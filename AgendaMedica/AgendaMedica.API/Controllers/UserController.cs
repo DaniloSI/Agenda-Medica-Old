@@ -85,11 +85,7 @@ namespace AgendaMedica.API.Controllers
 
                     var userToReturn = _mapper.Map<AppUserLoginDTO>(appUser);
 
-                    return Ok(new
-                    {
-                        token = GenerateJWToken(appUser).Result,
-                        user = userToReturn
-                    });
+                    return Ok(GenerateJWToken(appUser).Result);
                 }
 
                 return Unauthorized();
@@ -100,13 +96,13 @@ namespace AgendaMedica.API.Controllers
             }
         }
 
-        private async Task<string> GenerateJWToken(AppUser user)
+        private async Task<object> GenerateJWToken(AppUser user)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName)
-        };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
 
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -130,7 +126,13 @@ namespace AgendaMedica.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return tokenHandler.WriteToken(token);
+            return new
+            {
+                token = tokenHandler.WriteToken(token),
+                tokenDescriptor.Expires,
+                user.UserName,
+                user.Email
+            };
         }
     }
 }
