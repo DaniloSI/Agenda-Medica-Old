@@ -25,3 +25,7 @@ Para executar a API é necessário possuir o **Docker** instalado e o recurso **
 `docker-compose up -d`
 
 Uma vez que os containers estão em execução, basta abrir o navegador e acessar o seguinte link para ter acesso à documentação da API: http://localhost:8000/swagger.
+
+Para parar a execução, basta acessar a mesma pasta supracitada e executar o seguinte comando:
+
+`docker-compose down`
