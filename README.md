@@ -1,6 +1,6 @@
 # Agenda Médica
 
-O projeto contido nesse repositório é referente a um aplicativo de Agenda Médica. Com tal aplicativo, os donos de clínicas médicas e profissionais da saúde são capazes de criar uma conta e disponibilizar agendas de horários para atendimento aos seus pacientes.
+O projeto contido nesse repositório é referente a um aplicativo de Agenda Médica e tem por objetivo permitir que os donos de clínicas médicas e profissionais da saúde sejam capazes de criar uma conta e disponibilizar agendas de horários para atendimento aos seus pacientes.
 
 Por outro lado, os clientes são capazes de encontrar perfis de clínicas médicas e profissionais da saúde, bem como as agendas de horários disponíveis. Além disso, também são capazes de realizar (através do aplicativo) agendamento de horários a qualquer hora ou momento do dia.
 
