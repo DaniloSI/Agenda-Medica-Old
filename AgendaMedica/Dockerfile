@@ -6,7 +6,7 @@ EXPOSE 443
 WORKDIR /app
 
 # copy published
-COPY AgendaMedica.API/bin/Debug/netcoreapp2.2/publish/ ./
+COPY AgendaMedica.API/Publicados/ ./
 
 # make entry point
 ENTRYPOINT ["dotnet", "AgendaMedica.API.dll"]
