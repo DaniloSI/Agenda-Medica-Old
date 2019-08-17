@@ -117,6 +117,19 @@ namespace AgendaMedica.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            UpdateDatabase(app);
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<AgendaMedicaDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }
