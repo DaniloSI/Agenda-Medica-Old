@@ -10,7 +10,7 @@ Por outro lado, os clientes são capazes de encontrar perfis de clínicas médic
 - Agendar Horários.
 - Efetuar pagamento de consulta, sessão de terapia e outros pelo aplicativo, de forma antecipada e durante o agendamento.
 
-# Para Desenvolvedores
+# Documentação
 
 ## Download do Código Fonte
 
