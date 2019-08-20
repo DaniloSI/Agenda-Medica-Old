@@ -1,13 +1,30 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {isAuthenticated} from './services/auth';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Login from './pages/Login'
+import Cadastrar from './pages/Cadastrar'
 
-export default function Routes(){
-    return(
+const PrivateRoute = ({component: Component, ...rest}) => (
+    <Route
+        {...rest}
+        render = {
+            props => isAuthenticated() ? 
+            (<Component {...props}/>) : 
+            (<Redirect to={{ pathname: '/', state: { from: props.location }}}/>)
+        }
+    />
+);
+
+export default function Routes() {
+    return (
         <BrowserRouter>
-            <Route path="/" exact component={Login}></Route>
-            <Route path="/Login" component={Login}></Route>
+            <Switch>
+                <Route path="/" exact component={Login}></Route>
+                <Route path="/Login" component={Login}></Route>
+                <Route path="/Cadastrar" component={Cadastrar}></Route>
+                <PrivateRoute path="/Teste" component={() => <h1>Teste</h1>}/>
+            </Switch>
         </BrowserRouter>
     )
 }

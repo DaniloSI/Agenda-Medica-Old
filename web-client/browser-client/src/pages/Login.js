@@ -1,48 +1,49 @@
-import React, {useState} from 'react';
-import './Login.css';
-
+import React, { useState } from 'react';
+import { login } from '../services/auth';
 import api from '../services/api';
 
-export default function Login({history}){
+import './Login.css';
+
+export default function Login({ history }) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await api.post('/login', 
-    {
+    const response = await api.post('/User/Login',
+      {
         username,
         password,
-    });
+      });
 
-    const { _id } = response.data;
+    const { token } = response.data;
 
-    history.push(`/dev/${_id}`);
+    if(token !== null) login(token);
+
+    history.push('/Teste');
   }
 
-  return(
-    <div className="login-container">        
-      <form>
+  return (
+    <div className="login-container">
+      <form onSubmit={handleSubmit}>
         <strong>E-mail:</strong>
-        <input 
-        placeholder="Insira seu e-mail"
-        value={username}
-        onChange={e => setUsername(e.target.value)}></input>
-        
+        <input
+          placeholder="Ex. teste@provedor.com"
+          value={username}
+          onChange={e => setUsername(e.target.value)}></input>
+
         <strong>Senha:</strong>
-        <input 
-        type="password"
-        placeholder="Insira sua senha"
-        value={password}
-        onChange={e => setPassword(e.target.value)}></input>
-        
+        <input
+          type="password"
+          placeholder="Ex. 123456"
+          value={password}
+          onChange={e => setPassword(e.target.value)}></input>
+
         <div className="buttons">
-          <button 
-            type="submit"
-            onClick={e => handleSubmit(e)}>Entrar</button>
-          <button>Cadastrar</button>
+          <button type="submit">Entrar</button>
+          <button onClick={() => history.push('/Cadastrar')}>Cadastrar</button>
         </div>
       </form>
     </div>
