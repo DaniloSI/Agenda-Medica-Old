@@ -6,7 +6,7 @@ import './Login.css';
 
 export default function Login({ history }) {
 
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
@@ -14,7 +14,7 @@ export default function Login({ history }) {
 
     const response = await api.post('/User/Login',
       {
-        username,
+        userName,
         password,
       });
 
@@ -31,7 +31,7 @@ export default function Login({ history }) {
         <strong>E-mail:</strong>
         <input
           placeholder="Ex. teste@provedor.com"
-          value={username}
+          value={userName}
           onChange={e => setUsername(e.target.value)}></input>
 
         <strong>Senha:</strong>
