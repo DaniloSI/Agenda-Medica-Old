@@ -20,7 +20,9 @@ Para baixar o código fonte do projeto, basta baixar através do link de Downloa
 
 ## Execução da API
 
-Para executar a API é necessário possuir o **Docker** instalado e o recurso **Docker Compose** habilitado. Uma vez que os requisitos estão atendidos, basta acessar a pasta AgendaMedica, que contém o arquivo *docker-compose.yml* e executar o seguinte comando:
+Para executar a API é necessário possuir o **Docker** instalado e o recurso **Docker Compose** habilitado. Uma vez que os requisitos estão atendidos, basta acessar a pasta AgendaMedica, que contém o arquivo *docker-compose.yml* e executar os seguintes comandos:
+
+`docker-compose build`
 
 `docker-compose up -d`
 
