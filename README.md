@@ -31,3 +31,15 @@ Uma vez que os containers estão em execução, basta abrir o navegador e acessa
 Para parar a execução, basta acessar a mesma pasta supracitada e executar o seguinte comando:
 
 `docker-compose down`
+
+## Execução do Frontend
+
+Para executar a aplicação de Frontend, basta acessar a pasta **browser-client** dentro da pasta **web-client** e executar o seguinte comando, para baixar e instalar as dependências:
+
+`npm install`
+
+Em seguida, para executar a aplicação, basta digitar o seguinte comando:
+
+`npm start`
+
+Após executar a aplicação de Frontend, é possível acessá-la através do link: http://localhost:3000.
