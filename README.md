@@ -12,6 +12,11 @@ Por outro lado, os clientes serão capazes de encontrar perfis de clínicas méd
 
 # Documentação
 
+Pré requisitos para executar a aplicação:
+
+* Docker;
+* Node JS.
+
 ## Download do Código Fonte
 
 Para baixar o código fonte do projeto, basta baixar através do link de Download desse repositório ou digitar o seguinte comando no Terminal ou Prompt de Comando:
