@@ -83,7 +83,7 @@ namespace AgendaMedica.API
 
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                config.SwaggerDoc("v1", new Info { Title = "Agenda Médica", Version = "v1" });
             });
         }
 
@@ -115,7 +115,7 @@ namespace AgendaMedica.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Agenda Médica");
             });
 
             UpdateDatabase(app);
