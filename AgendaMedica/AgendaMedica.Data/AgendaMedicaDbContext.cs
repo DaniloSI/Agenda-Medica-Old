@@ -1,4 +1,5 @@
-﻿using AgendaMedica.Domain.Identity;
+﻿using AgendaMedica.Domain.Entities;
+using AgendaMedica.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ namespace AgendaMedica.Data
     public class AgendaMedicaDbContext
         : IdentityDbContext<AppUser, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
+        public DbSet<Usuario> Usuarios { get; set; }
+
         public AgendaMedicaDbContext(DbContextOptions<AgendaMedicaDbContext> options)
             : base(options)
         {
@@ -34,6 +37,9 @@ namespace AgendaMedica.Data
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+
+            builder.Entity<UsuarioPaciente>();
+            builder.Entity<UsuarioProfissional>();
         }
     }
 }

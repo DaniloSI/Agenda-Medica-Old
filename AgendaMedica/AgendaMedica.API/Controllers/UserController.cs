@@ -1,4 +1,5 @@
 ﻿using AgendaMedica.API.DTO;
+using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -41,20 +42,49 @@ namespace AgendaMedica.API.Controllers
         [HttpGet("GetUser")]
         public IActionResult GetUser()
         {
-            return Ok(new AppUserDTO());
+            return Ok(new dynamic[] { new UsuarioPacienteDTO(), new UsuarioProfissionalDTO() });
         }
 
-        [HttpPost("Register")]
+        [HttpPost("CadastroPaciente")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(AppUserDTO appUserDTO)
+        public async Task<IActionResult> CadastroPaciente(UsuarioPacienteDTO paciente)
         {
             try
             {
-                var user = _mapper.Map<AppUser>(appUserDTO);
+                var user = _mapper.Map<UsuarioPaciente>(paciente);
 
-                var result = await _userManager.CreateAsync(user, appUserDTO.Password);
+                user.UserName = paciente.Email;
 
-                var userToReturn = _mapper.Map<AppUserDTO>(user);
+                var result = await _userManager.CreateAsync(user, paciente.Password);
+
+                var userToReturn = _mapper.Map<UsuarioPacienteDTO>(user);
+
+                if (result.Succeeded)
+                {
+                    return Created("GetUser", userToReturn);
+                }
+
+                return BadRequest(result.Errors);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"O Banco Dados Falhou {e.Message}");
+            }
+        }
+
+        [HttpPost("CadastroProfissional")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CadastroProfissional(UsuarioProfissionalDTO profissional)
+        {
+            try
+            {
+                var user = _mapper.Map<UsuarioProfissional>(profissional);
+
+                user.UserName = profissional.Email;
+
+                var result = await _userManager.CreateAsync(user, profissional.Password);
+
+                var userToReturn = _mapper.Map<UsuarioProfissionalDTO>(user);
 
                 if (result.Succeeded)
                 {
