@@ -160,7 +160,7 @@ namespace AgendaMedica.API.Controllers
             {
                 token = tokenHandler.WriteToken(token),
                 tokenDescriptor.Expires,
-                user.UserName,
+                FullName = $"{(user as Usuario).Nome} {(user as Usuario).SobreNome}",
                 user.Email
             };
         }
