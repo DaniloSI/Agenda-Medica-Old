@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './auth';
 
 const api = axios.create({
-    baseURL: 'http://172.168.0.154:8000/api'
+    baseURL: 'http://localhost:8000/api'
 });
 
 api.interceptors.request.use(config => {
