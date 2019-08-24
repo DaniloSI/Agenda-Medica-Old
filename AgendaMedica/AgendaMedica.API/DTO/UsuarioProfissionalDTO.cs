@@ -11,5 +11,8 @@ namespace AgendaMedica.API.DTO
         public string Password { get; set; }
         public string Cnpj { get; set; }
         public string Telefone { get; set; }
+        public string Orgao { get; set; }
+        public string Estado { get; set; }
+        public string Registro { get; set; }
     }
 }

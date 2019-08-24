@@ -10,9 +10,11 @@ namespace AgendaMedica.API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<UsuarioPaciente, UsuarioPacienteDTO>()
+                .ForMember(dest => dest.Telefone, opt => opt.MapFrom(src => src.PhoneNumber))
                 .ReverseMap();
 
             CreateMap<UsuarioProfissional, UsuarioProfissionalDTO>()
+                .ForMember(dest => dest.Telefone, opt => opt.MapFrom(src => src.PhoneNumber))
                 .ReverseMap();
 
             CreateMap<AppUser, AppUserLoginDTO>()
