@@ -9,7 +9,7 @@ export default function Cadastrar({ history }) {
                 <div class="col-6 mx-auto">
                     <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title" style={{textAlign: 'center'}}>Cadastro</h5>
+                        <h5 class="card-title" style={{textAlign: 'center'}}>Cadastro de Usuário</h5>
                         <form>
                             <div class="form-group">
                                 <label for="nome">Primerio Nome</label>
@@ -43,20 +43,23 @@ export default function Cadastrar({ history }) {
                                 <input class="form-check-input" type="radio" name="tipoUsuarioOptions" id="tipoUsuarioProfissional" value="2" checked></input>
                                 <label class="form-check-label" for="tipoUsuarioProfissional">Profissional</label>
                             </div>
-                            <div class="form-group" style={{marginTop: '20px'}}>
-                                <label for="orgao">Órgão</label>
-                                <input type="text" class="form-control" id="orgao" placeholder="Órgão"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="estado">Estado</label>
-                                <input type="text" class="form-control" id="estado" placeholder="Estado"></input>
-                            </div>
-                            <div class="form-group">
-                                <label for="registro">Registro</label>
-                                <input type="text" class="form-control" id="registro" placeholder="Registro"></input>
+
+                            <div class="border-top border-secondary" style={{marginTop: '20px'}}>
+                                <div class="form-group" style={{marginTop: '20px'}}>
+                                    <label for="orgao">Órgão Regulador</label>
+                                    <input type="text" class="form-control" id="orgao" placeholder="Ex.: CRM"></input>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado</label>
+                                    <input type="text" class="form-control" id="estado" placeholder="Ex.: SP"></input>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registro">Registro Profissional</label>
+                                    <input type="text" class="form-control" id="registro" placeholder="Ex.: 045904"></input>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Cadastrar</button>
-                            <button type="submit" class="btn btn-light float-right" onClick={() => history.push('/Login')} >Voltar</button>
+                            <button type="submit" class="btn btn-light float-right" onClick={() => history.push('/Login')} >Cancelar</button>
                             </form>
                         </div>
                     </div>
