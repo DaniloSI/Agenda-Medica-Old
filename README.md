@@ -1,5 +1,7 @@
 # Agenda Médica
 
+[![Build Status](https://travis-ci.org/DaniloSI/Agenda-Medica.svg?branch=master)](https://travis-ci.org/DaniloSI/Agenda-Medica)
+
 O projeto contido nesse repositório é referente a um aplicativo de Agenda Médica. Ao final do desenvolvimento do projeto e com a implantação do mesmo em produção, os donos de clínicas médicas e profissionais da saúde serão capazes de criar uma conta e disponibilizar agendas de horários para atendimento aos seus pacientes.
 
 Por outro lado, os clientes serão capazes de encontrar perfis de clínicas médicas e profissionais da saúde, bem como as agendas de horários disponíveis. Além disso, também serão capazes de realizar (através do aplicativo) agendamento de horários a qualquer hora ou momento do dia.
