@@ -95,7 +95,7 @@ namespace AgendaMedica.API.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"O Banco Dados Falhou {e.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"O Banco Dados Falhou {e.Message}!");
             }
         }
 
@@ -122,7 +122,7 @@ namespace AgendaMedica.API.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {e.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Banco Dados Falhou {e.Message}!");
             }
         }
 
