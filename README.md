@@ -16,7 +16,7 @@ Por outro lado, os clientes serão capazes de encontrar perfis de clínicas méd
 
 Pré requisitos para executar a aplicação:
 
-  - Docker;
+  - Docker.
   - Node JS.
 
 ### Download do Código Fonte
