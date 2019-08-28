@@ -16,7 +16,7 @@ jdk:
 
 install:
     - dotnet tool install --global dotnet-sonarscanner
-    - dotnet restore vtb.sln
+    - dotnet restore AgendaMedica.sln
 
 before_script:
     - export PATH="$PATH:/home/travis/.dotnet/tools"
