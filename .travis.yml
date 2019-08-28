@@ -1,14 +1,38 @@
 language: csharp
 mono: none
 dotnet: 2.2
-script:
- - dotnet restore AgendaMedica/
-addons:
-  sonarcloud:
-    organization: "danilosi"
-    token:
-      secure: "5699f06f0439a343b2a709db88cf908b945ad9ff" # encrypted value of your token
+
+# -- NEW --
+jdk:
+  - oraclejdk8
+  # -- NEW --
 
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+ - dotnet restore AgendaMedica/
+ 
+ 
+ # -- NEW --
+ addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+  sonarqube: true
+  
+before_script:
+  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+  
+script:
   - sonar-scanner
+# -- NEW --
+ 
+ 
+# --- OLD ---
+# addons:
+#   sonarcloud:
+#     organization: "danilosi"
+#     token:
+#       secure: "5699f06f0439a343b2a709db88cf908b945ad9ff" # encrypted value of your token
+
+# script:
+#   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+#   - sonar-scanner
