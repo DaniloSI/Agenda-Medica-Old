@@ -16,14 +16,14 @@ jdk:
 
 install:
     - dotnet tool install --global dotnet-sonarscanner
-    - dotnet restore AgendaMedica.sln
+    - dotnet restore AgendaMedica/AgendaMedica.sln
 
 before_script:
     - export PATH="$PATH:/home/travis/.dotnet/tools"
     
 script:
   - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
-  - dotnet build AgendaMedica.sln
+  - dotnet build AgendaMedica/AgendaMedica.sln
   - dotnet sonarscanner end /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff || true
 
 cache:
