@@ -39,7 +39,7 @@ export default function Cadastrar({ history }) {
                             <h5 className="card-title" style={{ textAlign: 'center' }}>Cadastro de Usuário</h5>
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label for="nome">Primerio Nome</label>
+                                    <label htmlFor="nome">Primerio Nome</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -54,7 +54,7 @@ export default function Cadastrar({ history }) {
                                         placeholder="Primeiro Nome"></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="sobrenome">Sobrenome</label>
+                                    <label htmlFor="sobrenome">Sobrenome</label>
                                     <input
                                         type="text"
                                         className="form-control"
@@ -69,7 +69,7 @@ export default function Cadastrar({ history }) {
                                         placeholder="Sobrenome"></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="email">E-mail</label>
+                                    <label htmlFor="email">E-mail</label>
                                     <input
                                         type="email"
                                         className="form-control"
@@ -85,11 +85,11 @@ export default function Cadastrar({ history }) {
                                         placeholder="Ex.: pessoa@dominio.com"></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="emailConfirmacao">Confirmação de E-mail</label>
+                                    <label htmlFor="emailConfirmacao">Confirmação de E-mail</label>
                                     <input type="email" className="form-control" id="emailConfirmacao" aria-describedby="emailHelp" placeholder="Confirmação de E-mail"></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="senha">Senha</label>
+                                    <label htmlFor="senha">Senha</label>
                                     <input
                                         type="password"
                                         className="form-control"
@@ -102,7 +102,7 @@ export default function Cadastrar({ history }) {
                                         placeholder="Senha"></input>
                                 </div>
                                 <div className="form-group">
-                                    <label for="senhaConfirmacao">Confirmação de Senha</label>
+                                    <label htmlFor="senhaConfirmacao">Confirmação de Senha</label>
                                     <input type="password" className="form-control" id="senhaConfirmacao" placeholder="Confirmação de Senha"></input>
                                 </div>
                                 <div className="form-check form-check-inline">
@@ -117,7 +117,7 @@ export default function Cadastrar({ history }) {
                                             TipoUsuario: parseInt(e.target.value)
                                         })}
                                         checked={form.TipoUsuario === 1}></input>
-                                    <label className="form-check-label" for="tipoUsuarioPaciente">Paciente</label>
+                                    <label className="form-check-label" htmlFor="tipoUsuarioPaciente">Paciente</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input
@@ -131,20 +131,20 @@ export default function Cadastrar({ history }) {
                                             TipoUsuario: parseInt(e.target.value)
                                         })}
                                         checked={form.TipoUsuario === 2}></input>
-                                    <label className="form-check-label" for="tipoUsuarioProfissional">Profissional</label>
+                                    <label className="form-check-label" htmlFor="tipoUsuarioProfissional">Profissional</label>
                                 </div>
 
                                 <div id="professionalFields" className="border-top border-secondary" style={{ marginTop: '20px' }}>
                                     <div className="form-group" style={{ marginTop: '20px' }}>
-                                        <label for="orgao">Órgão Regulador</label>
+                                        <label htmlFor="orgao">Órgão Regulador</label>
                                         <input type="text" className="form-control" id="orgao" placeholder="Ex.: CRM"></input>
                                     </div>
                                     <div className="form-group">
-                                        <label for="estado">Estado</label>
+                                        <label htmlFor="estado">Estado</label>
                                         <input type="text" className="form-control" id="estado" placeholder="Ex.: SP"></input>
                                     </div>
                                     <div className="form-group">
-                                        <label for="registro">Registro Profissional</label>
+                                        <label htmlFor="registro">Registro Profissional</label>
                                         <input type="text" className="form-control" id="registro" placeholder="Ex.: 045904"></input>
                                     </div>
                                 </div>

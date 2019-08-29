@@ -24,27 +24,27 @@ export default function Login({ history }) {
   }
 
   return (
-    <div class="container h-100">
-      <div class="row align-items-center h-100">
-        <div class="col-6 mx-auto">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title" style={{textAlign: 'center'}}>Login</h5>
+    <div className="container h-100">
+      <div className="row align-items-center h-100">
+        <div className="col-6 mx-auto">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title" style={{textAlign: 'center'}}>Login</h5>
                 <form onSubmit={handleSubmit}>
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">E-mail</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex.: pessoa@dominio.com" value={userName} onChange={e => setUsername(e.target.value)}></input>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">E-mail</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex.: pessoa@dominio.com" value={userName} onChange={e => setUsername(e.target.value)}></input>
                   </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Senha</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)}></input>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputPassword1">Senha</label>
+                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)}></input>
                   </div>
-                  <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-                    <label class="form-check-label" for="exampleCheck1">Continuar conectado</label>
+                  <div className="form-group form-check">
+                    <input type="checkbox" className="form-check-input" id="exampleCheck1"></input>
+                    <label className="form-check-label" htmlFor="exampleCheck1">Continuar conectado</label>
                   </div>
-                  <button type="submit" class="btn btn-primary">Entrar</button>
-                  <button type="button" onClick={() => history.push('/Cadastrar')} class="btn btn-secondary" style={{marginLeft: '10px'}}>Cadastrar</button>
+                  <button type="submit" className="btn btn-primary">Entrar</button>
+                  <button type="button" onClick={() => history.push('/Cadastrar')} className="btn btn-secondary" style={{marginLeft: '10px'}}>Cadastrar</button>
                 </form>
               </div>
           </div>
