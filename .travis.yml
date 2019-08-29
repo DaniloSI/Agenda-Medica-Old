@@ -1,0 +1,37 @@
+language: csharp
+mono: none
+dotnet: 2.2
+
+script:
+ - dotnet restore AgendaMedica/
+ 
+addons:
+  sonarcloud:
+    organization: "danilosi"
+    token:
+      secure: "5699f06f0439a343b2a709db88cf908b945ad9ff" # encrypted value of your token
+
+jdk:
+  - oraclejdk8
+
+install:
+    - dotnet tool install --global dotnet-sonarscanner
+    - dotnet restore AgendaMedica/AgendaMedica.sln
+
+before_script:
+    - export PATH="$PATH:/home/travis/.dotnet/tools"
+    
+script:
+  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff /d:sonar.host.url="https://sonarcloud.io" /d:sonar.verbose=true
+  - dotnet build --force AgendaMedica/AgendaMedica.sln
+  - dotnet sonarscanner end /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff || true
+
+cache:
+  directories:
+    - "~/.nuget/packages"
+    - "~/.local/share/NuGet/Cache"
+    - "~/.sonar/cache"
+
+# script:
+#  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+#  - sonar-scanner
