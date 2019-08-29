@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { login } from '../services/auth';
 import api from '../services/api';
 
-// import './Login.css';
-
 export default function Login({ history }) {
 
   const [userName, setUsername] = useState('');
@@ -22,7 +20,7 @@ export default function Login({ history }) {
 
     if(token !== null) login(token);
 
-    history.push('/Teste');
+    history.push('/Home');
   }
 
   return (
