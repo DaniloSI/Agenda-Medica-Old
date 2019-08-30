@@ -1,12 +1,15 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 WORKDIR /app
 
-# copy published
-COPY AgendaMedica.API/Publicados/ ./
+# Copy csproj and restore
+COPY . ./
+RUN dotnet restore AgendaMedica.sln
 
-# make entry point
+# Build
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+WORKDIR /app
+COPY --from=build-env /app/AgendaMedica.API/out .
 ENTRYPOINT ["dotnet", "AgendaMedica.API.dll"]
