@@ -3,6 +3,6 @@ import {notific} from '../services/notifications';
 
 export default function Home(props){      
     return (
-        <notific message="Oi"></notific>
+            <notific message="Oi"></notific>        
     );
 }
