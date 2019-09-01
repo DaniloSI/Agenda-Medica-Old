@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AgendaMedica.Domain.Interfaces
+namespace AgendaMedica.Domain.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {

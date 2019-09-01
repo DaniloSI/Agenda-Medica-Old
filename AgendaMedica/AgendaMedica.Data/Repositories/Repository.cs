@@ -1,4 +1,4 @@
-﻿using AgendaMedica.Domain.Interfaces;
+﻿using AgendaMedica.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

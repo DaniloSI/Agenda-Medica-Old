@@ -2,7 +2,8 @@
 using AgendaMedica.Data.Repositories;
 using AgendaMedica.Data.UoW;
 using AgendaMedica.Domain.Identity;
-using AgendaMedica.Domain.Interfaces;
+using AgendaMedica.Domain.Interfaces.Repositories;
+using AgendaMedica.Domain.Interfaces.Domain;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
+using AgendaMedica.Domain.Services;
 
 namespace AgendaMedica.API
 {
@@ -139,6 +141,10 @@ namespace AgendaMedica.API
 
         private void RegisterServices(IServiceCollection services)
         {
+            // Domain
+            services.AddScoped<IEspecialidadeService, EspecialidadeService>();
+
+            // Repository
             services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<AgendaMedicaDbContext>();
