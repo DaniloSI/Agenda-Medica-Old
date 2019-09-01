@@ -1,5 +1,8 @@
 ﻿using AgendaMedica.Data;
+using AgendaMedica.Data.Repositories;
+using AgendaMedica.Data.UoW;
 using AgendaMedica.Domain.Identity;
+using AgendaMedica.Domain.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -85,6 +88,8 @@ namespace AgendaMedica.API
             {
                 config.SwaggerDoc("v1", new Info { Title = "Agenda Médica", Version = "v1" });
             });
+
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,6 +135,13 @@ namespace AgendaMedica.API
                     context.Database.Migrate();
                 }
             }
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<AgendaMedicaDbContext>();
         }
     }
 }

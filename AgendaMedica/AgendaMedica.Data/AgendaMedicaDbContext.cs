@@ -1,4 +1,5 @@
-﻿using AgendaMedica.Domain.Entities;
+﻿using AgendaMedica.Data.Mappings;
+using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace AgendaMedica.Data
         : IdentityDbContext<AppUser, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Especialidade> Especialidades { get; set; }
 
         public AgendaMedicaDbContext(DbContextOptions<AgendaMedicaDbContext> options)
             : base(options)
@@ -40,6 +42,8 @@ namespace AgendaMedica.Data
 
             builder.Entity<UsuarioPaciente>();
             builder.Entity<UsuarioProfissional>();
+
+            builder.ApplyConfiguration(new EspecialidadeMap());
         }
     }
 }

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.API", "AgendaM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Data", "AgendaMedica.Data\AgendaMedica.Data.csproj", "{90842CC9-B7EA-4EC5-9469-A3B6EA019FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaMedica.Domain", "AgendaMedica.Domain\AgendaMedica.Domain.csproj", "{E19779FB-93D3-400D-86D5-A1D85C230CFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Domain", "AgendaMedica.Domain\AgendaMedica.Domain.csproj", "{E19779FB-93D3-400D-86D5-A1D85C230CFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

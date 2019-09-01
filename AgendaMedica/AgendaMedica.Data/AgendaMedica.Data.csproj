@@ -13,8 +13,4 @@
     <ProjectReference Include="..\AgendaMedica.Domain\AgendaMedica.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-  </ItemGroup>
-
 </Project>
