@@ -1,4 +1,4 @@
-﻿using AgendaMedica.Domain.Interfaces;
+﻿using AgendaMedica.Domain.Interfaces.Repositories;
 
 namespace AgendaMedica.Data.UoW
 {

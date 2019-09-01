@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AgendaMedica.Domain.Interfaces
+namespace AgendaMedica.Domain.Interfaces.Repositories
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : class
     {

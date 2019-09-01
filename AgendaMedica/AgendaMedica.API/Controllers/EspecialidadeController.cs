@@ -1,5 +1,6 @@
 ﻿using AgendaMedica.Domain.Entities;
-using AgendaMedica.Domain.Interfaces;
+using AgendaMedica.Domain.Interfaces.Domain;
+using AgendaMedica.Domain.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +10,12 @@ namespace AgendaMedica.API.Controllers
     [ApiController]
     public class EspecialidadeController : ControllerBase
     {
-        private readonly IEspecialidadeRepository _especialidadeRepository;
+        private readonly IEspecialidadeService _especialidadeService;
         private readonly IUnitOfWork UoW;
 
-        public EspecialidadeController(IEspecialidadeRepository especialidadeRepository, IUnitOfWork UoW)
+        public EspecialidadeController(IEspecialidadeService especialidadeService, IUnitOfWork UoW)
         {
-            _especialidadeRepository = especialidadeRepository;
+            _especialidadeService = especialidadeService;
             this.UoW = UoW;
         }
 
@@ -22,7 +23,7 @@ namespace AgendaMedica.API.Controllers
         [AllowAnonymous]
         public ActionResult<Especialidade> Form(Especialidade especialidade)
         {
-            _especialidadeRepository.Add(especialidade);
+            _especialidadeService.Add(especialidade);
             UoW.Commit();
 
             return especialidade;
