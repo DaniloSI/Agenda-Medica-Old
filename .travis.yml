@@ -22,7 +22,8 @@ before_script:
     - export PATH="$PATH:/home/travis/.dotnet/tools"
     
 script:
-  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths="AgendaMedica/AgendaMedica.Domain" /d:sonar.cs.nunit.reportsPaths="AgendaMedica/AgendaMedica.Domain" /d:sonar.cs.opencover.reportsPaths="AgendaMedica/lcov.opencover.xml" /d:sonar.verbose=true
+  - dir="$(pwd)"
+  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths="AgendaMedica/AgendaMedica.Domain" /d:sonar.cs.nunit.reportsPaths="AgendaMedica/AgendaMedica.Domain" /d:sonar.cs.opencover.reportsPaths="${dir}/lcov.opencover.xml" /d:sonar.verbose=true
   - dotnet build --force AgendaMedica/AgendaMedica.sln
   - dotnet test AgendaMedica/AgendaMedica.Domain.Teste/AgendaMedica.Domain.Teste.NUnit.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=\"opencover,lcov\" /p:CoverletOutput=../lcov
   - dotnet sonarscanner end /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff || true
