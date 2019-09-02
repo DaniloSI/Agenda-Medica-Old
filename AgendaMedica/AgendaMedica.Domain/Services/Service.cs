@@ -14,7 +14,7 @@ namespace AgendaMedica.Domain.Services
             _repository = repository;
         }
 
-        public void Add(TEntity obj)
+        public virtual void Add(TEntity obj)
         {
             _repository.Add(obj);
         }
@@ -34,7 +34,7 @@ namespace AgendaMedica.Domain.Services
             return _repository.GetById(id);
         }
 
-        public void Remove(Guid id)
+        public virtual void Remove(Guid id)
         {
             _repository.Remove(id);
         }
@@ -44,7 +44,7 @@ namespace AgendaMedica.Domain.Services
             return _repository.SaveChanges();
         }
 
-        public void Update(TEntity obj)
+        public virtual void Update(TEntity obj)
         {
             _repository.Update(obj);
         }

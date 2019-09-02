@@ -18,6 +18,9 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Text;
 using AgendaMedica.Domain.Services;
+using AgendaMedica.Application.AutoMapper;
+using AgendaMedica.Application.Interfaces;
+using AgendaMedica.Application.AppServices;
 
 namespace AgendaMedica.API
 {
@@ -85,6 +88,7 @@ namespace AgendaMedica.API
             services.AddCors();
 
             services.AddAutoMapper();
+            AutoMapperConfig.RegisterMappings();
 
             services.AddSwaggerGen(config =>
             {
@@ -141,6 +145,9 @@ namespace AgendaMedica.API
 
         private void RegisterServices(IServiceCollection services)
         {
+            // Application
+            services.AddScoped<IEspecialidadeAppService, EspecialidadeAppService>();
+
             // Domain
             services.AddScoped<IEspecialidadeService, EspecialidadeService>();
 

@@ -19,6 +19,8 @@ namespace AgendaMedica.Data.Mappings
                 .HasColumnType("varchar(100)")
                 .HasMaxLength(100)
                 .IsRequired();
+
+            builder.ToTable(nameof(Especialidade));
         }
     }
 }
