@@ -25,7 +25,7 @@ script:
   - dir="$(pwd)"
   - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.nunit.reportsPaths=coverage.xml /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.verbose=true
   - dotnet build --force AgendaMedica/AgendaMedica.sln
-  - dotnet test AgendaMedica/AgendaMedica.Domain.Teste/AgendaMedica.Domain.Teste.NUnit.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="coverage.xml"
+  - dotnet test AgendaMedica/AgendaMedica.Domain.Teste/AgendaMedica.Domain.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="coverage.xml"
   - dotnet sonarscanner end /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff || true
 
 cache:
