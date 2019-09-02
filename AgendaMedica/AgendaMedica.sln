@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Domain", "Agen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Application", "AgendaMedica.Application\AgendaMedica.Application.csproj", "{267C3D84-359D-4EED-A6BE-39C951D7A0B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Domain.Teste.NUnit", "AgendaMedica.Domain.Teste\AgendaMedica.Domain.Teste.NUnit.csproj", "{9B4EE35E-00A0-48D3-91FE-DBBBB9768AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgendaMedica.Domain.Test", "AgendaMedica.Domain.Teste\AgendaMedica.Domain.Test.csproj", "{9B4EE35E-00A0-48D3-91FE-DBBBB9768AA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
