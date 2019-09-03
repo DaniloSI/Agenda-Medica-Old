@@ -20,6 +20,8 @@ namespace AgendaMedica.Domain.Teste
         {
             Especialidade especialidade = new Especialidade
             {
+                EspecialidadeId = 0,
+                Nome = string.Empty,
                 Codigo = string.Empty
             };
 
