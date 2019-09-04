@@ -44,6 +44,9 @@ namespace AgendaMedica.Data
             builder.Entity<UsuarioPaciente>();
             builder.Entity<UsuarioProfissional>();
 
+            builder.Entity<Endereco>()
+                .HasKey(e => e.EnderecoId);
+
             builder.ApplyConfiguration(new EspecialidadeMap());
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
         }
