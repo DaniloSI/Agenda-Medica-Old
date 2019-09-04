@@ -9,6 +9,9 @@ namespace AgendaMedica.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Especialidade, EspecialidadeViewModel>();
+            CreateMap<Usuario, UsuarioViewModel>();
+            CreateMap<UsuarioProfissional, UsuarioProfissionalViewModel>();
+            CreateMap<UsuarioPaciente, UsuarioPacienteViewModel>();
         }
     }
 }

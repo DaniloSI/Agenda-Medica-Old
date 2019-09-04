@@ -1,4 +1,4 @@
-﻿using AgendaMedica.API.DTO;
+﻿using AgendaMedica.Application.ViewModels;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using AutoMapper;
@@ -41,12 +41,12 @@ namespace AgendaMedica.API.Controllers
         [HttpGet("GetUser")]
         public IActionResult GetUser()
         {
-            return Ok(new dynamic[] { new UsuarioPacienteDTO(), new UsuarioProfissionalDTO() });
+            return Ok(new dynamic[] { new UsuarioPacienteViewModel(), new UsuarioProfissionalViewModel() });
         }
 
         [HttpPost("CadastroPaciente")]
         [AllowAnonymous]
-        public async Task<IActionResult> CadastroPaciente(UsuarioPacienteDTO paciente)
+        public async Task<IActionResult> CadastroPaciente(UsuarioPacienteViewModel paciente)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace AgendaMedica.API.Controllers
 
                 var result = await _userManager.CreateAsync(user, paciente.Password);
 
-                var userToReturn = _mapper.Map<UsuarioPacienteDTO>(user);
+                var userToReturn = _mapper.Map<UsuarioPacienteViewModel>(user);
 
                 if (result.Succeeded)
                 {
@@ -73,7 +73,7 @@ namespace AgendaMedica.API.Controllers
 
         [HttpPost("CadastroProfissional")]
         [AllowAnonymous]
-        public async Task<IActionResult> CadastroProfissional(UsuarioProfissionalDTO profissional)
+        public async Task<IActionResult> CadastroProfissional(UsuarioProfissionalViewModel profissional)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace AgendaMedica.API.Controllers
 
                 var result = await _userManager.CreateAsync(user, profissional.Password);
 
-                var userToReturn = _mapper.Map<UsuarioProfissionalDTO>(user);
+                var userToReturn = _mapper.Map<UsuarioProfissionalViewModel>(user);
 
                 if (result.Succeeded)
                 {
@@ -100,19 +100,19 @@ namespace AgendaMedica.API.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(AppUserLoginDTO userLogin)
+        public async Task<IActionResult> Login(LoginViewModel userLogin)
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(userLogin.UserName);
+                var user = await _userManager.FindByEmailAsync(userLogin.Email);
 
                 var result = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
 
                 if (result.Succeeded)
                 {
-                    var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.NormalizedUserName == userLogin.UserName.ToUpper());
+                    var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Email.ToUpper() == userLogin.Email.ToUpper());
 
-                    var userToReturn = _mapper.Map<AppUserLoginDTO>(appUser);
+                    var userToReturn = _mapper.Map<UsuarioViewModel>(appUser);
 
                     return Ok(GenerateJWToken(appUser).Result);
                 }
