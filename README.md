@@ -1,6 +1,6 @@
 # Agenda Médica
 
-[![Build Status](https://travis-ci.org/DaniloSI/Agenda-Medica.svg?branch=master)](https://travis-ci.org/DaniloSI/Agenda-Medica) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica)
+[![Build Status](https://travis-ci.org/DaniloSI/Agenda-Medica.svg?branch=master)](https://travis-ci.org/DaniloSI/Agenda-Medica) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=coverage)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica)
 
 O projeto contido nesse repositório é referente a um aplicativo de Agenda Médica. Ao final do desenvolvimento do projeto e com a implantação do mesmo em produção, os donos de clínicas médicas e profissionais da saúde serão capazes de criar uma conta e disponibilizar agendas de horários para atendimento aos seus pacientes.
 
