@@ -29,12 +29,12 @@ namespace AgendaMedica.Domain.Services
             return _repository.GetAll();
         }
 
-        public TEntity GetById(Guid id)
+        public TEntity GetById(int id)
         {
             return _repository.GetById(id);
         }
 
-        public virtual void Remove(Guid id)
+        public virtual void Remove(int id)
         {
             _repository.Remove(id);
         }

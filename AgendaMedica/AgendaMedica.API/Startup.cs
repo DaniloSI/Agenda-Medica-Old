@@ -21,6 +21,7 @@ using AgendaMedica.Domain.Services;
 using AgendaMedica.Application.AutoMapper;
 using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.AppServices;
+using AgendaMedica.Domain.Entities;
 
 namespace AgendaMedica.API
 {
@@ -153,6 +154,7 @@ namespace AgendaMedica.API
 
             // Repository
             services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
+            services.AddScoped<IUsuarioProfissionalRepository, UsuarioProfissionalRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<AgendaMedicaDbContext>();
         }

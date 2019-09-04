@@ -4,14 +4,16 @@ using AgendaMedica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    partial class AgendaMedicaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190904222552_ProfissionalEspecialidade")]
+    partial class ProfissionalEspecialidade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,8 +253,6 @@ namespace AgendaMedica.Data.Migrations
                     b.Property<string>("Orgao");
 
                     b.Property<string>("Registro");
-
-                    b.ToTable("UsuarioProfissional");
 
                     b.HasDiscriminator().HasValue("UsuarioProfissional");
                 });

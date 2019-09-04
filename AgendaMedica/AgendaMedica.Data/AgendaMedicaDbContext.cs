@@ -1,11 +1,10 @@
 ﻿using AgendaMedica.Data.Mappings;
+using AgendaMedica.Data.Mappings.ManyToManys;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace AgendaMedica.Data
 {
@@ -46,6 +45,7 @@ namespace AgendaMedica.Data
             builder.Entity<UsuarioProfissional>();
 
             builder.ApplyConfiguration(new EspecialidadeMap());
+            builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
         }
     }
 }

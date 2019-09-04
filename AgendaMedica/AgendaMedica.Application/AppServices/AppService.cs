@@ -38,12 +38,12 @@ namespace AgendaMedica.Application.AppServices
             return _mapper.Map<IQueryable<TViewModel>>(_service.GetAll());
         }
 
-        public TViewModel GetById(Guid id)
+        public TViewModel GetById(int id)
         {
             return _mapper.Map<TViewModel>(_service.GetById(id));
         }
 
-        public virtual void Remove(Guid id)
+        public virtual void Remove(int id)
         {
             _service.Remove(id);
         }

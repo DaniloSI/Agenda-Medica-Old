@@ -1,6 +1,7 @@
 ﻿using AgendaMedica.Application.ViewModels;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
+using AgendaMedica.Domain.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,16 +27,19 @@ namespace AgendaMedica.API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IUsuarioProfissionalRepository _usuarioProfissionalRepository;
 
         public UserController(IConfiguration config,
                               UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IUsuarioProfissionalRepository usuarioProfissionalRepository)
         {
             _signInManager = signInManager;
             _mapper = mapper;
             _config = config;
             _userManager = userManager;
+            _usuarioProfissionalRepository = usuarioProfissionalRepository;
         }
 
         [HttpGet("GetUser")]
@@ -83,11 +87,11 @@ namespace AgendaMedica.API.Controllers
 
                 var result = await _userManager.CreateAsync(user, profissional.Password);
 
-                var userToReturn = _mapper.Map<UsuarioProfissionalViewModel>(user);
-
                 if (result.Succeeded)
                 {
-                    return Created("GetUser", userToReturn);
+                    var usuario = _usuarioProfissionalRepository.GetById(user.Id);
+                    var usuarioViewModel = _mapper.Map<UsuarioProfissionalViewModel>(usuario);
+                    return Created("GetUser", usuarioViewModel);
                 }
 
                 return BadRequest(result.Errors);
