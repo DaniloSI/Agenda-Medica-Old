@@ -2,7 +2,6 @@
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AgendaMedica.Domain.Validations;
-using FluentValidation.Results;
 
 namespace AgendaMedica.Domain.Services
 {

@@ -148,12 +148,15 @@ namespace AgendaMedica.API
         {
             // Application
             services.AddScoped<IEspecialidadeAppService, EspecialidadeAppService>();
+            services.AddScoped<IConsultaAppService, ConsultaAppService>();
 
             // Domain
             services.AddScoped<IEspecialidadeService, EspecialidadeService>();
+            services.AddScoped<IConsultaService, ConsultaService>();
 
             // Repository
             services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
+            services.AddScoped<IConsultaRepository, ConsultaRepository>();
             services.AddScoped<IUsuarioProfissionalRepository, UsuarioProfissionalRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<AgendaMedicaDbContext>();
