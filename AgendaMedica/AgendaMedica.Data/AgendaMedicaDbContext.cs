@@ -49,6 +49,7 @@ namespace AgendaMedica.Data
 
             builder.ApplyConfiguration(new EspecialidadeMap());
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
+            builder.ApplyConfiguration(new ConsultaMap());
         }
     }
 }

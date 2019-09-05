@@ -10,5 +10,6 @@ namespace AgendaMedica.Domain.Entities
         public string Estado { get; set; }
         public string Registro { get; set; }
         public virtual ICollection<UsuarioProfissionalEspecialidade> Especialidades { get; set; }
+        public virtual ICollection<Consulta> Consultas { get; set; }
     }
 }
