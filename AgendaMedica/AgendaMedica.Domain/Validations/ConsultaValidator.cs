@@ -8,8 +8,8 @@ namespace AgendaMedica.Domain.Validations
     {
         public ConsultaValidator()
         {
-            RuleFor(consulta => consulta.Data + consulta.HoraInicio)
-                .Must(dataHora => dataHora < DateTime.Now)
+            RuleFor(consulta => (consulta.Data + consulta.HoraInicio))
+                .Must(dataHora => dataHora >= DateTime.Now)
                 .WithMessage("A consulta não pode ser no passado.");
         }
     }
