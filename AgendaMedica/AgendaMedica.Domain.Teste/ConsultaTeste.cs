@@ -5,6 +5,7 @@ using AgendaMedica.Domain.Services;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace AgendaMedica.Domain.Teste
 {
@@ -19,6 +20,8 @@ namespace AgendaMedica.Domain.Teste
         {
             consulta = new Consulta
             {
+                ConsultaId = 0,
+                PagamentoConfirmado = false,
                 Data = DateTime.Today,
                 HoraInicio = DateTime.Now.AddHours(-3).TimeOfDay,
                 HoraFim = DateTime.Now.AddHours(-2).TimeOfDay,
@@ -70,6 +73,9 @@ namespace AgendaMedica.Domain.Teste
                     Cnpj = "321.654.987-01",
                     Email = "fulano.tal@teste.com",
                     UserName = "fulano.tal@teste.com",
+                    Orgao = "Conselho Federal de Medicina",
+                    Estado = "ES",
+                    Registro = "457261",
                     EnderecoId = 2,
                     Endereco = new Endereco
                     {
@@ -82,7 +88,6 @@ namespace AgendaMedica.Domain.Teste
                     }
                 }
             };
-
         }
 
         [OneTimeSetUp]
@@ -100,6 +105,34 @@ namespace AgendaMedica.Domain.Teste
             consulta.Data = DateTime.Today;
             consulta.HoraInicio = DateTime.Now.AddHours(-3).TimeOfDay;
             consulta.HoraFim = DateTime.Now.AddHours(-2).TimeOfDay;
+
+            _consultaService.Add(consulta);
+            Assert.IsFalse(consulta.ValidationResult.IsValid);
+        }
+
+        [Test]
+        [Category("Agendar Consulta")]
+        public void ConsultaNaoPodeConflitarHorarioProfissional()
+        {
+            DateTime dataInicioConsulta = DateTime.Now.AddHours(4).AddMinutes(6);
+            DateTime dataFimConsulta = DateTime.Now.AddHours(5).AddMinutes(7);
+
+            consulta.Data = dataInicioConsulta.Date;
+            consulta.HoraInicio = dataInicioConsulta.TimeOfDay;
+            consulta.HoraFim = dataFimConsulta.TimeOfDay;
+
+            consulta.Profissional.Consultas = new List<Consulta>
+            {
+                new Consulta
+                {
+                    ConsultaId = 1,
+                    PagamentoConfirmado = true,
+                    Data = dataInicioConsulta.Date,
+                    HoraInicio = dataInicioConsulta.AddMinutes(30).TimeOfDay,
+                    HoraFim = dataFimConsulta.AddMinutes(30).TimeOfDay,
+                    ProfissionalId = 2
+                }
+            };
 
             _consultaService.Add(consulta);
             Assert.IsFalse(consulta.ValidationResult.IsValid);

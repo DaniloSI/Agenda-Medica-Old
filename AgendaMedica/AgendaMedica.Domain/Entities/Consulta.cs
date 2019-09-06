@@ -22,5 +22,27 @@ namespace AgendaMedica.Domain.Entities
 
         [NotMapped]
         public ValidationResult ValidationResult { get; set; }
+
+        public DateTime DataHoraInicio
+        {
+            get
+            {
+                return Data + HoraInicio;
+            }
+        }
+
+        public DateTime DataHoraFim
+        {
+            get
+            {
+                return Data + HoraFim;
+            }
+        }
+
+        public bool ConflitaHorario(Consulta consulta)
+        {
+            return consulta.DataHoraInicio >= DataHoraInicio && consulta.DataHoraInicio <= DataHoraFim
+                || consulta.DataHoraFim >= DataHoraInicio && consulta.DataHoraFim <= DataHoraFim;
+        }
     }
 }
