@@ -115,7 +115,7 @@ namespace AgendaMedica.Domain.Teste
         public void ConsultaNaoPodeConflitarHorarioProfissional()
         {
             DateTime dataInicioConsulta = DateTime.Now.AddHours(4).AddMinutes(6);
-            DateTime dataFimConsulta = DateTime.Now.AddHours(5).AddMinutes(7);
+            DateTime dataFimConsulta = DateTime.Now.AddHours(6).AddMinutes(7);
 
             consulta.Data = dataInicioConsulta.Date;
             consulta.HoraInicio = dataInicioConsulta.TimeOfDay;
