@@ -2,8 +2,10 @@
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AgendaMedica.Domain.Services;
+using AgendaMedica.Domain.Validations;
 using Moq;
 using NUnit.Framework;
+using System.Linq;
 
 namespace AgendaMedica.Domain.Teste
 {
@@ -40,7 +42,7 @@ namespace AgendaMedica.Domain.Teste
 
             _especialidadeService.Add(especialidade);
 
-            Assert.IsFalse(especialidade.ValidationResult.IsValid);
+            Assert.IsNotEmpty(especialidade.ValidationResult.Errors.Where(e => e.ErrorMessage == EspecialidadeValidator.ErrorsMessages["CODIGO_VAZIO"]));
         }
     }
 }

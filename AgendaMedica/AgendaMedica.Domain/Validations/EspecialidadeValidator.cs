@@ -1,16 +1,19 @@
 ﻿using AgendaMedica.Domain.Entities;
 using FluentValidation;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AgendaMedica.Domain.Validations
 {
     public class EspecialidadeValidator : AbstractValidator<Especialidade>
     {
+        public static Dictionary<string, string> ErrorsMessages = new Dictionary<string, string>
+        {
+            ["CODIGO_VAZIO"] = "O código da Especialidade não pode ser vazio"
+        };
+
         public EspecialidadeValidator()
         {
-            RuleFor(especialidade => especialidade.Codigo).NotEmpty().WithMessage("O código da Especialidade não pode ser vazio");
+            RuleFor(especialidade => especialidade.Codigo).NotEmpty().WithMessage(ErrorsMessages["CODIGO_VAZIO"]);
         }
     }
 }
