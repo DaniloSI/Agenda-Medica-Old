@@ -2,10 +2,12 @@
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AgendaMedica.Domain.Services;
+using AgendaMedica.Domain.Validations;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AgendaMedica.Domain.Teste
 {
@@ -107,7 +109,7 @@ namespace AgendaMedica.Domain.Teste
             consulta.HoraFim = DateTime.Now.AddHours(-2).TimeOfDay;
 
             _consultaService.Add(consulta);
-            Assert.IsFalse(consulta.ValidationResult.IsValid);
+            Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["CONSULTA_NO_PASSADO"]));
         }
 
         [Test]
@@ -135,7 +137,7 @@ namespace AgendaMedica.Domain.Teste
             };
 
             _consultaService.Add(consulta);
-            Assert.IsFalse(consulta.ValidationResult.IsValid);
+            Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["CONFLITO_HORARIO_PROFISSIONAL"].Replace("{{PROFISSIONAL_NOME}}", consulta.Profissional.Nome)));
         }
     }
 }
