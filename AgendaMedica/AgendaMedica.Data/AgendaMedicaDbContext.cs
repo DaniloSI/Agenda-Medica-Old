@@ -14,6 +14,9 @@ namespace AgendaMedica.Data
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Especialidade> Especialidades { get; set; }
+        public DbSet<Consulta> Consultas { get; set; }
+        public DbSet<Agenda> Agendas { get; set; }
+        public DbSet<Horario> Horarios { get; set; }
 
         public AgendaMedicaDbContext(DbContextOptions<AgendaMedicaDbContext> options)
             : base(options)
@@ -170,6 +173,8 @@ namespace AgendaMedica.Data
             builder.ApplyConfiguration(new EspecialidadeMap());
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
             builder.ApplyConfiguration(new ConsultaMap());
+            builder.ApplyConfiguration(new HorarioMap());
+            builder.ApplyConfiguration(new AgendaMap());
         }
     }
 }

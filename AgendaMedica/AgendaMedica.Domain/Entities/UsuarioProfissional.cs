@@ -12,6 +12,7 @@ namespace AgendaMedica.Domain.Entities
         public string Registro { get; set; }
         public virtual ICollection<UsuarioProfissionalEspecialidade> Especialidades { get; set; }
         public virtual ICollection<Consulta> Consultas { get; set; }
+        public virtual ICollection<Agenda> Agendas { get; set; }
 
         public bool ConflitaHorario(Consulta novaConsulta)
         {
