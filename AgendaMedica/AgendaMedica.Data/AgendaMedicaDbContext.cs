@@ -82,7 +82,45 @@ namespace AgendaMedica.Data
                     }
                 );
 
-            builder.Entity<UsuarioProfissional>();
+            builder.Entity<UsuarioProfissional>()
+                .HasData(
+                    new UsuarioProfissional
+                    {
+                        Id = 3,
+                        Nome = "Rodrigo",
+                        SobreNome = "Vitor Kevin Ferreira",
+                        DataNascimento = new DateTime(1971, 03, 04),
+                        Cnpj = "63.029.660/0001-15",
+                        Email = "rodrigo@teste.com",
+                        NormalizedEmail = "RODRIGO@TESTE.COM",
+                        PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                        SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                        ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                        LockoutEnabled = true,
+                        UserName = "rodrigo@teste.com",
+                        NormalizedUserName = "RODRIGO@TESTE.COM",
+                        PhoneNumber = "99349-5462",
+                        EnderecoId = 3
+                    },
+                    new UsuarioProfissional
+                    {
+                        Id = 4,
+                        Nome = "Augusto",
+                        SobreNome = "Menezes da Costa",
+                        DataNascimento = new DateTime(1982, 07, 01),
+                        Cnpj = "35.172.039/0001-70",
+                        Email = "augusto@teste.com",
+                        NormalizedEmail = "AUGUSTO@TESTE.COM",
+                        PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                        SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                        ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                        LockoutEnabled = true,
+                        UserName = "augusto@teste.com",
+                        NormalizedUserName = "AUGUSTO@TESTE.COM",
+                        PhoneNumber = "99598-2285",
+                        EnderecoId = 4
+                    }
+                );
 
             var builderEndereco = builder.Entity<Endereco>();
             builderEndereco.HasKey(e => e.EnderecoId);
@@ -106,6 +144,26 @@ namespace AgendaMedica.Data
                     Estado = "ES",
                     Numero = 51,
                     Rua = "Juiz Alexandre Martins de Castro Filho"
+                },
+                new Endereco
+                {
+                    EnderecoId = 3,
+                    CEP = "29100-000",
+                    Cidade = "Vila Velha",
+                    Complemento = "Casa",
+                    Estado = "ES",
+                    Numero = 851,
+                    Rua = "Av. São Paulo"
+                },
+                new Endereco
+                {
+                    EnderecoId = 4,
+                    CEP = "29166-820",
+                    Cidade = "Serra",
+                    Complemento = "Casa",
+                    Estado = "ES",
+                    Numero = 711,
+                    Rua = "Av. Copacabana"
                 }
             );
 
