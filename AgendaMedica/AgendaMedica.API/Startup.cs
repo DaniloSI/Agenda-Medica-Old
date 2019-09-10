@@ -161,6 +161,7 @@ namespace AgendaMedica.API
             services.AddScoped<IAgendaRepository, AgendaRepository>();
             services.AddScoped<IConsultaRepository, ConsultaRepository>();
             services.AddScoped<IUsuarioProfissionalRepository, UsuarioProfissionalRepository>();
+            services.AddScoped<IUsuarioPacienteRepository, UsuarioPacienteRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<AgendaMedicaDbContext>();
         }

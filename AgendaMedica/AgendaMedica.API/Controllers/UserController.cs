@@ -27,25 +27,32 @@ namespace AgendaMedica.API.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IUsuarioPacienteRepository _usuarioPacienteRepository;
         private readonly IUsuarioProfissionalRepository _usuarioProfissionalRepository;
 
         public UserController(IConfiguration config,
                               UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
                               IMapper mapper,
+                              IUsuarioPacienteRepository usuarioPacienteRepository,
                               IUsuarioProfissionalRepository usuarioProfissionalRepository)
         {
             _signInManager = signInManager;
             _mapper = mapper;
             _config = config;
             _userManager = userManager;
+            _usuarioPacienteRepository = usuarioPacienteRepository;
             _usuarioProfissionalRepository = usuarioProfissionalRepository;
         }
 
         [HttpGet("GetUser")]
         public IActionResult GetUser()
         {
-            return Ok(new dynamic[] { new UsuarioPacienteViewModel(), new UsuarioProfissionalViewModel() });
+            return Ok(new dynamic[]
+            {
+                _mapper.Map<UsuarioPaciente, UsuarioPacienteViewModel>(_usuarioPacienteRepository.GetById(1)),
+                _mapper.Map<UsuarioProfissional, UsuarioProfissionalViewModel>(_usuarioProfissionalRepository.GetById(3))
+            });
         }
 
         [HttpPost("CadastroPaciente")]
