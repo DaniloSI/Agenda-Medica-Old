@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20190905003503_Consulta")]
-    partial class Consulta
+    [Migration("20190910114822_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,6 +77,28 @@ namespace AgendaMedica.Data.Migrations
                     b.HasKey("EnderecoId");
 
                     b.ToTable("Endereco");
+
+                    b.HasData(
+                        new
+                        {
+                            EnderecoId = 1,
+                            CEP = "29050-902",
+                            Cidade = "Vitória",
+                            Complemento = "Casa",
+                            Estado = "ES",
+                            Numero = 56,
+                            Rua = "Av. Américo Buaiz"
+                        },
+                        new
+                        {
+                            EnderecoId = 2,
+                            CEP = "29045-250",
+                            Cidade = "Vitória",
+                            Complemento = "Casa",
+                            Estado = "ES",
+                            Numero = 51,
+                            Rua = "Juiz Alexandre Martins de Castro Filho"
+                        });
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Especialidade", b =>
@@ -302,6 +324,52 @@ namespace AgendaMedica.Data.Migrations
                     b.Property<string>("Cpf");
 
                     b.HasDiscriminator().HasValue("UsuarioPaciente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                            Email = "vanessa@teste.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "VANESSA@TESTE.COM",
+                            NormalizedUserName = "VANESSA@TESTE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                            PhoneNumber = "994839210",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                            TwoFactorEnabled = false,
+                            UserName = "vanessa@teste.com",
+                            DataNascimento = new DateTime(1941, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EnderecoId = 1,
+                            Nome = "Vanessa",
+                            SobreNome = "Bianca da Cruz",
+                            Cpf = "71985694719"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                            Email = "victor@teste.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "VICTOR@TESTE.COM",
+                            NormalizedUserName = "VICTOR@TESTE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                            PhoneNumber = "997965652",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                            TwoFactorEnabled = false,
+                            UserName = "victor@teste.com",
+                            DataNascimento = new DateTime(1946, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EnderecoId = 2,
+                            Nome = "Victor",
+                            SobreNome = "Nelson Martin Caldeira",
+                            Cpf = "52435366442"
+                        });
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.UsuarioProfissional", b =>

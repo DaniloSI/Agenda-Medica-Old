@@ -5,6 +5,7 @@ using AgendaMedica.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AgendaMedica.Data
 {
@@ -41,11 +42,72 @@ namespace AgendaMedica.Data
                     .IsRequired();
             });
 
-            builder.Entity<UsuarioPaciente>();
+            builder.Entity<UsuarioPaciente>()
+                .HasData(
+                    new UsuarioPaciente
+                    {
+                        Id = 1,
+                        Nome = "Vanessa",
+                        SobreNome = "Bianca da Cruz",
+                        DataNascimento = new DateTime(1941, 07, 24),
+                        Cpf = "71985694719",
+                        Email = "vanessa@teste.com",
+                        NormalizedEmail = "VANESSA@TESTE.COM",
+                        PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                        SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                        ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                        LockoutEnabled = true,
+                        UserName = "vanessa@teste.com",
+                        NormalizedUserName = "VANESSA@TESTE.COM",
+                        PhoneNumber = "994839210",
+                        EnderecoId = 1
+                    },
+                    new UsuarioPaciente
+                    {
+                        Id = 2,
+                        Nome = "Victor",
+                        SobreNome = "Nelson Martin Caldeira",
+                        DataNascimento = new DateTime(1946, 05, 01),
+                        Cpf = "52435366442",
+                        Email = "victor@teste.com",
+                        NormalizedEmail = "VICTOR@TESTE.COM",
+                        PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                        SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                        ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                        LockoutEnabled = true,
+                        UserName = "victor@teste.com",
+                        NormalizedUserName = "VICTOR@TESTE.COM",
+                        PhoneNumber = "997965652",
+                        EnderecoId = 2
+                    }
+                );
+
             builder.Entity<UsuarioProfissional>();
 
-            builder.Entity<Endereco>()
-                .HasKey(e => e.EnderecoId);
+            var builderEndereco = builder.Entity<Endereco>();
+            builderEndereco.HasKey(e => e.EnderecoId);
+            builderEndereco.HasData(
+                new Endereco
+                {
+                    EnderecoId = 1,
+                    CEP = "29050-902",
+                    Cidade = "Vitória",
+                    Complemento = "Casa",
+                    Estado = "ES",
+                    Numero = 56,
+                    Rua = "Av. Américo Buaiz"
+                },
+                new Endereco
+                {
+                    EnderecoId = 2,
+                    CEP = "29045-250",
+                    Cidade = "Vitória",
+                    Complemento = "Casa",
+                    Estado = "ES",
+                    Numero = 51,
+                    Rua = "Juiz Alexandre Martins de Castro Filho"
+                }
+            );
 
             builder.ApplyConfiguration(new EspecialidadeMap());
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
