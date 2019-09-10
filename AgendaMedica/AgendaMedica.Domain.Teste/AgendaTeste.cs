@@ -6,6 +6,7 @@ using AgendaMedica.Domain.Validations;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AgendaMedica.Domain.Teste
@@ -45,6 +46,31 @@ namespace AgendaMedica.Domain.Teste
             _agendaService.Add(agenda);
 
             Assert.IsNotEmpty(agenda.ValidationResult.Errors.Where(e => e.ErrorMessage == AgendaValidator.ErrorsMessages["DATA_FIM_MAIOR_QUE_DATA_INICIO"]));
+        }
+
+        [Test]
+        [Category("Adicionar horário(s) à Agenda")]
+        public void NaoDeveHaverConflitosDeHorarios()
+        {
+            agenda.Horarios = new List<Horario>
+            {
+                new Horario
+                {
+                    DiaSemana = DiaSemana.Segunda,
+                    HoraInicio = new TimeSpan(7, 30, 0),
+                    HoraFim = new TimeSpan(8, 30, 0)
+                },
+                new Horario
+                {
+                    DiaSemana = DiaSemana.Segunda,
+                    HoraInicio = new TimeSpan(8, 0, 0),
+                    HoraFim = new TimeSpan(9, 0, 0)
+                }
+            };
+
+            _agendaService.Add(agenda);
+
+            Assert.IsNotEmpty(agenda.ValidationResult.Errors.Where(e => e.ErrorMessage == AgendaValidator.ErrorsMessages["HORARIOS_CONFLITAM"]));
         }
     }
 }

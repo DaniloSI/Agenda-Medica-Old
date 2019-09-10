@@ -21,5 +21,14 @@ namespace AgendaMedica.Domain.Entities
         public TimeSpan HoraFim { get; set; }
         public int AgendaId { get; set; }
         public virtual Agenda Agenda { get; set; }
+
+        public bool Conflita(Horario horario)
+        {
+            bool diaSemanaIgual = horario.DiaSemana == DiaSemana;
+            bool horarioInicioConflita = horario.HoraInicio >= HoraInicio && horario.HoraInicio < HoraFim;
+            bool horarioFimConflita = horario.HoraFim > HoraInicio && horario.HoraFim <= HoraFim;
+
+            return diaSemanaIgual && (horarioInicioConflita || horarioFimConflita);
+        }
     }
 }
