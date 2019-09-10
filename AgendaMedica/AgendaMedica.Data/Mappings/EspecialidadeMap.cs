@@ -21,6 +21,33 @@ namespace AgendaMedica.Data.Mappings
                 .IsRequired();
 
             builder.ToTable(nameof(Especialidade));
+
+            builder.HasData(
+                new Especialidade
+                {
+                    EspecialidadeId = 1,
+                    Codigo = "ANSTSLG",
+                    Nome = "Anestesiologia"
+                },
+                new Especialidade
+                {
+                    EspecialidadeId = 2,
+                    Codigo = "CIRUR. PLAST.",
+                    Nome = "Cirurgia Plástica"
+                },
+                new Especialidade
+                {
+                    EspecialidadeId = 3,
+                    Codigo = "MED. ESP.",
+                    Nome = "Medicina Esportiva"
+                },
+                new Especialidade
+                {
+                    EspecialidadeId = 4,
+                    Codigo = "ORTOP. E TRAUM.",
+                    Nome = "Ortopedia e Traumatologia"
+                }
+            );
         }
     }
 }

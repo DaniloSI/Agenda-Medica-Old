@@ -19,6 +19,19 @@ namespace AgendaMedica.Data.Mappings.ManyToManys
                 .HasForeignKey(x => x.Id);
 
             builder.ToTable(nameof(UsuarioProfissionalEspecialidade));
+
+            builder.HasData(
+                new UsuarioProfissionalEspecialidade
+                {
+                    EspecialidadeId = 1,
+                    Id = 3
+                },
+                new UsuarioProfissionalEspecialidade
+                {
+                    EspecialidadeId = 3,
+                    Id = 4
+                }
+            );
         }
     }
 }
