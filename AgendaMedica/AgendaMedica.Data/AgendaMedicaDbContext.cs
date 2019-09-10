@@ -174,6 +174,7 @@ namespace AgendaMedica.Data
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
             builder.ApplyConfiguration(new ConsultaMap());
             builder.ApplyConfiguration(new HorarioMap());
+            builder.ApplyConfiguration(new HorarioExcecaoMap());
             builder.ApplyConfiguration(new AgendaMap());
         }
     }
