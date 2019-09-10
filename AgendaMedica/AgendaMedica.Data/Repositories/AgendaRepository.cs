@@ -10,5 +10,10 @@ namespace AgendaMedica.Data.Repositories
         {
 
         }
+
+        public void AddHorarioExcecao(HorarioExcecao horarioExcecao)
+        {
+            Db.HorariosExcecoes.Add(horarioExcecao);
+        }
     }
 }

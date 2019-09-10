@@ -29,5 +29,17 @@ namespace AgendaMedica.Application.AppServices
 
             agendaViewModel.ValidationResult = agenda.ValidationResult;
         }
+
+        public void AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecaoViewModel)
+        {
+            HorarioExcecao horarioExcecao = _mapper.Map<HorarioExcecao>(horarioExcecaoViewModel);
+
+            _agendaService.AddHorarioExcecao(horarioExcecao);
+
+            if (horarioExcecao.ValidationResult.IsValid)
+                UoW.Commit();
+
+            horarioExcecaoViewModel.ValidationResult = horarioExcecao.ValidationResult;
+        }
     }
 }

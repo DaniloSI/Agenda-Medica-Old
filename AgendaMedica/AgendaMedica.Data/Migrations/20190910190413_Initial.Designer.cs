@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20190910135340_Agenda_e_Horario")]
-    partial class Agenda_e_Horario
+    [Migration("20190910190413_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,6 +206,27 @@ namespace AgendaMedica.Data.Migrations
                     b.HasIndex("AgendaId");
 
                     b.ToTable("Horario");
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
+                {
+                    b.Property<int>("HorarioExcecaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgendaId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<TimeSpan>("HoraFim");
+
+                    b.Property<TimeSpan>("HoraInicio");
+
+                    b.HasKey("HorarioExcecaoId");
+
+                    b.HasIndex("AgendaId");
+
+                    b.ToTable("HorarioExcecao");
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.ManyToManys.UsuarioProfissionalEspecialidade", b =>
@@ -566,6 +587,14 @@ namespace AgendaMedica.Data.Migrations
                 {
                     b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
                         .WithMany("Horarios")
+                        .HasForeignKey("AgendaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
+                {
+                    b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
+                        .WithMany("HorariosExcecoes")
                         .HasForeignKey("AgendaId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

@@ -23,5 +23,13 @@ namespace AgendaMedica.API.Controllers
             _agendaAppService.Add(agenda);
             return agenda;
         }
+
+        [HttpPost("AddHorarioExcecao")]
+        [AllowAnonymous]
+        public ActionResult<HorarioExcecaoViewModel> AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecao)
+        {
+            _agendaAppService.AddHorarioExcecao(horarioExcecao);
+            return horarioExcecao;
+        }
     }
 }

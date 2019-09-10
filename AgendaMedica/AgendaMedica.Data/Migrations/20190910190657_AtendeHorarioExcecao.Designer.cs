@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20190910114822_Initial")]
-    partial class Initial
+    [Migration("20190910190657_AtendeHorarioExcecao")]
+    partial class AtendeHorarioExcecao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,25 @@ namespace AgendaMedica.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.Agenda", b =>
+                {
+                    b.Property<int>("AgendaId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataHoraFim");
+
+                    b.Property<DateTime>("DataHoraInicio");
+
+                    b.Property<int>("ProfissionalId");
+
+                    b.HasKey("AgendaId");
+
+                    b.HasIndex("ProfissionalId");
+
+                    b.ToTable("Agenda");
+                });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Consulta", b =>
                 {
@@ -98,6 +117,26 @@ namespace AgendaMedica.Data.Migrations
                             Estado = "ES",
                             Numero = 51,
                             Rua = "Juiz Alexandre Martins de Castro Filho"
+                        },
+                        new
+                        {
+                            EnderecoId = 3,
+                            CEP = "29100-000",
+                            Cidade = "Vila Velha",
+                            Complemento = "Casa",
+                            Estado = "ES",
+                            Numero = 851,
+                            Rua = "Av. São Paulo"
+                        },
+                        new
+                        {
+                            EnderecoId = 4,
+                            CEP = "29166-820",
+                            Cidade = "Serra",
+                            Complemento = "Casa",
+                            Estado = "ES",
+                            Numero = 711,
+                            Rua = "Av. Copacabana"
                         });
                 });
 
@@ -120,6 +159,76 @@ namespace AgendaMedica.Data.Migrations
                     b.HasKey("EspecialidadeId");
 
                     b.ToTable("Especialidade");
+
+                    b.HasData(
+                        new
+                        {
+                            EspecialidadeId = 1,
+                            Codigo = "ANSTSLG",
+                            Nome = "Anestesiologia"
+                        },
+                        new
+                        {
+                            EspecialidadeId = 2,
+                            Codigo = "CIRUR. PLAST.",
+                            Nome = "Cirurgia Plástica"
+                        },
+                        new
+                        {
+                            EspecialidadeId = 3,
+                            Codigo = "MED. ESP.",
+                            Nome = "Medicina Esportiva"
+                        },
+                        new
+                        {
+                            EspecialidadeId = 4,
+                            Codigo = "ORTOP. E TRAUM.",
+                            Nome = "Ortopedia e Traumatologia"
+                        });
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.Horario", b =>
+                {
+                    b.Property<int>("HorarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgendaId");
+
+                    b.Property<int>("DiaSemana");
+
+                    b.Property<TimeSpan>("HoraFim");
+
+                    b.Property<TimeSpan>("HoraInicio");
+
+                    b.HasKey("HorarioId");
+
+                    b.HasIndex("AgendaId");
+
+                    b.ToTable("Horario");
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
+                {
+                    b.Property<int>("HorarioExcecaoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgendaId");
+
+                    b.Property<bool>("Atende");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<TimeSpan>("HoraFim");
+
+                    b.Property<TimeSpan>("HoraInicio");
+
+                    b.HasKey("HorarioExcecaoId");
+
+                    b.HasIndex("AgendaId");
+
+                    b.ToTable("HorarioExcecao");
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.ManyToManys.UsuarioProfissionalEspecialidade", b =>
@@ -133,6 +242,18 @@ namespace AgendaMedica.Data.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("UsuarioProfissionalEspecialidade");
+
+                    b.HasData(
+                        new
+                        {
+                            EspecialidadeId = 1,
+                            Id = 3
+                        },
+                        new
+                        {
+                            EspecialidadeId = 3,
+                            Id = 4
+                        });
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Identity.AppUser", b =>
@@ -385,6 +506,60 @@ namespace AgendaMedica.Data.Migrations
                     b.Property<string>("Registro");
 
                     b.HasDiscriminator().HasValue("UsuarioProfissional");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                            Email = "rodrigo@teste.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "RODRIGO@TESTE.COM",
+                            NormalizedUserName = "RODRIGO@TESTE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                            PhoneNumber = "99349-5462",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                            TwoFactorEnabled = false,
+                            UserName = "rodrigo@teste.com",
+                            DataNascimento = new DateTime(1971, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EnderecoId = 3,
+                            Nome = "Rodrigo",
+                            SobreNome = "Vitor Kevin Ferreira",
+                            Cnpj = "63.029.660/0001-15"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                            Email = "augusto@teste.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "AUGUSTO@TESTE.COM",
+                            NormalizedUserName = "AUGUSTO@TESTE.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                            PhoneNumber = "99598-2285",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                            TwoFactorEnabled = false,
+                            UserName = "augusto@teste.com",
+                            DataNascimento = new DateTime(1982, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EnderecoId = 4,
+                            Nome = "Augusto",
+                            SobreNome = "Menezes da Costa",
+                            Cnpj = "35.172.039/0001-70"
+                        });
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.Agenda", b =>
+                {
+                    b.HasOne("AgendaMedica.Domain.Entities.UsuarioProfissional", "Profissional")
+                        .WithMany("Agendas")
+                        .HasForeignKey("ProfissionalId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Consulta", b =>
@@ -407,6 +582,22 @@ namespace AgendaMedica.Data.Migrations
                     b.HasOne("AgendaMedica.Domain.Entities.UsuarioProfissional", "Profissional")
                         .WithMany("Consultas")
                         .HasForeignKey("ProfissionalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.Horario", b =>
+                {
+                    b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
+                        .WithMany("Horarios")
+                        .HasForeignKey("AgendaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
+                {
+                    b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
+                        .WithMany("HorariosExcecoes")
+                        .HasForeignKey("AgendaId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

@@ -10,9 +10,9 @@ namespace AgendaMedica.Data.Mappings
         {
             builder.HasKey(c => c.HorarioExcecaoId);
 
-            builder.HasOne(h => h.Profissional)
+            builder.HasOne(h => h.Agenda)
                 .WithMany(p => p.HorariosExcecoes)
-                .HasForeignKey(h => h.ProfissionalId)
+                .HasForeignKey(h => h.AgendaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.ToTable(nameof(HorarioExcecao));

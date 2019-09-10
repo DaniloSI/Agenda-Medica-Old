@@ -119,6 +119,27 @@ namespace AgendaMedica.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Agenda",
+                columns: table => new
+                {
+                    AgendaId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DataHoraInicio = table.Column<DateTime>(nullable: false),
+                    DataHoraFim = table.Column<DateTime>(nullable: false),
+                    ProfissionalId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agenda", x => x.AgendaId);
+                    table.ForeignKey(
+                        name: "FK_Agenda_AspNetUsers_ProfissionalId",
+                        column: x => x.ProfissionalId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -271,25 +292,104 @@ namespace AgendaMedica.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Endereco",
-                columns: new[] { "EnderecoId", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
-                values: new object[] { 1, "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" });
+            migrationBuilder.CreateTable(
+                name: "Horario",
+                columns: table => new
+                {
+                    HorarioId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DiaSemana = table.Column<int>(nullable: false),
+                    HoraInicio = table.Column<TimeSpan>(nullable: false),
+                    HoraFim = table.Column<TimeSpan>(nullable: false),
+                    AgendaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Horario", x => x.HorarioId);
+                    table.ForeignKey(
+                        name: "FK_Horario_Agenda_AgendaId",
+                        column: x => x.AgendaId,
+                        principalTable: "Agenda",
+                        principalColumn: "AgendaId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HorarioExcecao",
+                columns: table => new
+                {
+                    HorarioExcecaoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<DateTime>(nullable: false),
+                    HoraInicio = table.Column<TimeSpan>(nullable: false),
+                    HoraFim = table.Column<TimeSpan>(nullable: false),
+                    AgendaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HorarioExcecao", x => x.HorarioExcecaoId);
+                    table.ForeignKey(
+                        name: "FK_HorarioExcecao_Agenda_AgendaId",
+                        column: x => x.AgendaId,
+                        principalTable: "Agenda",
+                        principalColumn: "AgendaId",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "Endereco",
                 columns: new[] { "EnderecoId", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
-                values: new object[] { 2, "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" });
+                values: new object[,]
+                {
+                    { 1, "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" },
+                    { 2, "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" },
+                    { 3, "29100-000", "Vila Velha", "Casa", "ES", 851, "Av. São Paulo" },
+                    { 4, "29166-820", "Serra", "Casa", "ES", 711, "Av. Copacabana" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Especialidade",
+                columns: new[] { "EspecialidadeId", "Codigo", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "ANSTSLG", "Anestesiologia" },
+                    { 2, "CIRUR. PLAST.", "Cirurgia Plástica" },
+                    { 3, "MED. ESP.", "Medicina Esportiva" },
+                    { 4, "ORTOP. E TRAUM.", "Ortopedia e Traumatologia" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cpf" },
-                values: new object[] { 1, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "vanessa@teste.com", false, true, null, "VANESSA@TESTE.COM", "VANESSA@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "994839210", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "vanessa@teste.com", new DateTime(1941, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Vanessa", "Bianca da Cruz", "71985694719" });
+                values: new object[,]
+                {
+                    { 1, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "vanessa@teste.com", false, true, null, "VANESSA@TESTE.COM", "VANESSA@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "994839210", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "vanessa@teste.com", new DateTime(1941, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Vanessa", "Bianca da Cruz", "71985694719" },
+                    { 2, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "victor@teste.com", false, true, null, "VICTOR@TESTE.COM", "VICTOR@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "997965652", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "victor@teste.com", new DateTime(1946, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Victor", "Nelson Martin Caldeira", "52435366442" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cpf" },
-                values: new object[] { 2, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "victor@teste.com", false, true, null, "VICTOR@TESTE.COM", "VICTOR@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "997965652", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "victor@teste.com", new DateTime(1946, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Victor", "Nelson Martin Caldeira", "52435366442" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cnpj", "Estado", "Orgao", "Registro" },
+                values: new object[,]
+                {
+                    { 3, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "rodrigo@teste.com", false, true, null, "RODRIGO@TESTE.COM", "RODRIGO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99349-5462", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "rodrigo@teste.com", new DateTime(1971, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Rodrigo", "Vitor Kevin Ferreira", "63.029.660/0001-15", null, null, null },
+                    { 4, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "augusto@teste.com", false, true, null, "AUGUSTO@TESTE.COM", "AUGUSTO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99598-2285", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "augusto@teste.com", new DateTime(1982, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Augusto", "Menezes da Costa", "35.172.039/0001-70", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioProfissionalEspecialidade",
+                columns: new[] { "EspecialidadeId", "Id" },
+                values: new object[] { 1, 3 });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioProfissionalEspecialidade",
+                columns: new[] { "EspecialidadeId", "Id" },
+                values: new object[] { 3, 4 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agenda_ProfissionalId",
+                table: "Agenda",
+                column: "ProfissionalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -356,6 +456,16 @@ namespace AgendaMedica.Data.Migrations
                 column: "ProfissionalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Horario_AgendaId",
+                table: "Horario",
+                column: "AgendaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HorarioExcecao_AgendaId",
+                table: "HorarioExcecao",
+                column: "AgendaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UsuarioProfissionalEspecialidade_Id",
                 table: "UsuarioProfissionalEspecialidade",
                 column: "Id");
@@ -382,10 +492,19 @@ namespace AgendaMedica.Data.Migrations
                 name: "Consulta");
 
             migrationBuilder.DropTable(
+                name: "Horario");
+
+            migrationBuilder.DropTable(
+                name: "HorarioExcecao");
+
+            migrationBuilder.DropTable(
                 name: "UsuarioProfissionalEspecialidade");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Agenda");
 
             migrationBuilder.DropTable(
                 name: "Especialidade");

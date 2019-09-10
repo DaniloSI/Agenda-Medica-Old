@@ -12,6 +12,7 @@ namespace AgendaMedica.Application.AutoMapper
         {
             CreateMap<Especialidade, EspecialidadeViewModel>();
             CreateMap<Horario, HorarioViewModel>();
+            CreateMap<HorarioExcecao, HorarioExcecaoViewModel>();
             CreateMap<Agenda, AgendaViewModel>();
             CreateMap<Consulta, ConsultaViewModel>();
             CreateMap<Usuario, UsuarioViewModel>();

@@ -212,17 +212,19 @@ namespace AgendaMedica.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AgendaId");
+
+                    b.Property<bool>("Atende");
+
                     b.Property<DateTime>("Data");
 
                     b.Property<TimeSpan>("HoraFim");
 
                     b.Property<TimeSpan>("HoraInicio");
 
-                    b.Property<int>("ProfissionalId");
-
                     b.HasKey("HorarioExcecaoId");
 
-                    b.HasIndex("ProfissionalId");
+                    b.HasIndex("AgendaId");
 
                     b.ToTable("HorarioExcecao");
                 });
@@ -591,9 +593,9 @@ namespace AgendaMedica.Data.Migrations
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
                 {
-                    b.HasOne("AgendaMedica.Domain.Entities.UsuarioProfissional", "Profissional")
+                    b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
                         .WithMany("HorariosExcecoes")
-                        .HasForeignKey("ProfissionalId")
+                        .HasForeignKey("AgendaId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

@@ -17,6 +17,7 @@ namespace AgendaMedica.Data
         public DbSet<Consulta> Consultas { get; set; }
         public DbSet<Agenda> Agendas { get; set; }
         public DbSet<Horario> Horarios { get; set; }
+        public DbSet<HorarioExcecao> HorariosExcecoes { get; set; }
 
         public AgendaMedicaDbContext(DbContextOptions<AgendaMedicaDbContext> options)
             : base(options)
