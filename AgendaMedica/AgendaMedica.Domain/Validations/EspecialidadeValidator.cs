@@ -6,7 +6,7 @@ namespace AgendaMedica.Domain.Validations
 {
     public class EspecialidadeValidator : AbstractValidator<Especialidade>
     {
-        public static Dictionary<string, string> ErrorsMessages = new Dictionary<string, string>
+        public static IReadOnlyDictionary<string, string> ErrorsMessages = new Dictionary<string, string>
         {
             ["CODIGO_VAZIO"] = "O código da Especialidade não pode ser vazio"
         };

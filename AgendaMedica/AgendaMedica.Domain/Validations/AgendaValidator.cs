@@ -2,12 +2,13 @@
 using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace AgendaMedica.Domain.Validations
 {
     public class AgendaValidator : AbstractValidator<Agenda>
     {
-        public static Dictionary<string, string> ErrorsMessages = new Dictionary<string, string>
+        public static IReadOnlyDictionary<string, string> ErrorsMessages = new Dictionary<string, string>
         {
             ["DATA_FIM_MAIOR_QUE_DATA_INICIO"] = "A data final deve ser maior que a data inicial",
             ["HORARIOS_CONFLITAM"] = "Existe conflito de horários",
