@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/DaniloSI/Agenda-Medica.svg?branch=master)](https://travis-ci.org/DaniloSI/Agenda-Medica) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=coverage)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica)
 
-## Table of Contents
-- Sobre o Projeto
+## Sumário
+- [Sobre o Projeto](https://github.com/DaniloSI/Agenda-Medica#sobre-o-projeto)
 - [Documentação do Projeto](https://github.com/DaniloSI/Agenda-Medica/wiki)
 - [Documentação do Código](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#documenta%C3%A7%C3%A3o)
 
