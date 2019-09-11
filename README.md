@@ -13,7 +13,7 @@ O projeto contido nesse repositório é referente a um aplicativo de Agenda Méd
 
 Por outro lado, os clientes serão capazes de encontrar perfis de clínicas médicas e profissionais da saúde, bem como as agendas de horários disponíveis. Além disso, também serão capazes de realizar (através do aplicativo) agendamento de horários a qualquer hora ou momento do dia.
 
-**Principais Features:**
+### Principais Features:
   - Cadastrar horários de atendimento para consultas, sessões de terapia e outros.
   - Busca refinada por consultórios, profissionais da saúde, clínicas e outros.
   - Agendar Horários.
