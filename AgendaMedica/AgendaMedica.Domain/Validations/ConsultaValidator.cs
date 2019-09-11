@@ -7,7 +7,7 @@ namespace AgendaMedica.Domain.Validations
 {
     public class ConsultaValidator : AbstractValidator<Consulta>
     {
-        public static IReadOnlyDictionary<string, string> ErrorsMessages = new Dictionary<string, string>
+        public static readonly  IReadOnlyDictionary<string, string> ErrorsMessages = new Dictionary<string, string>
         {
             ["CONSULTA_NO_PASSADO"] = "A consulta não pode ser no passado",
             ["CONFLITO_HORARIO_PROFISSIONAL"] = "O profissional {{PROFISSIONAL_NOME}} já possui uma outra consulta agendada para esse horário."
