@@ -4,8 +4,12 @@
 
 ## Sumário
 - [Sobre o Projeto](https://github.com/DaniloSI/Agenda-Medica#sobre-o-projeto)
+  - [Principais Features](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#principais-features)
 - [Documentação do Projeto](https://github.com/DaniloSI/Agenda-Medica/wiki)
 - [Documentação do Código](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#documenta%C3%A7%C3%A3o)
+  - [Download do Código Fonte](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#download-do-c%C3%B3digo-fonte)
+  - [Execução da API](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#execu%C3%A7%C3%A3o-da-api)
+  - [Execução do Frontend](https://github.com/DaniloSI/Agenda-Medica/blob/master/README.md#execu%C3%A7%C3%A3o-do-frontend)
 
 ## Sobre o Projeto
 
