@@ -5,11 +5,11 @@
 ## Sumário
 - [Sobre o Projeto](https://github.com/DaniloSI/Agenda-Medica#sobre-o-projeto)
   - [Principais Features](https://github.com/DaniloSI/Agenda-Medica#principais-features)
-- [Documentação do Projeto](https://github.com/DaniloSI/Agenda-Medica/wiki)
 - [Documentação do Código](https://github.com/DaniloSI/Agenda-Medica#documenta%C3%A7%C3%A3o-do-c%C3%B3digo)
   - [Download do Código Fonte](https://github.com/DaniloSI/Agenda-Medica#download-do-c%C3%B3digo-fonte)
   - [Execução da API](https://github.com/DaniloSI/Agenda-Medica#execu%C3%A7%C3%A3o-da-api)
   - [Execução do Frontend](https://github.com/DaniloSI/Agenda-Medica#execu%C3%A7%C3%A3o-do-frontend)
+- [Documentação do Projeto](https://github.com/DaniloSI/Agenda-Medica/wiki)
 
 ## Sobre o Projeto
 
