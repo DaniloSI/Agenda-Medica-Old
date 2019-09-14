@@ -36,7 +36,6 @@ export default function Cadastrar({ history }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(form);
 
         if (form.TipoUsuario === 0) {
             handleResponse(
@@ -54,9 +53,13 @@ export default function Cadastrar({ history }) {
         }
 
         function handleResponse(response) {
-            console.log('Response: ', response);
             if (response.data.sucesso) {
-                Notifications.showSuccess("Usuário cadastrado com sucesso!");
+                history.push({
+                    pathname: '/Login',
+                    state: {
+                        cadastroSucesso: true
+                    }
+                });
             } else {
                 response.data.errors.forEach(error => {
                     Notifications.showError(error.description);

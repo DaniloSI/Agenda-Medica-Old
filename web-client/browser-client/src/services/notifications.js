@@ -4,18 +4,19 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const configurations = {
-    position: toast.POSITION.BOTTOM_LEFT,
-    autoClose: false,
-}
-
 export function showError(message){
-    toast.error(message, configurations);
+    toast.error(message, {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 10000
+    });
     render();
 }
 
 export function showSuccess(message) {
-    toast.success(message, configurations);
+    toast.success(message,  {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 6000
+    });
     render();
 }
 

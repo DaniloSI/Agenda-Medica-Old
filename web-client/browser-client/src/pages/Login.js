@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import { login } from '../services/auth';
 import api from '../services/api';
 
+import * as Notifications from '../services/notifications';
+
 export default function Login({ history }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  if (history.location.state && history.location.state.cadastroSucesso) {
+    Notifications.showSuccess("Usuário cadastrado com sucesso!");
+    history.replace('/Login', null);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
