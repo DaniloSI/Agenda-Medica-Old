@@ -4,7 +4,7 @@ import api from '../services/api';
 
 export default function Login({ history }) {
 
-  const [userName, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
@@ -12,7 +12,7 @@ export default function Login({ history }) {
 
     const response = await api.post('/User/Login',
       {
-        userName,
+        email,
         password,
       });
 
@@ -33,7 +33,7 @@ export default function Login({ history }) {
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="exampleInputEmail1">E-mail</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex.: pessoa@dominio.com" value={userName} onChange={e => setUsername(e.target.value)}></input>
+                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex.: pessoa@dominio.com" value={email} onChange={e => setEmail(e.target.value)}></input>
                   </div>
                   <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Senha</label>

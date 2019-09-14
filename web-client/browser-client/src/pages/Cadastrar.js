@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../services/api';
 
 export default function Cadastrar({ history }) {
 
@@ -30,25 +31,24 @@ export default function Cadastrar({ history }) {
         }
     }, [form]);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         console.log(form);
 
-        // if (form.TipoUsuario == 0) {
-        //     handleResponse(
-        //         await api.post('/User/CadastroPaciente',
-        //         {
-        //             Nome = form.Nome,
-        //             SobreNome = form.Sobrenome,
-        //             DataNascimento = form.DataNascimento,
-        //             Email = form.Email,
-        //             Password = form.password,
-        //             Cpf = "548.725.260-23",
-        //             PhoneNumber = "55704468412301",
-        //             password,
-        //         })
-        //     );
-        // }
+        if (form.TipoUsuario == 0) {
+            handleResponse(
+                await api.post('/User/CadastroPaciente',
+                {
+                    Nome: form.Nome,
+                    SobreNome: form.Sobrenome,
+                    DataNascimento: form.DataNascimento,
+                    Email: form.Email,
+                    Password: form.Senha,
+                    Cpf: form.cpf,
+                    PhoneNumber: "55704468412301"
+                })
+            );
+        }
 
         // const response = await api.post('/User/Login',
         // {
@@ -56,9 +56,9 @@ export default function Cadastrar({ history }) {
         //     password,
         // });
 
-        // function handleResponse(response) {
-        //     console.log(response);
-        // }
+        function handleResponse(response) {
+            console.log(response);
+        }
     }
 
     return (
