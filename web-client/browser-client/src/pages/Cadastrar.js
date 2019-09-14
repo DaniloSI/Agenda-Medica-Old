@@ -5,29 +5,60 @@ export default function Cadastrar({ history }) {
     const [form, setForm] = useState({
         Nome: "",
         Sobrenome: "",
+        cpf: "",
         Email: "",
         Senha: "",
-        TipoUsuario: 1,
+        TipoUsuario: 0,
+        cnpj: "",
         Orgao: "",
         Estado: "",
         Registro: "",
     });
 
     useEffect(() => {
-        var campo = document.getElementById('professionalFields');
+        var camposProfissional = document.getElementById('professionalFields');
+        var campoPaciente = document.getElementById('patientFields');
 
-        if (form.TipoUsuario === 1) {
-            campo.hidden = true;
+        if (form.TipoUsuario === 0) {
+            camposProfissional.hidden = true;
+            campoPaciente.hidden = false;
         }
 
-        if (form.TipoUsuario === 2) {
-            campo.hidden = false;
+        if (form.TipoUsuario === 1) {
+            camposProfissional.hidden = false;
+            campoPaciente.hidden = true;
         }
     }, [form]);
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(form);
+
+        // if (form.TipoUsuario == 0) {
+        //     handleResponse(
+        //         await api.post('/User/CadastroPaciente',
+        //         {
+        //             Nome = form.Nome,
+        //             SobreNome = form.Sobrenome,
+        //             DataNascimento = form.DataNascimento,
+        //             Email = form.Email,
+        //             Password = form.password,
+        //             Cpf = "548.725.260-23",
+        //             PhoneNumber = "55704468412301",
+        //             password,
+        //         })
+        //     );
+        // }
+
+        // const response = await api.post('/User/Login',
+        // {
+        //     Email,
+        //     password,
+        // });
+
+        // function handleResponse(response) {
+        //     console.log(response);
+        // }
     }
 
     return (
@@ -112,12 +143,12 @@ export default function Cadastrar({ history }) {
                                             type="radio"
                                             name="tipoUsuarioOptions"
                                             id="tipoUsuarioPaciente"
-                                            value={1}
+                                            value={0}
                                             onChange={e => setForm({
                                                 ...form,
                                                 TipoUsuario: parseInt(e.target.value)
                                             })}
-                                            checked={form.TipoUsuario === 1}></input>
+                                            checked={form.TipoUsuario === 0}></input>
                                         <label className="form-check-label" htmlFor="tipoUsuarioPaciente">Paciente</label>
                                     </div>
                                     <div className="col-1-2 form-check form-check-inline">
@@ -126,27 +157,92 @@ export default function Cadastrar({ history }) {
                                             type="radio"
                                             name="tipoUsuarioOptions"
                                             id="tipoUsuarioProfissional"
-                                            value={2}
+                                            value={1}
                                             onChange={e => setForm({
                                                 ...form,
                                                 TipoUsuario: parseInt(e.target.value)
                                             })}
-                                            checked={form.TipoUsuario === 2}></input>
+                                            checked={form.TipoUsuario === 1}></input>
                                         <label className="form-check-label" htmlFor="tipoUsuarioProfissional">Profissional</label>
                                     </div>
                                 </div>
                                 <div id="professionalFields" className="border-top border-secondary" style={{ marginTop: '20px' }}>
-                                    <div className="form-group" style={{ marginTop: '20px' }}>
+                                    <div className="form-group mt-3">
+                                        <label htmlFor="cnpj">CNPJ</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="cnpj"
+                                            value={form.cnpj}
+                                            onChange={e => setForm(
+                                                {
+                                                    ...form,
+                                                    cnpj: e.target.value
+                                                }
+                                            )}
+                                            placeholder="CNPJ"></input>
+                                    </div>
+                                    <div className="form-group">
                                         <label htmlFor="orgao">Órgão Regulador</label>
-                                        <input type="text" className="form-control" id="orgao" placeholder="Ex.: CRM"></input>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="orgao"
+                                            value={form.Orgao}
+                                            onChange={e => setForm(
+                                                {
+                                                    ...form,
+                                                    Orgao: e.target.value
+                                                }
+                                            )}
+                                            placeholder="Órgão"></input>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="estado">Estado</label>
-                                        <input type="text" className="form-control" id="estado" placeholder="Ex.: SP"></input>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="estado"
+                                            value={form.Estado}
+                                            onChange={e => setForm(
+                                                {
+                                                    ...form,
+                                                    Estado: e.target.value
+                                                }
+                                            )}
+                                            placeholder="Estado"></input>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="registro">Registro Profissional</label>
-                                        <input type="text" className="form-control" id="registro" placeholder="Ex.: 045904"></input>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="registro"
+                                            value={form.Registro}
+                                            onChange={e => setForm(
+                                                {
+                                                    ...form,
+                                                    Registro: e.target.value
+                                                }
+                                            )}
+                                            placeholder="Registro"></input>
+                                    </div>
+                                </div>
+                                <div id="patientFields" className="border-top border-secondary" style={{marginTop: '20px'}}>
+                                    <div className="form-group mt-3">
+                                        <label htmlFor="cpf">CPF</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="cpf"
+                                            value={form.cpf}
+                                            onChange={e => setForm(
+                                                {
+                                                    ...form,
+                                                    cpf: e.target.value
+                                                }
+                                            )}
+                                            placeholder="CPF"></input>
                                     </div>
                                 </div>
                                 <div className="mt-3">
