@@ -105,35 +105,36 @@ export default function Cadastrar({ history }) {
                                     <label htmlFor="senhaConfirmacao">Confirmação de Senha</label>
                                     <input type="password" className="form-control" id="senhaConfirmacao" placeholder="Confirmação de Senha"></input>
                                 </div>
-                                <div className="form-check form-check-inline">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="tipoUsuarioOptions"
-                                        id="tipoUsuarioPaciente"
-                                        value={1}
-                                        onChange={e => setForm({
-                                            ...form,
-                                            TipoUsuario: parseInt(e.target.value)
-                                        })}
-                                        checked={form.TipoUsuario === 1}></input>
-                                    <label className="form-check-label" htmlFor="tipoUsuarioPaciente">Paciente</label>
+                                <div className="row">
+                                    <div className="pl-3 form-check form-check-inline">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="tipoUsuarioOptions"
+                                            id="tipoUsuarioPaciente"
+                                            value={1}
+                                            onChange={e => setForm({
+                                                ...form,
+                                                TipoUsuario: parseInt(e.target.value)
+                                            })}
+                                            checked={form.TipoUsuario === 1}></input>
+                                        <label className="form-check-label" htmlFor="tipoUsuarioPaciente">Paciente</label>
+                                    </div>
+                                    <div className="col-1-2 form-check form-check-inline">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="tipoUsuarioOptions"
+                                            id="tipoUsuarioProfissional"
+                                            value={2}
+                                            onChange={e => setForm({
+                                                ...form,
+                                                TipoUsuario: parseInt(e.target.value)
+                                            })}
+                                            checked={form.TipoUsuario === 2}></input>
+                                        <label className="form-check-label" htmlFor="tipoUsuarioProfissional">Profissional</label>
+                                    </div>
                                 </div>
-                                <div className="form-check form-check-inline">
-                                    <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="tipoUsuarioOptions"
-                                        id="tipoUsuarioProfissional"
-                                        value={2}
-                                        onChange={e => setForm({
-                                            ...form,
-                                            TipoUsuario: parseInt(e.target.value)
-                                        })}
-                                        checked={form.TipoUsuario === 2}></input>
-                                    <label className="form-check-label" htmlFor="tipoUsuarioProfissional">Profissional</label>
-                                </div>
-
                                 <div id="professionalFields" className="border-top border-secondary" style={{ marginTop: '20px' }}>
                                     <div className="form-group" style={{ marginTop: '20px' }}>
                                         <label htmlFor="orgao">Órgão Regulador</label>
@@ -148,8 +149,10 @@ export default function Cadastrar({ history }) {
                                         <input type="text" className="form-control" id="registro" placeholder="Ex.: 045904"></input>
                                     </div>
                                 </div>
-                                <button type="submit" className="btn btn-primary">Cadastrar</button>
-                                <button className="btn btn-light float-right" onClick={() => history.push('/Login')} >Cancelar</button>
+                                <div className="mt-3">
+                                    <button type="submit" className="btn btn-primary">Cadastrar</button>
+                                    <button className="btn btn-light float-right" onClick={() => history.push('/Login')} >Cancelar</button>
+                                </div>
                             </form>
                         </div>
                     </div>
