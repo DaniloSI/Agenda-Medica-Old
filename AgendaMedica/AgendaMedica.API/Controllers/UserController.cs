@@ -71,10 +71,19 @@ namespace AgendaMedica.API.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Created("GetUser", userToReturn);
+                    return Ok(new
+                    {
+                        sucesso = true,
+                        Usuario = userToReturn
+                    });
                 }
 
-                return BadRequest(result.Errors);
+                return Ok(new
+                {
+                    sucesso = false,
+                    Usuario = userToReturn,
+                    result.Errors
+                });
             }
             catch (Exception e)
             {
@@ -94,14 +103,25 @@ namespace AgendaMedica.API.Controllers
 
                 var result = await _userManager.CreateAsync(user, profissional.Password);
 
+
                 if (result.Succeeded)
                 {
                     var usuario = _usuarioProfissionalRepository.GetById(user.Id);
-                    var usuarioViewModel = _mapper.Map<UsuarioProfissionalViewModel>(usuario);
-                    return Created("GetUser", usuarioViewModel);
+                    return Ok(new
+                    {
+                        sucesso = false,
+                        Usuario = _mapper.Map<UsuarioPacienteViewModel>(usuario),
+                        result.Errors
+                    });
                 }
 
-                return BadRequest(result.Errors);
+                var userToReturn = _mapper.Map<UsuarioPacienteViewModel>(user);
+                return Ok(new
+                {
+                    sucesso = false,
+                    Usuario = userToReturn,
+                    result.Errors
+                });
             }
             catch (Exception e)
             {

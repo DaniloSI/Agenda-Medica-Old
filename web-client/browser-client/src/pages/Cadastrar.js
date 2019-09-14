@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
 import api from '../services/api';
+import * as Notifications from '../services/notifications';
+
 
 export default function Cadastrar({ history }) {
 
@@ -35,7 +38,7 @@ export default function Cadastrar({ history }) {
         e.preventDefault();
         console.log(form);
 
-        if (form.TipoUsuario == 0) {
+        if (form.TipoUsuario === 0) {
             handleResponse(
                 await api.post('/User/CadastroPaciente',
                 {
@@ -50,14 +53,15 @@ export default function Cadastrar({ history }) {
             );
         }
 
-        // const response = await api.post('/User/Login',
-        // {
-        //     Email,
-        //     password,
-        // });
-
         function handleResponse(response) {
-            console.log(response);
+            console.log('Response: ', response);
+            if (response.data.sucesso) {
+                Notifications.showSuccess("Usuário cadastrado com sucesso!");
+            } else {
+                response.data.errors.forEach(error => {
+                    Notifications.showError(error.description);
+                });
+            }
         }
     }
 

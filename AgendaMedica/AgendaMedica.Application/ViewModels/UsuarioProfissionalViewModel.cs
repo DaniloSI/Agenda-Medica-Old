@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
 
 namespace AgendaMedica.Application.ViewModels
 {
@@ -9,5 +10,6 @@ namespace AgendaMedica.Application.ViewModels
         public string Estado { get; set; }
         public string Registro { get; set; }
         public virtual IEnumerable<EspecialidadeViewModel> Especialidades { get; set; }
+        public ValidationResult ValidationResult { get; set; }
     }
 }

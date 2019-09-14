@@ -1,25 +1,27 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const notific = ({message, ...rest}) =>{
-    return(
-        <h1>{message}</h1>
-    )
-}
 
-export function showNotification({message}){
-    return(
-        <p>Olá mundo {message}</p>
-    )
+const configurations = {
+    position: toast.POSITION.BOTTOM_LEFT,
+    autoClose: false,
 }
 
 export function showError(message){
-    return (
-        <p>Olá mundo</p>
-    )
+    toast.error(message, configurations);
+    render();
 }
 
-export function showSuccess(message){
-    return (
-        <p>Olá mundo</p>
-    )
+export function showSuccess(message) {
+    toast.success(message, configurations);
+    render();
+}
+
+function render(){
+    ReactDOM.render(
+        <ToastContainer />,
+        document.getElementById('notifications')
+    );
 }
