@@ -9,7 +9,7 @@ namespace AgendaMedica.Application.ViewModels
         public string Orgao { get; set; }
         public string Estado { get; set; }
         public string Registro { get; set; }
-        public virtual IEnumerable<EspecialidadeViewModel> Especialidades { get; set; }
+        public IEnumerable<EspecialidadeViewModel> Especialidades { get; set; }
         public ValidationResult ValidationResult { get; set; }
     }
 }

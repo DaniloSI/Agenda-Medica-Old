@@ -50,6 +50,22 @@ export default function Cadastrar({ history }) {
                     PhoneNumber: "55704468412301"
                 })
             );
+        } else {
+            handleResponse(
+                await api.post('/User/CadastroProfissional',
+                {
+                    Nome: form.Nome,
+                    SobreNome: form.Sobrenome,
+                    DataNascimento: form.DataNascimento,
+                    Email: form.Email,
+                    Password: form.Senha,
+                    Cnpj: form.cnpj,
+                    PhoneNumber: "55704468412301",
+                    Orgao: form.Orgao,
+                    Estado: form.Estado,
+                    Registro: form.Registro
+                })
+            );
         }
 
         function handleResponse(response) {

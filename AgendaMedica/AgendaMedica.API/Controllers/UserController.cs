@@ -109,13 +109,13 @@ namespace AgendaMedica.API.Controllers
                     var usuario = _usuarioProfissionalRepository.GetById(user.Id);
                     return Ok(new
                     {
-                        sucesso = false,
-                        Usuario = _mapper.Map<UsuarioPacienteViewModel>(usuario),
+                        sucesso = true,
+                        Usuario = _mapper.Map<UsuarioProfissionalViewModel>(usuario),
                         result.Errors
                     });
                 }
 
-                var userToReturn = _mapper.Map<UsuarioPacienteViewModel>(user);
+                var userToReturn = _mapper.Map<UsuarioProfissionalViewModel>(user);
                 return Ok(new
                 {
                     sucesso = false,
