@@ -53,7 +53,7 @@ export default function Login({ history }) {
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      paddingRight: '25px'
+      paddingRight: '35px'
     },
     button: {
       margin: theme.spacing(1),
