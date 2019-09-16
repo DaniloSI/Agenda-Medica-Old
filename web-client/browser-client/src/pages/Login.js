@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { login } from '../services/auth';
 import api from '../services/api';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import * as Notifications from '../services/notifications';
 
@@ -30,33 +39,74 @@ export default function Login({ history }) {
     history.push('/Home');
   }
 
+  const useStyles = makeStyles(theme => ({
+    root: {
+      flexGrow: 1,
+    },
+    card: {
+      width: '60%',
+      margin: theme.spacing(2),
+      marginTop: '250px',
+      margin: 'auto',
+      maxWidth: 500, 
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      paddingRight: '25px'
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <div className="container h-100">
-      <div className="row align-items-center h-100">
-        <div className="col-6 mx-auto">
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title" style={{textAlign: 'center'}}>Login</h5>
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">E-mail</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ex.: pessoa@dominio.com" value={email} onChange={e => setEmail(e.target.value)}></input>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Senha</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)}></input>
-                  </div>
-                  <div className="form-group form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1"></input>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Continuar conectado</label>
-                  </div>
-                  <button type="submit" className="btn btn-primary">Entrar</button>
-                  <button type="button" onClick={() => history.push('/Cadastrar')} className="btn btn-secondary" style={{marginLeft: '10px'}}>Cadastrar</button>
-                </form>
-              </div>
-          </div>
-        </div>
-      </div>
+    <div className={classes.root}>
+      <Container fixed>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Login
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                id="email"
+                label="E-mail"
+                className={classes.textField}
+                onChange={e => setEmail(e.target.value)}
+                fullWidth
+                margin="normal"
+                />
+              <TextField
+                id="password"
+                label="Password"
+                className={classes.textField}
+                onChange={e => setPassword(e.target.value)}
+                fullWidth
+                type="password"
+                autoComplete="current-password"
+                margin="normal"
+                />
+              <CardActions>
+                <Box display="flex" flexDirection="row-reverse" width="100%" p={1} m={1} bgcolor="background.paper">
+                  <Box p={1}>
+                    <Button variant="contained" color="secondary" className={classes.button} onClick={() => history.push('/Cadastrar')}>
+                      Cadastrar
+                    </Button>
+                  </Box>
+                  <Box p={1}>
+                    <Button variant="contained" color="primary" className={classes.button} type="submit">
+                      Entrar
+                    </Button>
+                  </Box>
+                </Box>
+              </CardActions>
+            </form>
+          </CardContent>
+        </Card>
+      </Container>
     </div>
   );
 }
