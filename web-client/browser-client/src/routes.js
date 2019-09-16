@@ -29,8 +29,8 @@ export default function Routes() {
                 <Route path="/Login" component={Login}></Route>
                 <Route path="/Cadastrar" component={Cadastrar}></Route>
                 <Route path="/CadastrarHorarios" component={CadastrarHorarios}></Route>
-                <PrivateRoute path="/Home" component={Home}/>
-                <PrivateRoute path="/AgendamentoHorario" component={AgendamentoHorario}/>
+                <Route path="/Home" component={Home}/>
+                <Route path="/AgendamentoHorario" component={AgendamentoHorario}/>
                 {/* <PrivateRoute path="/consultas" component={pacienteConsultas}/> */}
             </Switch>
         </BrowserRouter>
