@@ -1,5 +1,5 @@
 import React from 'react';
-import { logout } from '../services/auth';
+import { logout } from '../../services/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -46,7 +46,7 @@ export default function MenuAppBar({ history }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Agenda Médica
+            Paciente
           </Typography>
           <div>
             <IconButton
@@ -73,8 +73,8 @@ export default function MenuAppBar({ history }) {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Meu Perfil</MenuItem>
+              <MenuItem onClick={handleClose}>Configurações</MenuItem>
               <MenuItem onClick={() => {
                 logout();
                 history.push('/Login');

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import Login from './pages/Login'
 import Cadastrar from './pages/Cadastrar'
-import Home from './pages/Home'
+import Home from './pages/Paciente/Home'
 import CadastrarHorarios from './pages/Profissional/CadastrarHorarios'
 
 import AgendamentoHorario from './pages/AgendamentoHorario'
