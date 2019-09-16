@@ -90,13 +90,13 @@ export default function Login({ history }) {
                 margin="normal"
                 />
               <CardActions>
-                <Box display="flex" flexDirection="row-reverse" width="100%" p={1} m={1} bgcolor="background.paper">
-                  <Box p={1}>
+                <Box display="flex" flexDirection="row-reverse" width="100%" m={1} bgcolor="background.paper">
+                  <Box>
                     <Button variant="contained" color="secondary" className={classes.button} onClick={() => history.push('/Cadastrar')}>
                       Cadastrar
                     </Button>
                   </Box>
-                  <Box p={1}>
+                  <Box>
                     <Button variant="contained" color="primary" className={classes.button} type="submit">
                       Entrar
                     </Button>

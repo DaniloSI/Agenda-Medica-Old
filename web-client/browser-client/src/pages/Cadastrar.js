@@ -12,6 +12,16 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 
 export default function Cadastrar({ history }) {
@@ -19,10 +29,11 @@ export default function Cadastrar({ history }) {
     const [form, setForm] = useState({
         Nome: "",
         Sobrenome: "",
+        DataNascimento: null,
         cpf: "",
         Email: "",
         Senha: "",
-        TipoUsuario: 0,
+        TipoUsuario: "0",
         cnpj: "",
         Orgao: "",
         Estado: "",
@@ -33,12 +44,12 @@ export default function Cadastrar({ history }) {
         var camposProfissional = document.getElementById('professionalFields');
         var campoPaciente = document.getElementById('patientFields');
 
-        if (form.TipoUsuario === 0) {
+        if (form.TipoUsuario === "0") {
             camposProfissional.hidden = true;
             campoPaciente.hidden = false;
         }
 
-        if (form.TipoUsuario === 1) {
+        if (form.TipoUsuario === "1") {
             camposProfissional.hidden = false;
             campoPaciente.hidden = true;
         }
@@ -47,7 +58,7 @@ export default function Cadastrar({ history }) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (form.TipoUsuario === 0) {
+        if (form.TipoUsuario === "0") {
             handleResponse(
                 await api.post('/User/CadastroPaciente',
                 {
@@ -100,8 +111,7 @@ export default function Cadastrar({ history }) {
         },
         card: {
           width: '60%',
-          margin: theme.spacing(2),
-          marginTop: '250px',
+          marginTop: '100px',
           margin: 'auto',
           maxWidth: 500, 
         },
@@ -113,6 +123,9 @@ export default function Cadastrar({ history }) {
         button: {
           margin: theme.spacing(1),
         },
+        radio: {
+            marginTop: '35px'
+        }
       }));
     
       const classes = useStyles();
@@ -124,10 +137,28 @@ export default function Cadastrar({ history }) {
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">Cadastro de Usuário</Typography>
                         <form onSubmit={handleSubmit}>
+                            <FormControl className={classes.radio}>
+                                <FormLabel component="legend">Tipo de Usuário</FormLabel>
+                                <RadioGroup
+                                    aria-label="Tipo de Usuário"
+                                    name="TipoUsuario"
+                                    value={form.TipoUsuario}
+                                    onChange={e => setForm(
+                                        {
+                                            ...form,
+                                            TipoUsuario: e.target.value
+                                        }
+                                    )}
+                                    row>
+                                    <FormControlLabel value="0" control={<Radio />} label="Paciente" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Profissional" />
+                                </RadioGroup>
+                            </FormControl>
                             <TextField
                                 id="Nome"
                                 label="Primerio Nome"
-                                className={classes.textField}value={form.Nome}
+                                className={classes.textField}
+                                value={form.Nome}
                                 onChange={e => setForm(
                                     {
                                         ...form,
@@ -140,7 +171,8 @@ export default function Cadastrar({ history }) {
                             <TextField
                                 id="Sobrenome"
                                 label="Sobrenome"
-                                className={classes.textField}value={form.Sobrenome}
+                                className={classes.textField}
+                                value={form.Sobrenome}
                                 onChange={e => setForm(
                                     {
                                         ...form,
@@ -148,6 +180,42 @@ export default function Cadastrar({ history }) {
                                     }
                                 )}
                                 fullWidth
+                                margin="normal"
+                            />
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <KeyboardDatePicker
+                                    id="DataNascimento"
+                                    label="Data de Nascimento"
+                                    fullWidth
+                                    format="dd/MM/yyyy"
+                                    className={classes.textField}
+                                    value={form.DataNascimento}
+                                    onChange={date => setForm(
+                                        {
+                                            ...form,
+                                            DataNascimento: date
+                                        }
+                                    )}
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date',
+                                    }}
+                                />
+                            </MuiPickersUtilsProvider>
+                            <TextField
+                                id="email"
+                                label="Email"
+                                className={classes.textField}
+                                type="email"
+                                value={form.Email}
+                                onChange={e => setForm(
+                                    {
+                                        ...form,
+                                        Email: e.target.value
+                                    }
+                                )}
+                                name="email"
+                                fullWidth
+                                autoComplete="email"
                                 margin="normal"
                             />
                             <Box id="professionalFields" m={0}>
@@ -237,19 +305,28 @@ export default function Cadastrar({ history }) {
                                 type="password"
                                 autoComplete="current-password"
                                 margin="normal"
-                                />
+                            />
+                            <TextField
+                                id="confirm-password"
+                                label="ConfirmPassword"
+                                className={classes.textField}
+                                fullWidth
+                                type="password"
+                                autoComplete="current-password"
+                                margin="normal"
+                            />
                             <CardActions>
-                                <Box display="flex" flexDirection="row-reverse" width="100%" p={1} m={1} bgcolor="background.paper">
-                                <Box p={1}>
-                                    <Button variant="contained" color="secondary" className={classes.button} onClick={() => history.push('/Cadastrar')}>
-                                    Cadastrar
-                                    </Button>
-                                </Box>
-                                <Box p={1}>
-                                    <Button variant="contained" color="primary" className={classes.button} type="submit">
-                                    Entrar
-                                    </Button>
-                                </Box>
+                                <Box display="flex" flexDirection="row-reverse" width="100%" m={1}>
+                                    <Box>
+                                        <Button variant="contained" className={classes.button} onClick={() => history.push('/Login')}>
+                                        Cancelar
+                                        </Button>
+                                    </Box>
+                                    <Box>
+                                        <Button variant="contained" color="primary" className={classes.button} type="submit">
+                                        Cadastrar
+                                        </Button>
+                                    </Box>
                                 </Box>
                             </CardActions>
                         </form>
