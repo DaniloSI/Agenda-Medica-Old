@@ -78,6 +78,7 @@ export default function Login({ history }) {
               <TextField
                 id="email"
                 label="E-mail"
+                required={true}
                 className={classes.textField}
                 onChange={e => setEmail(e.target.value)}
                 fullWidth
@@ -86,6 +87,7 @@ export default function Login({ history }) {
               <TextField
                 id="password"
                 label="Password"
+                required={true}
                 className={classes.textField}
                 onChange={e => setPassword(e.target.value)}
                 fullWidth

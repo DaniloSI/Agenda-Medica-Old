@@ -165,12 +165,14 @@ export default function Cadastrar({ history }) {
                                         Nome: e.target.value
                                     }
                                 )}
+                                required={true}
                                 fullWidth
                                 margin="normal"
                             />
                             <TextField
                                 id="Sobrenome"
                                 label="Sobrenome"
+                                required={true}
                                 className={classes.textField}
                                 value={form.Sobrenome}
                                 onChange={e => setForm(
@@ -186,6 +188,7 @@ export default function Cadastrar({ history }) {
                                 <KeyboardDatePicker
                                     id="DataNascimento"
                                     label="Data de Nascimento"
+                                    required={true}
                                     fullWidth
                                     format="dd/MM/yyyy"
                                     className={classes.textField}
@@ -204,6 +207,7 @@ export default function Cadastrar({ history }) {
                             <TextField
                                 id="email"
                                 label="Email"
+                                required={true}
                                 className={classes.textField}
                                 type="email"
                                 value={form.Email}
@@ -221,6 +225,7 @@ export default function Cadastrar({ history }) {
                             <Box id="professionalFields" m={0}>
                                 <TextField
                                     id="cnpj"
+                                    required={true}
                                     label="CNPJ"
                                     className={classes.textField}
                                     value={form.cnpj}
@@ -280,6 +285,7 @@ export default function Cadastrar({ history }) {
                                 <TextField
                                     id="cpf"
                                     label="CPF"
+                                    required={true}
                                     className={classes.textField}
                                     value={form.cpf}
                                     onChange={e => setForm(
@@ -295,6 +301,7 @@ export default function Cadastrar({ history }) {
                             <TextField
                                 id="password"
                                 label="Password"
+                                required={true}
                                 className={classes.textField}
                                 value={form.Senha}
                                 onChange={e => setForm({
