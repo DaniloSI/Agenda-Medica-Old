@@ -31,12 +31,16 @@ export default function Login({ history }) {
         email,
         password,
       });
-
-    const { token } = response.data;
-
-    if(token !== null) login(token);
-
-    history.push('/Home');
+    
+    if (response.data.sucesso) {
+      const { token } = response.data;
+  
+      if(token !== null) login(token);
+  
+      history.push('/Home');
+    } else {
+      Notifications.showError(response.data.erro);
+    }
   }
 
   const useStyles = makeStyles(theme => ({

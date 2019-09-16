@@ -137,18 +137,25 @@ namespace AgendaMedica.API.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(userLogin.Email);
 
-                var result = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
-
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Email.ToUpper() == userLogin.Email.ToUpper());
+                    var result = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
 
-                    var userToReturn = _mapper.Map<UsuarioViewModel>(appUser);
+                    if (result.Succeeded)
+                    {
+                        var appUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Email.ToUpper() == userLogin.Email.ToUpper());
 
-                    return Ok(GenerateJWToken(appUser).Result);
+                        var userToReturn = _mapper.Map<UsuarioViewModel>(appUser);
+
+                        return Ok(GenerateJWToken(appUser).Result);
+                    }
                 }
 
-                return Unauthorized();
+                return Ok(new
+                {
+                    sucesso = false,
+                    Erro = "Senha inválida ou usuário não existe"
+                });
             }
             catch (Exception e)
             {
@@ -188,6 +195,7 @@ namespace AgendaMedica.API.Controllers
 
             return new
             {
+                sucesso = true,
                 token = tokenHandler.WriteToken(token),
                 tokenDescriptor.Expires,
                 FullName = $"{(user as Usuario).Nome} {(user as Usuario).SobreNome}",
