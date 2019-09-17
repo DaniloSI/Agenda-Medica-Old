@@ -104,9 +104,9 @@ namespace AgendaMedica.Domain.Teste
         [Category("Agendar Consulta")]
         public void ConsultaNaoPodeSerNoPassado()
         {
-            consulta.Data = DateTime.Today;
-            consulta.HoraInicio = DateTime.Now.AddHours(-3).TimeOfDay;
-            consulta.HoraFim = DateTime.Now.AddHours(-2).TimeOfDay;
+            consulta.Data = DateTime.Today.AddDays(-5);
+            consulta.HoraInicio = DateTime.Today.AddDays(-5).AddHours(-3).TimeOfDay;
+            consulta.HoraFim = DateTime.Today.AddDays(-5).AddHours(-2).TimeOfDay;
 
             _consultaService.Add(consulta);
             Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["CONSULTA_NO_PASSADO"]));
