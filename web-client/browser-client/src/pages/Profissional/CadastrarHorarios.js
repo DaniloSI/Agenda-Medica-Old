@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
-import { showSuccess, showError } from '../../services/notifications'
+import { showError } from '../../services/notifications'
 import Header from './Components/Header/Index';
+import HorarioSemana from './Components/HorarioSemana'
+
+export const FormContext = React.createContext();
 
 export default function CadastrarHorarios() {
 
@@ -12,22 +15,12 @@ export default function CadastrarHorarios() {
         profissionalId: 10
     })
 
-    useEffect(() => {
-        const selector = document.querySelectorAll('tbody tr');
-
-        for (var i = 0; i < selector.length; i++) {
-            selector.deleteRow(i);
-        }
-
-    }, [form.horarios])
-
     function adicionarHorario(e) {
 
         let existErro = false;
 
-        let horarioInicio = document.querySelector('#adicionarHorariosFields #horaInicioAtendimento').value;
-        let horarioFim = document.querySelector('#adicionarHorariosFields #horaFimAtendimento').value;
-        let diasMarcados = [];
+        let horarioInicio = document.querySelector('#cadastrarHorario #horaInicio').value;
+        let horarioFim = document.querySelector('#cadastrarHorario #horaFim').value;
 
         //Valida Horário
         if (horarioInicio === "") {
@@ -45,31 +38,35 @@ export default function CadastrarHorarios() {
             existErro = true;
         }
 
+        //Pega o valor do select
+        var selectedOption = document.querySelector('#cadastrarHorario #selectDiaSemana').value;
 
-        //Pega o valor dos checkboxs marcados
-        document.querySelectorAll('#adicionarHorariosFields .form-check input').forEach(val => { if (val.checked === true) diasMarcados.push(val.value) });
-
-        //Valida Checkbox
-        if (diasMarcados.length === 0) {
-            showError('Selecione pelo menos 1 dia da semana');
-            e.preventDefault();
-            return;
-        }
+        // Verifica conflito de horário
+        form.horarios
+            .filter(horario => horario.diaSemana === selectedOption)
+            .forEach(n => {
+                if(horarioInicio > n.horaInicio && horarioInicio < n.horaFim)
+                {
+                    showError('Resolva o conflito de horário antes de adicionar um novo');
+                    existErro = true;
+                }
+            })
 
         if (!existErro) {
-            diasMarcados.forEach(n => {
-                form.horarios.push({
-                    diaSemana: n,
-                    horaInicio: horarioInicio,
-                    horaFim: horarioFim
-                });
-            })
+            let novo_horario = {
+                diaSemana: parseInt(selectedOption),
+                horaInicio: horarioInicio,
+                horaFim: horarioFim
+            }
+
+            form.horarios.push(novo_horario);
 
             setForm(
                 {
                     ...form,
                     horarios: form.horarios
-                });
+                }
+            )            
         }
 
         e.preventDefault();
@@ -106,85 +103,48 @@ export default function CadastrarHorarios() {
                         ></DateRangePicker>
                     </div>
 
+                    <h2>Adicionar novos horários:</h2>
 
-                    <div id="adicionarHorariosFields" className="form-group border rounded-lg">
-                        <h3>Adicionar novo horário</h3>
+                    <div id="cadastrarHorario">
+                        <select id="selectDiaSemana">
+                            <option value={1}>Segunda-Feira</option>
+                            <option value={2}>Terça-Feira</option>
+                            <option value={3}>Quarta-Feira</option>
+                            <option value={4}>Quinta-Feira</option>
+                            <option value={5}>Sexta-Feira</option>
+                            <option value={6}>Sábado</option>
+                            <option value={0}>Domingo</option>
+                        </select>
 
-                        <label><strong>Dias da Semana:</strong></label>
+                        <label>Horário de Início:</label>
+                        <input type="time" id="horaInicio" required={true}></input>
+                        <label>Horário de Término:</label>
+                        <input type="time" id="horaFim" required={true}></input>
 
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox0" value="0" />
-                            <label className="form-check-label" htmlFor="blankCheckbox0">Domingo</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox1" value="1" />
-                            <label className="form-check-label" htmlFor="blankCheckbox1">Segunda-Feira</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox2" value="2" />
-                            <label className="form-check-label" htmlFor="blankCheckbox2">Terça-Feira</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox3" value="3" />
-                            <label className="form-check-label" htmlFor="blankCheckbox3">Quarta-Feira</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox4" value="4" />
-                            <label className="form-check-label" htmlFor="blankCheckbox4">Quinta-Feira</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox5" value="5" />
-                            <label className="form-check-label" htmlFor="blankCheckbox5">Sexta-Feira</label>
-                        </div>
-
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input position-static" type="checkbox" id="blankCheckbox6" value="6" />
-                            <label className="form-check-label" htmlFor="blankCheckbox6">Sábado</label>
-                        </div>
-
-                        <div>
-                            <label>Horário de Início:</label>
-                            <input type="time" id="horaInicioAtendimento" required={true}></input>
-                            <label>Horário de Término:</label>
-                            <input type="time" id="horaFimAtendimento" required={true}></input>
-                            <button onClick={adicionarHorario}>Adicionar</button>
-                        </div>
+                        <button onClick={
+                            adicionarHorario
+                        }>Adicionar</button>
                     </div>
 
+                    <FormContext.Provider value={[form.horarios, setForm]}>
 
-                    <div>
-                        <table className="table table-borderless">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Dia da Semana</th>
-                                    <th>Ciclo de Início</th>
-                                    <th>Ciclo de Término</th>
-                                    <th>Açoes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    form.horarios.map(
-                                        horario => (
-                                            <tr>
-                                                <td>{horario.diaSemana}</td>
-                                                <td>À definir</td>
-                                                <td>{horario.horaInicio}</td>
-                                                <td>{horario.horaFim}</td>
-                                                <td><button>Editar</button><button>Deletar</button></td>
-                                            </tr>
-                                        )
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                        <div id="horariosTable">
+                            <HorarioSemana tableId="table1" id={1} nome="Segunda-Feira" />
+
+                            <HorarioSemana tableId="table2" id={2} nome="Terça-Feira" />
+
+                            <HorarioSemana tableId="table3" id={3} nome="Quarta-Feira" />
+
+                            <HorarioSemana tableId="table4" id={4} nome="Quinta-Feira" />
+
+                            <HorarioSemana tableId="table5" id={5} nome="Sexta-Feira" />
+
+                            <HorarioSemana tableId="table6" id={6} nome="Sábado" />
+
+                            <HorarioSemana tableId="table0" id={0} nome="Domingo" />
+                        </div>
+
+                    </FormContext.Provider>
 
                     <button onClick={handleSubmit}>Salvar</button>
                     <button>Cancelar</button>
