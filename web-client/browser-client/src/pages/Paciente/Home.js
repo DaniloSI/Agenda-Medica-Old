@@ -23,6 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import SearchIcon from '@material-ui/icons/Search';
 import Agenda from './Agenda'
+import BuscaProfissionais from './BuscaProfissionais'
 
 const drawerWidth = 260;
 
@@ -197,7 +198,14 @@ export default function MenuAppBar({ history }) {
             </ListItemIcon>
             <ListItemText primary='Minha Agenda' />
           </ListItem>
-          <ListItem button key='Procurar Profissionais'>
+          <ListItem button key='Procurar Profissionais' onClick={
+            () => {
+              ReactDOM.render(
+                <BuscaProfissionais />,
+                document.getElementById('pagina-paciente')
+              );
+            }
+          }>
             <ListItemIcon>
               <SearchIcon />
             </ListItemIcon>

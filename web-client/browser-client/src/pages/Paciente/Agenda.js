@@ -26,6 +26,10 @@ export default function Agenda() {
     const [state, setState] = React.useState({
         columns: [
             {
+                title: 'Especialidade',
+                field: 'especialidade'
+            },
+            {
                 title: 'Profissional',
                 field: 'nome'
             },
@@ -46,12 +50,14 @@ export default function Agenda() {
         ],
         data: [
             {
+                especialidade: 'Clínico Geral',
                 nome: 'Mehmet da Silva',
                 data: '16/09/2019',
                 horarioInicio: '15:30',
                 horarioFim: '16:30'
             },
             {
+                especialidade: 'Fisioterapeuta',
                 nome: 'Mehmet Soarez de Sousa',
                 data: '21/09/2019',
                 horarioInicio: '08:30', 
