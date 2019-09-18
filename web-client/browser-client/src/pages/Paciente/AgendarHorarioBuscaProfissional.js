@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AgendarHorarioBuscaProfissional() {
+export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -37,6 +37,8 @@ export default function AgendarHorarioBuscaProfissional() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(profissional);
 
   return (
     <div>
@@ -58,8 +60,8 @@ export default function AgendarHorarioBuscaProfissional() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transiton-group animates me.</p>
+            <h2 id="transition-modal-title">Agendamento de Horário</h2>
+            <p id="transition-modal-description"><strong>Profissional</strong>: {profissional.NomeCompleto}</p>
           </div>
         </Fade>
       </Modal>

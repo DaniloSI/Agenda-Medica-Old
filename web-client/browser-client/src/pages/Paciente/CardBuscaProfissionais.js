@@ -35,6 +35,7 @@ export default function RecipeReviewCard() {
   const classes = useStyles();
   const profissionais = [
     {
+      Id: 1,
       NomeCompleto: "Marlene Esther Ayla Nunes",
       Endereco: "Endereço: R. Coelho Filho, 38 - Parque Res. Laranjeiras, Serra - ES, 29191-275",
       Especialidades: [
@@ -45,114 +46,7 @@ export default function RecipeReviewCard() {
       Avaliacao: 4.5
     },
     {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    },
-    {
+      Id: 2,
       NomeCompleto: "Fábio Raul Moraes",
       Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
       Especialidades: [
@@ -165,7 +59,7 @@ export default function RecipeReviewCard() {
 
   return (
     profissionais.map(profissional => 
-      <Card className={classes.card}>
+      <Card className={classes.card} key={profissional.Id}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -173,11 +67,11 @@ export default function RecipeReviewCard() {
             </Avatar>
           }
           action={
-            <Grid>
-              <Grid container xs={12} justify="flex-end" direction="row">
-                <AgendarHorarioBuscaProfissional />
+            <Grid container>
+              <Grid container justify="flex-end" direction="row">
+                <AgendarHorarioBuscaProfissional profissional={profissional} />
               </Grid>
-              <Grid container xs={12} justify="flex-end" direction="row">
+              <Grid container justify="flex-end" direction="row">
                 <Button color="secondary" size="small"  className={classes.button}>
                   <VisibilityIcon className={classes.leftIcon} />
                   Visualizar Perfil
@@ -197,8 +91,8 @@ export default function RecipeReviewCard() {
                 <Rating size="small" precision={0.5} value={profissional.Avaliacao} readOnly />
               </Grid>
               <Grid item xs={12}>
-                {profissional.Especialidades.map(especialidade =>
-                  <Chip size="small" label={especialidade} className={classes.chip} />
+                {profissional.Especialidades.map((especialidade, index) =>
+                  <Chip size="small" label={especialidade} className={classes.chip} key={index}/>
                 )}
               </Grid>
             </Grid>
