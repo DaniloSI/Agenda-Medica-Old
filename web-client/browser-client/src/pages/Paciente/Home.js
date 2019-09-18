@@ -220,7 +220,9 @@ export default function MenuAppBar({ history }) {
         })}
       >
         <div className={classes.drawerHeader} />
-        <div id="pagina-paciente" />
+        <div id="pagina-paciente">
+          <Agenda />
+        </div>
       </main>
     </div>
   );
