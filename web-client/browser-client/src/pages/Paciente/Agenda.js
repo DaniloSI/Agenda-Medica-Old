@@ -34,6 +34,10 @@ export default function Agenda() {
                 field: 'nome'
             },
             {
+                title: 'Endereço',
+                field: 'Endereco'
+            },
+            {
                 title: 'Data',
                 field: 'data',
                 type: 'date'
@@ -51,14 +55,16 @@ export default function Agenda() {
         data: [
             {
                 especialidade: 'Clínico Geral',
-                nome: 'Mehmet da Silva',
+                nome: 'José da Silva',
+                Endereco: 'R. Coelho Filho, 38 - Parque Res. Laranjeiras, Serra - ES, 29191-275',
                 data: '16/09/2019',
                 horarioInicio: '15:30',
                 horarioFim: '16:30'
             },
             {
                 especialidade: 'Fisioterapeuta',
-                nome: 'Mehmet Soarez de Sousa',
+                nome: 'Lorraine Soarez de Sousa',
+                Endereco: 'R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123',
                 data: '21/09/2019',
                 horarioInicio: '08:30', 
                 horarioFim: '10:30'
