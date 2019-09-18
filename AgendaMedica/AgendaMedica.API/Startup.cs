@@ -93,7 +93,16 @@ namespace AgendaMedica.API
 
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new Info { Title = "Agenda Médica", Version = "v1" });
+                config.SwaggerDoc("v1", new Info
+                {
+                    Title = "Agenda Médica",
+                    Version = "v1",
+                    Contact = new Contact
+                    {
+                        Name = "Repositório do GitHub",
+                        Url = "https://github.com/DaniloSI/Agenda-Medica"
+                    }
+                });
             });
 
             RegisterServices(services);
