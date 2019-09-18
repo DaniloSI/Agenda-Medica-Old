@@ -5,7 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import AgendarHorarioBuscaProfissional from './AgendarHorarioBuscaProfissional';
 import Rating from '@material-ui/lab/Rating';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
@@ -175,10 +175,7 @@ export default function RecipeReviewCard() {
           action={
             <Grid>
               <Grid container xs={12} justify="flex-end" direction="row">
-                <Button color="primary" size="small" className={classes.button}>
-                  <EventAvailableIcon className={classes.leftIcon} />
-                  Agendar Horário
-                </Button>
+                <AgendarHorarioBuscaProfissional />
               </Grid>
               <Grid container xs={12} justify="flex-end" direction="row">
                 <Button color="secondary" size="small"  className={classes.button}>
