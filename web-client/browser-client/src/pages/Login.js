@@ -15,8 +15,8 @@ import * as Notifications from '../services/notifications';
 
 export default function Login({ history }) {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('vanessa@teste.com');
+  const [password, setPassword] = useState('Pass123');
 
   if (history.location.state && history.location.state.cadastroSucesso) {
     Notifications.showSuccess("Usuário cadastrado com sucesso!");
@@ -78,6 +78,7 @@ export default function Login({ history }) {
               <TextField
                 id="email"
                 label="E-mail"
+                value={email}
                 required={true}
                 className={classes.textField}
                 onChange={e => setEmail(e.target.value)}
@@ -87,6 +88,7 @@ export default function Login({ history }) {
               <TextField
                 id="password"
                 label="Password"
+                value={password}
                 required={true}
                 className={classes.textField}
                 onChange={e => setPassword(e.target.value)}

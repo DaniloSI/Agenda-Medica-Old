@@ -5,6 +5,17 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import * as Notifications from '../../services/notifications';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -17,6 +28,7 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    maxWidth: '350px'
   },
   button: {
     margin: theme.spacing(1),
@@ -24,11 +36,38 @@ const useStyles = makeStyles(theme => ({
   leftIcon: {
     marginRight: theme.spacing(1),
   },
+  formControl: {
+    minWidth: 250,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
 }));
 
 export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [horario, setHorario] = React.useState({
+    horarioId: '',
+    Intervalo: 'De 05:00 às 06:00',
+  });
+
+  function handleChange(event) {
+    console.log(event)
+    setHorario(oldHorario => ({
+      ...oldHorario,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function handleDateChange(date) {
+    setSelectedDate(date);
+  }
 
   const handleOpen = () => {
     setOpen(true);
@@ -36,6 +75,19 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
 
   const handleClose = () => {
     setOpen(false);
+    setHorario(oldHorario => ({
+      ...oldHorario,
+      'horarioId': '',
+    }));
+  };
+
+  const handleAgendar = () => {
+    setOpen(false);
+    setHorario(oldHorario => ({
+      ...oldHorario,
+      'horarioId': '',
+    }));
+    Notifications.showSuccess("Horário agendado com sucesso!");
   };
 
   console.log(profissional);
@@ -62,6 +114,52 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Agendamento de Horário</h2>
             <p id="transition-modal-description"><strong>Profissional</strong>: {profissional.NomeCompleto}</p>
+            <form autoComplete="off" className={{flexGrow: 1}}>
+              <Grid container spacing={3} justify="center">
+                <Grid item xs={12}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      id="date-picker-data-consulta"
+                      label="Data da Consulta"
+                      format="MM/dd/yyyy"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </MuiPickersUtilsProvider>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="horario">Horário</InputLabel>
+                    <Select
+                      value={horario.horarioId}
+                      onChange={handleChange}
+                      displayEmpty
+                      inputProps={{
+                        name: 'horarioId',
+                        id: 'horario',
+                      }}
+                    >
+                      <MenuItem value={'1'}>De 05:00 às 06:00</MenuItem>
+                      <MenuItem value={'2'}>De 06:00 às 07:00</MenuItem>
+                      <MenuItem value={'3'}>De 07:00 às 08:00</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={handleAgendar}>
+                    Agendar
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" className={classes.button} onClick={handleClose}>
+                    Fechar
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
           </div>
         </Fade>
       </Modal>
