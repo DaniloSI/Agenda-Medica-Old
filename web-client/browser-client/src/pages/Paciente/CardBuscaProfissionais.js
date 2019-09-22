@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 
+
 const useStyles = makeStyles(theme => ({
   card: {
     marginBottom: theme.spacing(1.5)
@@ -31,39 +32,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function CardBuscaProfissionais(props) {
   const classes = useStyles();
-  const profissionais = [
-    {
-      Id: 1,
-      NomeCompleto: "Marlene Esther Ayla Nunes",
-      Endereco: "Endereço: R. Coelho Filho, 38 - Parque Res. Laranjeiras, Serra - ES, 29191-275",
-      Especialidades: [
-        "Clínico Geral",
-        "Fisioterapeuta",
-        "Ortopedista"
-      ],
-      Avaliacao: 4.5
-    },
-    {
-      Id: 2,
-      NomeCompleto: "Fábio Raul Moraes",
-      Endereco: "Endereço: R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123",
-      Especialidades: [
-        "Pediatra",
-        "Fisioterapeuta"
-      ],
-      Avaliacao: 4
-    }
-  ];
+  const profissionais = props.profissionais;
 
   return (
     profissionais.map(profissional => 
-      <Card className={classes.card} key={profissional.Id}>
+      <Card className={classes.card} key={profissional.id}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              {profissional.NomeCompleto.substring(0, 1)}
+              {profissional.nomeCompleto.substring(0, 1)}
             </Avatar>
           }
           action={
@@ -79,20 +58,20 @@ export default function RecipeReviewCard() {
               </Grid>
             </Grid>
           }
-          title={profissional.NomeCompleto}
+          title={profissional.nomeCompleto}
           subheader={
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {profissional.Endereco}
+                  {profissional.endereco}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Rating size="small" precision={0.5} value={profissional.Avaliacao} readOnly />
+                <Rating size="small" precision={0.5} value={profissional.avaliacao} readOnly />
               </Grid>
               <Grid item xs={12}>
-                {profissional.Especialidades.map((especialidade, index) =>
-                  <Chip size="small" label={especialidade} className={classes.chip} key={index}/>
+                {profissional.especialidades && profissional.especialidades.map((especialidade, index) =>
+                  <Chip size="small" label={especialidade.nome} className={classes.chip} key={especialidade.especialidadeId}/>
                 )}
               </Grid>
             </Grid>

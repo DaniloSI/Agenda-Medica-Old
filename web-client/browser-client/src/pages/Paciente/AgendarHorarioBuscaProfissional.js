@@ -54,13 +54,24 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [horario, setHorario] = React.useState({
     horarioId: '',
-    Intervalo: 'De 05:00 às 06:00',
+    Intervalo: '',
+  });
+  const [especialidade, setEspecialidade] = React.useState({
+    especialidadeId: '',
+    intervalo: '',
   });
 
-  function handleChange(event) {
+  function handleChangeHorario(event) {
     console.log(event)
     setHorario(oldHorario => ({
       ...oldHorario,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function handleChangeEspecialidade(event) {
+    setEspecialidade(oldEspecialidade => ({
+      ...oldEspecialidade,
       [event.target.name]: event.target.value,
     }));
   }
@@ -90,7 +101,9 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     Notifications.showSuccess("Horário agendado com sucesso!");
   };
 
-  console.log(profissional);
+  function renderEspecialidade(e) {
+    return <MenuItem key={e.especialidadeId} value={e.especialidadeId}>{e.nome}</MenuItem>
+  }
 
   return (
     <div>
@@ -113,7 +126,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Agendamento de Horário</h2>
-            <p id="transition-modal-description"><strong>Profissional</strong>: {profissional.NomeCompleto}</p>
+            <p id="transition-modal-description"><strong>Profissional</strong>: {profissional.nomeCompleto}</p>
             <form autoComplete="off" className={{flexGrow: 1}}>
               <Grid container spacing={3} justify="center">
                 <Grid item xs={12}>
@@ -132,10 +145,26 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="especialidade">Especialidade</InputLabel>
+                    <Select
+                      value={especialidade.especialidadeId}
+                      onChange={handleChangeEspecialidade}
+                      displayEmpty
+                      inputProps={{
+                        name: 'especialidadeId',
+                        id: 'especialidade',
+                      }}
+                    >
+                      {profissional.especialidades.map(e => renderEspecialidade(e))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="horario">Horário</InputLabel>
                     <Select
                       value={horario.horarioId}
-                      onChange={handleChange}
+                      onChange={handleChangeHorario}
                       displayEmpty
                       inputProps={{
                         name: 'horarioId',

@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,6 +55,31 @@ namespace AgendaMedica.API.Controllers
                 _mapper.Map<UsuarioPaciente, UsuarioPacienteViewModel>(_usuarioPacienteRepository.GetById(1)),
                 _mapper.Map<UsuarioProfissional, UsuarioProfissionalViewModel>(_usuarioProfissionalRepository.GetById(3))
             });
+        }
+
+        [HttpGet("Profissionais")]
+        public JsonResult GetProfissionais()
+        {
+            var profissionais = _usuarioProfissionalRepository.GetAll()
+                .Include(x => x.Especialidades)
+                .Include(x => x.Endereco)
+                .AsNoTracking()
+                .Select(p => new
+                {
+                    p.Id,
+                    NomeCompleto = $"{p.Nome} {p.SobreNome}",
+                    Endereco = p.Endereco != null ? $"Rua {p.Endereco.Rua}, CEP {p.Endereco.CEP}, Nº {p.Endereco.Numero}" : "",
+                    Avaliacao = 3.5,
+                    Especialidades = p.Especialidades.Select(e => new
+                    {
+                        e.Especialidade.EspecialidadeId,
+                        e.Especialidade.Codigo,
+                        e.Especialidade.Nome,
+                    }).ToArray()
+                })
+                .ToArray();
+
+            return new JsonResult(profissionais);
         }
 
         [HttpPost("CadastroPaciente")]
