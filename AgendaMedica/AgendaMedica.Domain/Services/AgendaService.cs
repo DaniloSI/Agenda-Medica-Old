@@ -2,6 +2,9 @@
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AgendaMedica.Domain.Validations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AgendaMedica.Domain.Services
 {
@@ -32,8 +35,19 @@ namespace AgendaMedica.Domain.Services
             if (agenda.ValidationResult.IsValid)
             {
                 horarioExcecao.ValidationResult = agenda.ValidationResult;
-                base.Update(agenda); //_agendaRepository.AddHorarioExcecao(horarioExcecao);
+                base.Update(agenda);
             }
+        }
+
+        public IEnumerable<Horario> GetHorariosPorDataProfissional(UsuarioProfissional profissional, DateTime data)
+        {
+            Agenda agenda = profissional?
+                .Agendas?
+                .SingleOrDefault(a => data >= a.DataHoraInicio && data <= a.DataHoraFim);
+
+            return agenda?
+                .Horarios?
+                .Where(h => h.DiaSemana == (DiaSemana)data.DayOfWeek);
         }
     }
 }

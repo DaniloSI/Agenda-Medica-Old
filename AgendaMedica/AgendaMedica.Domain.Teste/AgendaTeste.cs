@@ -72,5 +72,39 @@ namespace AgendaMedica.Domain.Teste
 
             Assert.IsNotEmpty(agenda.ValidationResult.Errors.Where(e => e.ErrorMessage == AgendaValidator.ErrorsMessages["HORARIOS_CONFLITAM"]));
         }
+
+        [Test]
+        [Category("Adicionar horário(s) à Agenda")]
+        public void ObterHorariosPorData()
+        {
+            agenda.Horarios = new List<Horario>
+            {
+                new Horario
+                {
+                    HorarioId = 1,
+                    DiaSemana = DiaSemana.Segunda,
+                    HoraInicio = new TimeSpan(7, 30, 0),
+                    HoraFim = new TimeSpan(8, 30, 0)
+                },
+                new Horario
+                {
+                    HorarioId = 2,
+                    DiaSemana = DiaSemana.Segunda,
+                    HoraInicio = new TimeSpan(8, 0, 0),
+                    HoraFim = new TimeSpan(9, 0, 0)
+                }
+            };
+
+            UsuarioProfissional profissional = new UsuarioProfissional
+            {
+                Id = 1,
+                Nome = "Fulano",
+                SobreNome = "de Tal",
+                Email = "fulano@teste.com",
+                Agendas = new List<Agenda> { agenda }
+            };
+
+            Assert.AreEqual(_agendaService.GetHorariosPorDataProfissional(profissional, new DateTime(2019, 07, 15)).Count(h => h.HorarioId == 1 || h.HorarioId == 2), 2);
+        }
     }
 }

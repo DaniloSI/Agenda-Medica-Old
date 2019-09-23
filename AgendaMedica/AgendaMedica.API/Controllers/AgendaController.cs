@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AgendaMedica.API.Controllers
 {
@@ -37,32 +38,19 @@ namespace AgendaMedica.API.Controllers
 
         [HttpGet("HorariosPorData")]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<HorarioViewModel>> GetHorariosPorData(int profissionalId, DateTime data)
+        public JsonResult GetHorariosPorData(int profissionalId, DateTime data)
         {
-            return new List<HorarioViewModel>
-            {
-                new HorarioViewModel
+            var horarios = _agendaAppService.GetHorariosPorDataProfissional(profissionalId, data)
+                .Select(x => new
                 {
-                    HorarioId = 1,
-                    DiaSemana = (DiaSemana) data.DayOfWeek,
-                    HoraInicio = new TimeSpan(7, 30, 0),
-                    HoraFim = new TimeSpan(8, 30, 0)
-                },
-                new HorarioViewModel
-                {
-                    HorarioId = 2,
-                    DiaSemana = (DiaSemana) data.DayOfWeek,
-                    HoraInicio = new TimeSpan(8, 30, 0),
-                    HoraFim = new TimeSpan(9, 30, 0)
-                },
-                new HorarioViewModel
-                {
-                    HorarioId = 3,
-                    DiaSemana = (DiaSemana) data.DayOfWeek,
-                    HoraInicio = new TimeSpan(15, 30, 0),
-                    HoraFim = new TimeSpan(16, 30, 0)
-                }
-            };
+                    x.HorarioId,
+                    x.AgendaId,
+                    x.DiaSemana,
+                    x.HoraInicio,
+                    x.HoraFim
+                });
+
+            return new JsonResult(horarios);
         }
     }
 }
