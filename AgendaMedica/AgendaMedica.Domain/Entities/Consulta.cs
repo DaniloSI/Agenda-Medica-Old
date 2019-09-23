@@ -11,8 +11,6 @@ namespace AgendaMedica.Domain.Entities
         public TimeSpan HoraInicio { get; set; }
         public TimeSpan HoraFim { get; set; }
         public bool PagamentoConfirmado { get; set; }
-        public int EnderecoId { get; set; }
-        public virtual Endereco Endereco { get; set; }
         public int PacienteId { get; set; }
         public virtual UsuarioPaciente Paciente { get; set; }
         public int ProfissionalId { get; set; }

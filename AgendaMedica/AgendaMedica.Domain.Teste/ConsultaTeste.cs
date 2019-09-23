@@ -27,16 +27,6 @@ namespace AgendaMedica.Domain.Teste
                 Data = DateTime.Today,
                 HoraInicio = DateTime.Now.AddHours(-3).TimeOfDay,
                 HoraFim = DateTime.Now.AddHours(-2).TimeOfDay,
-                EnderecoId = 1,
-                Endereco = new Endereco
-                {
-                    EnderecoId = 1,
-                    CEP = "12345-678",
-                    Cidade = "Vitória",
-                    Estado = "Espírito Santo",
-                    Numero = 25,
-                    Rua = "Rua das Garças"
-                },
                 EspecialidadeId = 1,
                 Especialidade = new Especialidade
                 {

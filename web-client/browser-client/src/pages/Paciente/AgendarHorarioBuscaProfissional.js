@@ -10,6 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import api from '../../services/api';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as Notifications from '../../services/notifications';
 import {
@@ -52,6 +53,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [listaHorarios, setListaHorarios] = React.useState([]);
   const [horario, setHorario] = React.useState({
     horarioId: '',
     Intervalo: '',
@@ -76,8 +78,23 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     }));
   }
 
-  function handleDateChange(date) {
+  async function handleDateChange(date) {
     setSelectedDate(date);
+
+    const response = await api.get("/Agenda/HorariosPorData", {
+      params: {
+        profissionalId: 1,
+        data: date
+      }
+    });
+
+    if (response.status == 200) {
+      setListaHorarios(response.data);
+    } else {
+      Notifications.showError("Erro ao atualizar lista de Horários.");
+    }
+    
+    console.log(response);
   }
 
   const handleOpen = () => {
@@ -171,9 +188,11 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                         id: 'horario',
                       }}
                     >
-                      <MenuItem value={'1'}>De 05:00 às 06:00</MenuItem>
-                      <MenuItem value={'2'}>De 06:00 às 07:00</MenuItem>
-                      <MenuItem value={'3'}>De 07:00 às 08:00</MenuItem>
+                      {
+                        listaHorarios.map(horario =>
+                          <MenuItem key={horario.horarioId} value={horario.horarioId}>De {horario.horaInicio} às {horario.horaFim}</MenuItem>
+                        )
+                      }
                     </Select>
                   </FormControl>
                 </Grid>

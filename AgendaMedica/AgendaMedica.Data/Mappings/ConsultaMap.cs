@@ -10,10 +10,6 @@ namespace AgendaMedica.Data.Mappings
         {
             builder.HasKey(c => c.ConsultaId);
 
-            builder.HasOne(x => x.Endereco)
-                .WithMany()
-                .HasForeignKey(x => x.EnderecoId);
-
             builder.HasOne(x => x.Paciente)
                 .WithMany(x => x.Consultas)
                 .HasForeignKey(x => x.PacienteId)
