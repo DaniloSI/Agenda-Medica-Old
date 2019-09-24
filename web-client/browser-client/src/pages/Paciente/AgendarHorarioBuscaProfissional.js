@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState(null);
   const [listaHorarios, setListaHorarios] = React.useState([]);
   const [horario, setHorario] = React.useState({
     horarioId: '',
@@ -64,7 +64,6 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   });
 
   function handleChangeHorario(event) {
-    console.log(event)
     setHorario(oldHorario => ({
       ...oldHorario,
       [event.target.name]: event.target.value,
@@ -83,7 +82,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
 
     const response = await api.get("/Agenda/HorariosPorData", {
       params: {
-        profissionalId: 1,
+        profissionalId: profissional.id,
         data: date
       }
     });
@@ -93,8 +92,6 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     } else {
       Notifications.showError("Erro ao atualizar lista de Horários.");
     }
-    
-    console.log(response);
   }
 
   const handleOpen = () => {

@@ -57,7 +57,7 @@ namespace AgendaMedica.Application.AppServices
                     .ThenInclude(x => x.Horarios)
                 .SingleOrDefault();
 
-            IEnumerable<Horario> horarios = _agendaService.GetHorariosPorDataProfissional(profissional, data).ToList();
+            IEnumerable<Horario> horarios = _agendaService.GetHorariosPorDataProfissional(profissional, data)?.ToList() ?? new List<Horario>();
 
             return _mapper.Map<IEnumerable<HorarioViewModel>>(horarios);
         }
