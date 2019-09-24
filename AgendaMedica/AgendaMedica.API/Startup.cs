@@ -22,6 +22,7 @@ using AgendaMedica.Application.AutoMapper;
 using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.AppServices;
 using AgendaMedica.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace AgendaMedica.API
 {
@@ -80,6 +81,8 @@ namespace AgendaMedica.API
                     ValidateAudience = false
                 };
             });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Add application services.
             // services.AddTransient<IEmailSender, EmailSender>();
