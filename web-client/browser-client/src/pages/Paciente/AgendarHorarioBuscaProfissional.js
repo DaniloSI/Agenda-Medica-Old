@@ -106,13 +106,35 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     }));
   };
 
-  const handleAgendar = () => {
-    setOpen(false);
-    setHorario(oldHorario => ({
-      ...oldHorario,
-      'horarioId': '',
-    }));
-    Notifications.showSuccess("Horário agendado com sucesso!");
+  async function handleAgendar() {
+    if (!selectedDate || !horario.horarioId || !especialidade.especialidadeId) {
+      Notifications.showError("É necessário preencher todos os campos!");
+    } else {
+      const response = await api.post("/Consulta",{
+        data: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()),
+        horaInicio: listaHorarios.filter(h => h.horarioId == horario.horarioId).pop().horaInicio,
+        horaFim: listaHorarios.filter(h => h.horarioId == horario.horarioId).pop().horaFim,
+        profissionalId: profissional.id,
+        especialidadeId: especialidade.especialidadeId
+      });
+
+      if (response.status == 200) {
+        if (response.data.validationResult.isValid) {
+          setOpen(false);
+          setHorario(oldHorario => ({
+            ...oldHorario,
+            'horarioId': '',
+          }));
+          Notifications.showSuccess("Horário agendado com sucesso!");
+        } else {
+          response.data.validationResult.errors.forEach(function (error) {
+            Notifications.showError(error.errorMessage);
+          });
+        }
+      } else {
+        Notifications.showError("Erro '" + response.status + "'");
+      }
+    }
   };
 
   function renderEspecialidade(e) {
@@ -147,6 +169,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       id="date-picker-data-consulta"
+                      className={classes.formControl}
                       label="Data da Consulta"
                       format="MM/dd/yyyy"
                       value={selectedDate}

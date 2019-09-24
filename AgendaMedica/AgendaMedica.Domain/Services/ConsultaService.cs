@@ -24,6 +24,7 @@ namespace AgendaMedica.Domain.Services
                 .Where(x => x.Id == consulta.ProfissionalId)
                 .Include(x => x.Agendas)
                     .ThenInclude(x => x.Horarios)
+                .Include(x => x.Consultas)
                 .SingleOrDefault();
 
             consulta.ValidationResult = new ConsultaValidator().Validate(consulta);
