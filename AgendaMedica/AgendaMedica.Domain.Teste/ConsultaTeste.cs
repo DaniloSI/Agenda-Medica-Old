@@ -17,8 +17,9 @@ namespace AgendaMedica.Domain.Teste
         private Consulta consulta;
         private IConsultaService _consultaService;
 
-        [SetUp]
-        public void Setup()
+
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
             consulta = new Consulta
             {
@@ -77,17 +78,22 @@ namespace AgendaMedica.Domain.Teste
                         Estado = "Espírito Santo",
                         Numero = 7,
                         Rua = "Rua dos Afrás"
+                    },
+                    Agendas = new List<Agenda>
+                    {
+                        new Agenda
+                        {
+                            Horarios = new List<Horario>()
+                        }
                     }
                 }
             };
-        }
 
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
             var mock = new Mock<IConsultaRepository>();
+            var mockProfissional = new Mock<IUsuarioProfissionalRepository>();
             mock.Setup(x => x.Add(It.IsAny<Consulta>()));
-            _consultaService = new ConsultaService(mock.Object);
+            mockProfissional.Setup(x => x.GetAll()).Returns(new List<UsuarioProfissional> { consulta.Profissional }.AsQueryable());
+            _consultaService = new ConsultaService(mock.Object, mockProfissional.Object);
         }
 
         [Test]
@@ -128,6 +134,48 @@ namespace AgendaMedica.Domain.Teste
 
             _consultaService.Add(consulta);
             Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["CONFLITO_HORARIO_PROFISSIONAL"].Replace("{{PROFISSIONAL_NOME}}", consulta.Profissional.Nome)));
+        }
+
+        [Test]
+        [Category("Agendar Consulta")]
+        public void HorarioDeveEstarDisponivelNaAgenda()
+        {
+            consulta.Data = new DateTime(2019, 9, 24);
+            consulta.HoraInicio = new TimeSpan(8, 30, 0);
+            consulta.HoraFim = new TimeSpan(9, 30, 0);
+
+            consulta.Profissional.Agendas = new List<Agenda>
+            {
+                new Agenda
+                {
+                    AgendaId = 1,
+                    DataHoraInicio = DateTime.MinValue,
+                    DataHoraFim = DateTime.MaxValue,
+                    ProfissionalId = consulta.ProfissionalId,
+                    Horarios = new List<Horario>
+                    {
+                        new Horario
+                        {
+                            HorarioId = 1,
+                            AgendaId = 1,
+                            DiaSemana = DiaSemana.Terca,
+                            HoraInicio = new TimeSpan(13, 30, 0),
+                            HoraFim = new TimeSpan(14, 30, 0)
+                        },
+                        new Horario
+                        {
+                            HorarioId = 2,
+                            AgendaId = 1,
+                            DiaSemana = DiaSemana.Terca,
+                            HoraInicio = new TimeSpan(14, 30, 0),
+                            HoraFim = new TimeSpan(15, 30, 0)
+                        }
+                    }
+                }
+            };
+
+            _consultaService.Add(consulta);
+            Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["HORARIO_INDISPONIVEL"]));
         }
     }
 }
