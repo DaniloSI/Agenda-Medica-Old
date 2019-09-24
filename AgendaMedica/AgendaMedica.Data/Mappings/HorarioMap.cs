@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AgendaMedica.Data.Mappings
 {
@@ -16,56 +18,23 @@ namespace AgendaMedica.Data.Mappings
                 .HasForeignKey(h => h.AgendaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasData(
-                new Horario
+            List<Horario> horarios = new List<Horario>();
+            int horarioId = 1;
+            foreach (DiaSemana diaSemana in Enum.GetValues(typeof(DiaSemana)))
+            {
+                foreach (int hora in Enumerable.Range(7, 7))
                 {
-                    HorarioId = 1,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Segunda,
-                    HoraInicio = new TimeSpan(7, 30, 0),
-                    HoraFim = new TimeSpan(8, 30, 0)
-                },
-                new Horario
-                {
-                    HorarioId = 2,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Segunda,
-                    HoraInicio = new TimeSpan(8, 30, 0),
-                    HoraFim = new TimeSpan(9, 30, 0)
-                },
-                new Horario
-                {
-                    HorarioId = 3,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Segunda,
-                    HoraInicio = new TimeSpan(9, 30, 0),
-                    HoraFim = new TimeSpan(10, 30, 0)
-                },
-                new Horario
-                {
-                    HorarioId = 4,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Terca,
-                    HoraInicio = new TimeSpan(7, 30, 0),
-                    HoraFim = new TimeSpan(8, 30, 0)
-                },
-                new Horario
-                {
-                    HorarioId = 5,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Terca,
-                    HoraInicio = new TimeSpan(8, 30, 0),
-                    HoraFim = new TimeSpan(9, 30, 0)
-                },
-                new Horario
-                {
-                    HorarioId = 6,
-                    AgendaId = 1,
-                    DiaSemana = DiaSemana.Quarta,
-                    HoraInicio = new TimeSpan(9, 30, 0),
-                    HoraFim = new TimeSpan(10, 30, 0)
+                    horarios.Add(new Horario
+                    {
+                        HorarioId = horarioId++,
+                        AgendaId = 1,
+                        DiaSemana = diaSemana,
+                        HoraInicio = new TimeSpan(hora, 30, 0),
+                        HoraFim = new TimeSpan(hora + 1, 30, 0)
+                    });
                 }
-            );
+            }
+            builder.HasData(horarios);
 
             builder.ToTable(nameof(Horario));
         }
