@@ -9,5 +9,10 @@
         public string Complemento { get; set; }
         public string Cidade { get; set; }
         public int Numero { get; set; }
+
+        public override string ToString()
+        {
+            return $"Rua {Rua}, CEP {CEP}, Nº {Numero}";
+        }
     }
 }

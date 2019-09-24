@@ -1,11 +1,12 @@
 ﻿using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.ViewModels;
-using AgendaMedica.Domain.Entities;
+using AgendaMedica.Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AgendaMedica.API.Controllers
 {
@@ -14,10 +15,16 @@ namespace AgendaMedica.API.Controllers
     public class AgendaController : ControllerBase
     {
         private readonly IAgendaAppService _agendaAppService;
+        private readonly IConsultaAppService _consultaAppService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AgendaController(IAgendaAppService agendaAppService)
+        public AgendaController(IAgendaAppService agendaAppService,
+            IConsultaAppService consultaAppService,
+            UserManager<AppUser> userManager)
         {
             _agendaAppService = agendaAppService;
+            _consultaAppService = consultaAppService;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -26,6 +33,27 @@ namespace AgendaMedica.API.Controllers
         {
             _agendaAppService.Add(agenda);
             return agenda;
+        }
+
+        [HttpGet("AgendaPaciente")]
+        [Authorize]
+        public async Task<JsonResult> GetAgendaPaciente()
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var consultas = _consultaAppService.GetAllByPaciente(user.Id);
+
+            return new JsonResult(
+                consultas.Select(c => new
+                {
+                    c.ConsultaId,
+                    EspecialidadeNome = c.Especialidade.Nome,
+                    ProfissionalNome = c.Profissional.Nome,
+                    Endereco = c.Profissional.Endereco?.ToString(),
+                    Data = c.Data.Date.ToString("dd/MM/yyyy"),
+                    c.HoraInicio,
+                    c.HoraFim
+                })
+            );
         }
 
         [HttpPost("AddHorarioExcecao")]

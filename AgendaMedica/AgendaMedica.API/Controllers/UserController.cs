@@ -68,7 +68,7 @@ namespace AgendaMedica.API.Controllers
                 {
                     p.Id,
                     NomeCompleto = $"{p.Nome} {p.SobreNome}",
-                    Endereco = p.Endereco != null ? $"Rua {p.Endereco.Rua}, CEP {p.Endereco.CEP}, Nº {p.Endereco.Numero}" : "",
+                    Endereco = p.Endereco != null ? p.Endereco.ToString() : "",
                     Avaliacao = 3.5,
                     Especialidades = p.Especialidades.Select(e => new
                     {

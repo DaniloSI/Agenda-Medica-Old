@@ -1,21 +1,27 @@
-﻿using AgendaMedica.Application.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.ViewModels;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaMedica.Application.AppServices
 {
     public class ConsultaAppService : AppService<Consulta, ConsultaViewModel>, IConsultaAppService
     {
         private readonly IConsultaService _consultaService;
+        private readonly IConsultaRepository _consultaRepository;
         public ConsultaAppService(IConsultaService consultaService,
+            IConsultaRepository consultaRepository,
             IUnitOfWork UoW,
             IMapper mapper)
             : base(consultaService, UoW, mapper)
         {
             _consultaService = consultaService;
+            _consultaRepository = consultaRepository;
         }
 
         public override void Add(ConsultaViewModel consultaViewModel)
@@ -28,6 +34,19 @@ namespace AgendaMedica.Application.AppServices
                 UoW.Commit();
 
             consultaViewModel.ValidationResult = consulta.ValidationResult;
+        }
+
+        public IEnumerable<ConsultaViewModel> GetAllByPaciente(int id)
+        {
+            IEnumerable<Consulta> consultas = _consultaRepository
+                .GetAll()
+                .Include(c => c.Especialidade)
+                .Include(c => c.Profissional)
+                    .ThenInclude(p => p.Endereco)
+                .Where(consulta => consulta.PacienteId == id)?
+                .ToList() ?? new List<Consulta>();
+
+            return _mapper.Map<IEnumerable<ConsultaViewModel>>(consultas);
         }
     }
 }

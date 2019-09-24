@@ -1,9 +1,8 @@
 import React, { forwardRef }  from 'react'
 import Container from '@material-ui/core/Container';
 import MaterialTable from 'material-table';
+import api from '../../services/api';
 import {
-    Search,
-    Clear,
     FirstPage,
     LastPage,
     ChevronLeft,
@@ -12,13 +11,10 @@ import {
 } from '@material-ui/icons';
 
 const tableIcons = {
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
     FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
     LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
     NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
     PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
     SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />)
 };
 
@@ -27,15 +23,15 @@ export default function Agenda() {
         columns: [
             {
                 title: 'Especialidade',
-                field: 'especialidade'
+                field: 'especialidadeNome'
             },
             {
                 title: 'Profissional',
-                field: 'nome'
+                field: 'profissionalNome'
             },
             {
                 title: 'Endereço',
-                field: 'Endereco'
+                field: 'endereco'
             },
             {
                 title: 'Data',
@@ -44,43 +40,33 @@ export default function Agenda() {
             },
             {
                 title: 'Horário de Início',
-                field: 'horarioInicio'
+                field: 'horaInicio'
             },
             {
                 title: 'Horário de Fim',
-                field: 'horarioFim',
+                field: 'horaFim',
                 type: 'time'
             }
-        ],
-        data: [
-            {
-                especialidade: 'Clínico Geral',
-                nome: 'José da Silva',
-                Endereco: 'R. Coelho Filho, 38 - Parque Res. Laranjeiras, Serra - ES, 29191-275',
-                data: '16/09/2019',
-                horarioInicio: '15:30',
-                horarioFim: '16:30'
-            },
-            {
-                especialidade: 'Fisioterapeuta',
-                nome: 'Lorraine Soarez de Sousa',
-                Endereco: 'R. Coelho Sobrinho, 83 - Morada de Laranjeiras, Serra - ES, 29191-123',
-                data: '21/09/2019',
-                horarioInicio: '08:30', 
-                horarioFim: '10:30'
-            }
-        ],
+        ]
       });
     return (
         <Container maxWidth="lg">
             <MaterialTable
                 title="Agenda"
                 columns={state.columns}
-                data={state.data}
+                data={() => new Promise((resolve, reject) => {
+                    api.get('/Agenda/AgendaPaciente')
+                        .then(response => {
+                            resolve({
+                                data: response.data
+                            });
+                        });
+                })}
                 icons={tableIcons}
                 options={
                     {
-                        paging: false
+                        paging: false,
+                        search: false
                     }
                 }
             />
