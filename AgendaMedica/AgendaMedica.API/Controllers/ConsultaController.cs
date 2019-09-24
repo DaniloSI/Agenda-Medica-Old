@@ -48,5 +48,44 @@ namespace AgendaMedica.API.Controllers
                 }
             });
         }
+
+        [HttpGet("CancelarConsulta")]
+        [Authorize]
+        public async Task<JsonResult> CancelarConsulta(int consultaId)
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            ConsultaViewModel consulta = _consultaAppService.GetById(consultaId);
+
+            if (user.Id != consulta.ProfissionalId && user.Id != consulta.PacienteId)
+            {
+                return new JsonResult(new
+                {
+                    ValidationResult = new
+                    {
+                        IsValid = false,
+                        Errors = new object[] {
+                            new
+                            {
+                                ErrorMessage = "Somente o paciente e o profissional pode cancelar a consulta"
+                            }
+                        }
+                    }
+                });
+            }
+            else
+            {
+                _consultaAppService.Remove(consultaId);
+
+                return new JsonResult(new
+                {
+                    ValidationResult = new
+                    {
+                        IsValid = true,
+                        Errors = new object[] { }
+                    }
+                });
+            }
+        }
     }
 }

@@ -2,6 +2,8 @@ import React, { forwardRef }  from 'react'
 import Container from '@material-ui/core/Container';
 import MaterialTable from 'material-table';
 import api from '../../services/api';
+import ConfirmCancel from '../../services/ConfirmCancel';
+import * as Notifications from '../../services/notifications';
 import {
     FirstPage,
     LastPage,
@@ -74,13 +76,39 @@ export default function Agenda() {
                 }
                 actions={[
                     {
-                        icon: tableIcons.Cancel,
-                        tooltip: 'Cancelar Consulta',
-                        onClick: (event, rowData) => {
-                            alert('Clicou em cancelar consulta.');
-                        }
+                      icon: 'Cancel',
+                      tooltip: 'cancelar'
                     }
-                ]}
+                  ]}
+                components={{
+                    Action: props => 
+                        <ConfirmCancel
+                        title="Deseja cancelar a consulta?"
+                        text="Ao clicar em SIM, a consulta será cancelada."
+                        labelCancel="Não"
+                        labelAccept="Sim"
+                        callBack={(setOpen)=> {
+                            console.log(props);
+                            api.get('/Consulta/CancelarConsulta', {
+                                params: {
+                                    consultaId: props.data.consultaId
+                                }
+                            })
+                                .then(response => {
+                                    if (response.status == 200){
+                                        if (response.data.validationResult.isValid) {
+                                        Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                        } else {
+                                            response.data.validationResult.errors.forEach(function (e) {
+                                                Notifications.showError(e.errorMessage);
+                                            })
+                                        }
+                                    }
+                                    setOpen(false);
+                                });
+                        }}
+                        />
+                }}
             />
         </Container>
     )
