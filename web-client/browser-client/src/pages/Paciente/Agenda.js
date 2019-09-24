@@ -7,7 +7,8 @@ import {
     LastPage,
     ChevronLeft,
     ChevronRight,
-    ArrowUpward
+    ArrowUpward,
+    Cancel
 } from '@material-ui/icons';
 
 const tableIcons = {
@@ -15,7 +16,8 @@ const tableIcons = {
     LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
     NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
     PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />)
+    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
+    Cancel: forwardRef((props, ref) => <Cancel {...props} ref={ref} />)
 };
 
 export default function Agenda() {
@@ -66,9 +68,19 @@ export default function Agenda() {
                 options={
                     {
                         paging: false,
-                        search: false
+                        search: false,
+                        actionsColumnIndex: -1
                     }
                 }
+                actions={[
+                    {
+                        icon: tableIcons.Cancel,
+                        tooltip: 'Cancelar Consulta',
+                        onClick: (event, rowData) => {
+                            alert('Clicou em cancelar consulta.');
+                        }
+                    }
+                ]}
             />
         </Container>
     )
