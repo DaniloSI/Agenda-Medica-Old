@@ -177,5 +177,34 @@ namespace AgendaMedica.Domain.Teste
             _consultaService.Add(consulta);
             Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["HORARIO_INDISPONIVEL"]));
         }
+
+        [Test]
+        [Category("Agendar Consulta")]
+        public void ConsultaNaoPodeConflitarHorarioPaciente()
+        {
+            DateTime dataInicioConsulta = new DateTime(2019, 09, 06, 15, 30, 00);
+            DateTime dataFimConsulta = new DateTime(2019, 09, 06, 16, 30, 00);
+
+            consulta.Data = dataInicioConsulta.Date;
+            consulta.HoraInicio = dataInicioConsulta.TimeOfDay;
+            consulta.HoraFim = dataFimConsulta.TimeOfDay;
+
+            consulta.Paciente.Consultas = new List<Consulta>
+            {
+                new Consulta
+                {
+                    ConsultaId = 1,
+                    PagamentoConfirmado = true,
+                    Data = dataInicioConsulta.Date,
+                    HoraInicio = dataInicioConsulta.AddMinutes(30).TimeOfDay,
+                    HoraFim = dataFimConsulta.AddMinutes(30).TimeOfDay,
+                    ProfissionalId = 2,
+                    PacienteId = 1
+                }
+            };
+
+            _consultaService.Add(consulta);
+            Assert.IsNotEmpty(consulta.ValidationResult.Errors.Where(e => e.ErrorMessage == ConsultaValidator.ErrorsMessages["CONFLITO_HORARIO_PACIENTE"]));
+        }
     }
 }

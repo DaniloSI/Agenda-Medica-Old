@@ -12,6 +12,7 @@ namespace AgendaMedica.Domain.Validations
         {
             ["CONSULTA_NO_PASSADO"] = "A consulta não pode ser no passado",
             ["CONFLITO_HORARIO_PROFISSIONAL"] = "O profissional {{PROFISSIONAL_NOME}} já possui uma outra consulta agendada para esse horário",
+            ["CONFLITO_HORARIO_PACIENTE"] = "Você já possui uma consulta agendada para esse horário",
             ["PROFISSIONAL_OBRIGATORIO"] = "O Profissional é obrigatório",
             ["PACIENTE_OBRIGATORIO"] = "O Paciente é obrigatório",
             ["ESPECIALIDADE_OBRIGATORIA"] = "O campo Especialidade é obrigatório",
@@ -47,6 +48,10 @@ namespace AgendaMedica.Domain.Validations
             RuleFor(novaConsulta => novaConsulta.Profissional)
                 .Must((novaConsulta, profissional) => !profissional.ConflitaHorario(novaConsulta))
                 .WithMessage(c => ErrorsMessages["CONFLITO_HORARIO_PROFISSIONAL"].Replace("{{PROFISSIONAL_NOME}}", c.Profissional.Nome));
+
+            RuleFor(novaConsulta => novaConsulta.Paciente)
+                .Must((novaConsulta, paciente) => !paciente.ConflitaHorario(novaConsulta))
+                .WithMessage(ErrorsMessages["CONFLITO_HORARIO_PACIENTE"]);
         }
     }
 }
