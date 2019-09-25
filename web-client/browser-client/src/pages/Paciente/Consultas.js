@@ -70,30 +70,29 @@ export default function Consultas(props) {
                     }
                 }
                 actions={[
-                    {
+                    rowData => ({
                       icon: 'Cancel',
                       tooltip: 'cancelar'
-                    }
+                    })
                   ]}
                 components={{
-                    Action: props => 
+                    Action: rowData => 
                         <ConfirmCancel
                         title="Deseja cancelar a consulta?"
                         text="Ao clicar em SIM, a consulta será cancelada."
                         labelCancel="Não"
                         labelAccept="Sim"
                         callBack={(setOpen)=> {
-                            console.log(props);
                             api.get('/Consulta/CancelarConsulta', {
                                 params: {
-                                    consultaId: props.data.consultaId
+                                    consultaId: rowData.data.consultaId
                                 }
                             })
                                 .then(response => {
                                     if (response.status == 200){
                                         if (response.data.validationResult.isValid) {
                                             const data = [...state.data];
-                                            data.splice(data.indexOf(props.data), 1);
+                                            data.splice(data.indexOf(rowData.data), 1);
                                             setState({ ...state, data });
 
                                             Notifications.showSuccess("Consulta cancelada com sucesso!");
