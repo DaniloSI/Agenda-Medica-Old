@@ -18,7 +18,6 @@ export default function ConfirmCancel(props) {
 
   const handleClose = () => {
     setOpen(false);
-    props.callBack(setOpen);
   };
 
   return (
@@ -41,11 +40,23 @@ export default function ConfirmCancel(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} size="small" color="default">
-          {props.labelCancel}
+          <Button
+            onClick={handleClose}
+            size="small"
+            color="default"
+          >
+            {props.labelCancel}
           </Button>
-          <Button onClick={handleClose} size="small" color="primary" autoFocus>
-          {props.labelAccept}
+          <Button
+            onClick={() => {
+              setOpen(false);
+              props.callBack(setOpen);
+            }}
+            size="small"
+            color="primary"
+            autoFocus
+          >
+            {props.labelAccept}
           </Button>
         </DialogActions>
       </Dialog>
