@@ -36,6 +36,12 @@ namespace AgendaMedica.Application.AppServices
             consultaViewModel.ValidationResult = consulta.ValidationResult;
         }
 
+        public override void Remove(int id)
+        {
+            base.Remove(id);
+            UoW.Commit();
+        }
+
         public IEnumerable<ConsultaViewModel> GetAllByPaciente(int id)
         {
             IEnumerable<Consulta> consultas = _consultaRepository

@@ -35,27 +35,6 @@ namespace AgendaMedica.API.Controllers
             return agenda;
         }
 
-        [HttpGet("AgendaPaciente")]
-        [Authorize]
-        public async Task<JsonResult> GetAgendaPaciente()
-        {
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            var consultas = _consultaAppService.GetAllByPaciente(user.Id);
-
-            return new JsonResult(
-                consultas.Select(c => new
-                {
-                    c.ConsultaId,
-                    EspecialidadeNome = c.Especialidade.Nome,
-                    ProfissionalNome = c.Profissional.Nome,
-                    Endereco = c.Profissional.Endereco?.ToString(),
-                    Data = c.Data.Date.ToString("dd/MM/yyyy"),
-                    c.HoraInicio,
-                    c.HoraFim
-                })
-            );
-        }
-
         [HttpPost("AddHorarioExcecao")]
         [AllowAnonymous]
         public ActionResult<HorarioExcecaoViewModel> AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecao)

@@ -22,7 +22,7 @@ const tableIcons = {
     Cancel: forwardRef((props, ref) => <Cancel {...props} ref={ref} />)
 };
 
-export default function Agenda() {
+export default function Consultas(props) {
     const [state, setState] = React.useState({
         columns: [
             {
@@ -51,21 +51,16 @@ export default function Agenda() {
                 field: 'horaFim',
                 type: 'time'
             }
-        ]
+        ],
+        data: props.consultas
       });
+
     return (
         <Container maxWidth="lg">
             <MaterialTable
-                title="Agenda"
+                title="Consultas Agendadas"
                 columns={state.columns}
-                data={() => new Promise((resolve, reject) => {
-                    api.get('/Agenda/AgendaPaciente')
-                        .then(response => {
-                            resolve({
-                                data: response.data
-                            });
-                        });
-                })}
+                data={state.data}
                 icons={tableIcons}
                 options={
                     {
@@ -97,7 +92,11 @@ export default function Agenda() {
                                 .then(response => {
                                     if (response.status == 200){
                                         if (response.data.validationResult.isValid) {
-                                        Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                            const data = [...state.data];
+                                            data.splice(data.indexOf(props.data), 1);
+                                            setState({ ...state, data });
+
+                                            Notifications.showSuccess("Consulta cancelada com sucesso!");
                                         } else {
                                             response.data.validationResult.errors.forEach(function (e) {
                                                 Notifications.showError(e.errorMessage);

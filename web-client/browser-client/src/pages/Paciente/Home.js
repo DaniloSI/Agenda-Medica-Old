@@ -22,8 +22,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import SearchIcon from '@material-ui/icons/Search';
-import Agenda from './Agenda'
+import Consultas from './Consultas'
 import BuscaProfissionais from './BuscaProfissionais'
+import api from '../../services/api';
 
 const drawerWidth = 260;
 
@@ -113,6 +114,18 @@ export default function MenuAppBar({ history }) {
     setOpenLeftMenu(false);
   }
 
+  function renderPageConsultas() {
+    api.get('/Consulta/ConsultasPaciente')
+      .then(response => {
+        ReactDOM.render(
+          <Consultas
+            consultas={response.data}
+          />,
+          document.getElementById('pagina-paciente')
+        );
+      })
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -185,18 +198,11 @@ export default function MenuAppBar({ history }) {
         </div>
         <Divider />
         <List>
-          <ListItem button key='Minha Agenda' onClick={
-            () => {
-              ReactDOM.render(
-                <Agenda />,
-                document.getElementById('pagina-paciente')
-              );
-            }
-          }>
+          <ListItem button key='Minha Agenda' onClick={renderPageConsultas}>
             <ListItemIcon>
               <EventNoteIcon />
             </ListItemIcon>
-            <ListItemText primary='Minha Agenda' />
+            <ListItemText primary='Minhas Consultas' />
           </ListItem>
           <ListItem button key='Procurar Profissionais' onClick={
             () => {
@@ -221,7 +227,7 @@ export default function MenuAppBar({ history }) {
       >
         <div className={classes.drawerHeader} />
         <div id="pagina-paciente">
-          <Agenda />
+          {renderPageConsultas()}
         </div>
       </main>
     </div>

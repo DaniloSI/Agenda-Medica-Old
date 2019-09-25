@@ -104,6 +104,11 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
       ...oldHorario,
       'horarioId': '',
     }));
+    setEspecialidade(oldEspecialidade => ({
+      ...oldEspecialidade,
+      'especialidadeId': '',
+    }));
+    setSelectedDate(null);
   };
 
   async function handleAgendar() {
@@ -120,11 +125,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
 
       if (response.status == 200) {
         if (response.data.validationResult.isValid) {
-          setOpen(false);
-          setHorario(oldHorario => ({
-            ...oldHorario,
-            'horarioId': '',
-          }));
+          handleClose();
           Notifications.showSuccess("Horário agendado com sucesso!");
         } else {
           response.data.validationResult.errors.forEach(function (error) {
