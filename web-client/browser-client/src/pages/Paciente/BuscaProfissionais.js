@@ -5,9 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container'
 import CardBuscaProfissionais from './CardBuscaProfissionais'
 import api from '../../services/api';
+import NavBarPaciente from './NavBarPaciente.js';
 
 
-export default function BuscaProfissionais() {
+export default function BuscaProfissionais({ history }) {
 
   async function showProfissionais() {
     const response = await api.get("/User/Profissionais");
@@ -22,12 +23,17 @@ export default function BuscaProfissionais() {
   showProfissionais()
 
   return (
-      <div>
-          <CssBaseline />
-          <Container fixed>
-              <div id="cards-profissionais">
-              </div>
-          </Container>
-      </div>
+    <NavBarPaciente
+      history={history}
+      content={
+          <div>
+            <CssBaseline />
+            <Container fixed>
+                <div id="cards-profissionais">
+                </div>
+            </Container>
+          </div>
+      }
+    />
   )
 }

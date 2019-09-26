@@ -1,4 +1,5 @@
 import React, { forwardRef }  from 'react'
+import ReactDOM from 'react-dom';
 import Container from '@material-ui/core/Container';
 import MaterialTable from 'material-table';
 import api from '../../services/api';
@@ -12,6 +13,7 @@ import {
     ArrowUpward,
     Cancel
 } from '@material-ui/icons';
+import NavBarPaciente from './NavBarPaciente.js';
 
 const tableIcons = {
     FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
@@ -22,7 +24,9 @@ const tableIcons = {
     Cancel: forwardRef((props, ref) => <Cancel {...props} ref={ref} />)
 };
 
-export default function Consultas(props) {
+
+function TableConsultas({ consultas }) {
+    console.log(consultas);
     const [state, setState] = React.useState({
         columns: [
             {
@@ -52,62 +56,82 @@ export default function Consultas(props) {
                 type: 'time'
             }
         ],
-        data: props.consultas
-      });
+        data: consultas
+    });
 
     return (
-        <Container maxWidth="lg">
-            <MaterialTable
-                title="Consultas Agendadas"
-                columns={state.columns}
-                data={state.data}
-                icons={tableIcons}
-                options={
-                    {
-                        paging: false,
-                        search: false,
-                        actionsColumnIndex: -1
-                    }
+        <MaterialTable
+            title="Consultas Agendadas"
+            columns={state.columns}
+            data={state.data}
+            icons={tableIcons}
+            options={
+                {
+                    paging: false,
+                    search: false,
+                    actionsColumnIndex: -1
                 }
-                actions={[
-                    rowData => ({
-                      icon: 'Cancel',
-                      tooltip: 'cancelar'
-                    })
-                  ]}
-                components={{
-                    Action: rowData => 
-                        <ConfirmCancel
-                        title="Deseja cancelar a consulta?"
-                        text="Ao clicar em SIM, a consulta será cancelada."
-                        labelCancel="Não"
-                        labelAccept="Sim"
-                        callBack={(setOpen)=> {
-                            api.get('/Consulta/CancelarConsulta', {
-                                params: {
-                                    consultaId: rowData.data.consultaId
-                                }
-                            })
-                                .then(response => {
-                                    if (response.status == 200){
-                                        if (response.data.validationResult.isValid) {
-                                            const data = [...state.data];
-                                            data.splice(data.indexOf(rowData.data), 1);
-                                            setState({ ...state, data });
+            }
+            actions={[
+                rowData => ({
+                icon: 'Cancel',
+                tooltip: 'cancelar'
+                })
+            ]}
+            components={{
+                Action: rowData => 
+                    <ConfirmCancel
+                    title="Deseja cancelar a consulta?"
+                    text="Ao clicar em SIM, a consulta será cancelada."
+                    labelCancel="Não"
+                    labelAccept="Sim"
+                    callBack={(setOpen)=> {
+                        api.get('/Consulta/CancelarConsulta', {
+                            params: {
+                                consultaId: rowData.data.consultaId
+                            }
+                        })
+                            .then(response => {
+                                if (response.status == 200){
+                                    if (response.data.validationResult.isValid) {
+                                        const data = [...state.data];
+                                        data.splice(data.indexOf(rowData.data), 1);
+                                        setState({ ...state, data });
 
-                                            Notifications.showSuccess("Consulta cancelada com sucesso!");
-                                        } else {
-                                            response.data.validationResult.errors.forEach(function (e) {
-                                                Notifications.showError(e.errorMessage);
-                                            })
-                                        }
+                                        Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                    } else {
+                                        response.data.validationResult.errors.forEach(function (e) {
+                                            Notifications.showError(e.errorMessage);
+                                        })
                                     }
-                                    setOpen(false);
-                                });
-                        }}
-                        />
-                }}
-            />
-        </Container>
+                                }
+                                setOpen(false);
+                            });
+                    }}
+                    />
+            }}
+        />
+    );
+}
+
+export default function Consultas(props) {
+    api.get('/Consulta/ConsultasPaciente')
+        .then(response => {
+            ReactDOM.render(
+                <TableConsultas consultas={response.data} />,
+                document.getElementById('table-consultas')
+            );
+    });
+
+    return (
+        <NavBarPaciente
+            history={props.history}
+            content={
+                <Container maxWidth="lg">
+                    <div id="table-consultas">
+                    </div>
+                </Container>
+            }
+        />
     )
 }

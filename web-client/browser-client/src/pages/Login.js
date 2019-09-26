@@ -37,7 +37,7 @@ export default function Login({ history }) {
   
       if(token !== null) login(token);
   
-      history.push('/Home');
+      history.push('/ConsultasPaciente');
     } else {
       Notifications.showError(response.data.erro);
     }
