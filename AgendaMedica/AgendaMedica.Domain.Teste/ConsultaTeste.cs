@@ -91,9 +91,11 @@ namespace AgendaMedica.Domain.Teste
 
             var mock = new Mock<IConsultaRepository>();
             var mockProfissional = new Mock<IUsuarioProfissionalRepository>();
+            var mockPaciente = new Mock<IUsuarioPacienteRepository>();
             mock.Setup(x => x.Add(It.IsAny<Consulta>()));
             mockProfissional.Setup(x => x.GetAll()).Returns(new List<UsuarioProfissional> { consulta.Profissional }.AsQueryable());
-            _consultaService = new ConsultaService(mock.Object, mockProfissional.Object);
+            mockPaciente.Setup(x => x.GetAll()).Returns(new List<UsuarioPaciente> { consulta.Paciente }.AsQueryable());
+            _consultaService = new ConsultaService(mock.Object, mockProfissional.Object, mockPaciente.Object);
         }
 
         [Test]
