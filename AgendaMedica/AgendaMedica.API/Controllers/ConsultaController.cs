@@ -70,6 +70,29 @@ namespace AgendaMedica.API.Controllers
             );
         }
 
+        [HttpGet("ConsultasProfissional")]
+        [Authorize]
+        public async Task<JsonResult> GetConsultasProfissional()
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var consultas = _consultaAppService.GetAllByProfissional(user.Id);
+
+            return new JsonResult(
+                consultas.Select(c => new
+                {
+                    c.ConsultaId,
+                    EspecialidadeNome = c.Especialidade.Nome,
+                    PacienteNome = $"{c.Paciente.Nome} {c.Paciente.SobreNome}",
+                    c.Paciente.Cpf,
+                    c.Paciente.Email,
+                    c.Paciente.PhoneNumber,
+                    Data = c.Data.Date.ToString("dd/MM/yyyy"),
+                    c.HoraInicio,
+                    c.HoraFim
+                })
+            );
+        }
+
         [HttpGet("CancelarConsulta")]
         [Authorize]
         public async Task<JsonResult> CancelarConsulta(int consultaId)

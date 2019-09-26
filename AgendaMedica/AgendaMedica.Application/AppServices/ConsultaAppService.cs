@@ -54,5 +54,17 @@ namespace AgendaMedica.Application.AppServices
 
             return _mapper.Map<IEnumerable<ConsultaViewModel>>(consultas);
         }
+
+        public IEnumerable<ConsultaViewModel> GetAllByProfissional(int id)
+        {
+            IEnumerable<Consulta> consultas = _consultaRepository
+                .GetAll()
+                .Include(c => c.Especialidade)
+                .Include(c => c.Paciente)
+                .Where(consulta => consulta.ProfissionalId == id)?
+                .ToList() ?? new List<Consulta>();
+
+            return _mapper.Map<IEnumerable<ConsultaViewModel>>(consultas);
+        }
     }
 }

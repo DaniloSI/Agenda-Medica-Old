@@ -33,11 +33,19 @@ export default function Login({ history }) {
       });
     
     if (response.data.sucesso) {
-      const { token } = response.data;
+      const { token, tipoUsuario } = response.data;
+
+      localStorage.setItem('TIPO_USUARIO', tipoUsuario);
   
-      if(token !== null) login(token);
-  
-      history.push('/ConsultasPaciente');
+      if(token !== null) {
+        login(token);
+      }
+
+      if (tipoUsuario == '0') {
+        history.push('/ConsultasPaciente');
+      } else {
+        history.push('/ConsultasProfissional');
+      }
     } else {
       Notifications.showError(response.data.erro);
     }
