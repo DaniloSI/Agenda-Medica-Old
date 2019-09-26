@@ -26,7 +26,6 @@ const tableIcons = {
 
 
 function TableConsultas({ consultas }) {
-    console.log(consultas);
     const [state, setState] = React.useState({
         columns: [
             {
