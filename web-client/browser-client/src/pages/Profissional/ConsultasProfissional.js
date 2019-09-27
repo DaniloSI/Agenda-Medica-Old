@@ -134,7 +134,7 @@ export default function ConsultasProfissional(props) {
         <NavBarProfissional
             history={props.history}
             content={
-                <Container maxWidth="lg">
+                <Container maxWidth="xl">
                     <div id="table-consultas">
                     </div>
                 </Container>
