@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,14 +10,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Fab from '@material-ui/core/Fab';
 import * as Notifications from '../../services/notifications';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
 } from '@material-ui/pickers';
-import { Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    maxWidth: '450px'
+    maxWidth: '475px'
   },
   button: {
     margin: theme.spacing(1),
@@ -114,9 +110,9 @@ export default function AdicionarHorario({ callBackAdicionar }) {
 
   return (
     <div>
-        <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
-            <AddIcon />
-        </Fab>
+        <Button variant="contained" className={classes.button} onClick={handleOpen}>
+            Adicionar Horário
+        </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -182,21 +178,13 @@ export default function AdicionarHorario({ callBackAdicionar }) {
                   </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={8}>
-                  <Button variant="contained" size="small" color="primary" className={classes.button} onClick={handleAdicionar}>
-                    <Typography noWrap={true}>
-                        <Box fontSize="fontSize" m={1}>
-                            Adicionar e Limpar Campos
-                        </Box>
-                    </Typography>
+                  <Button variant="contained" size="medium" color="primary" className={classes.button} onClick={handleAdicionar}>
+                    Adicionar e Limpar Campos
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button variant="contained" size="small" className={classes.button} onClick={handleClose}>
-                    <Typography noWrap={true}>
-                        <Box fontSize="fontSize" m={1}>
-                            Fechar
-                        </Box>
-                    </Typography>
+                  <Button variant="contained" size="medium" className={classes.button} onClick={handleClose}>
+                    Fechar
                   </Button>
                 </Grid>
               </Grid>

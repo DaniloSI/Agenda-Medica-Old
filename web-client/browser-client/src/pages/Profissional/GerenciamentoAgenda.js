@@ -155,6 +155,15 @@ export default function GerenciamentoAgenda(props) {
                                                 />
                                             </MuiPickersUtilsProvider>
                                         </Grid>
+                                        <Grid item xs={12}>
+                                            <Box display="flex" justifyContent="flex-end">
+                                                <AdicionarHorario callBackAdicionar={(h) => {
+                                                    var novosHorarios = horarios.slice();
+                                                    novosHorarios.push(h);
+                                                    setHorarios(old => novosHorarios);
+                                                }}/>
+                                            </Box>
+                                        </Grid>
                                     </Grid>
                                 </form>
                             </Paper>
@@ -181,11 +190,6 @@ export default function GerenciamentoAgenda(props) {
                             )}
                         </Box>
                     </Container>
-                    <AdicionarHorario callBackAdicionar={(h) => {
-                        var novosHorarios = horarios.slice();
-                        novosHorarios.push(h);
-                        setHorarios(old => novosHorarios);
-                    }}/>
                 </div>
             }
         />
