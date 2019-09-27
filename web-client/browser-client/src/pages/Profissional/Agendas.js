@@ -68,7 +68,7 @@ export default function Agendas(props) {
                                 }
                             ]}
                         />
-                        <Fab color="primary" aria-label="add" className={classes.fab}>
+                        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => props.history.push('/GerenciamentoAgenda')}>
                             <AddIcon />
                         </Fab>
                     </div>

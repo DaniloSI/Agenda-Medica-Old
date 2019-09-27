@@ -44,15 +44,15 @@ const useStyles = makeStyles(theme => ({
   fab: {
         position: "fixed",
         margin: theme.spacing(1),
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 6
+        bottom: theme.spacing(2),
+        right: theme.spacing(6)
     },
 }));
 
-export default function AdicionarHorario() {
+export default function AdicionarHorario({ callBackAdicionar }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [selectedDiaSemana, setSelectedDiaSemana] = React.useState(null);
+  const [selectedDiaSemana, setSelectedDiaSemana] = React.useState('');
   const [selectedHorarioInicio, setSelectedHorarioInicio] = React.useState(null);
   const [selectedHorarioFim, setSelectedHorarioFim] = React.useState(null);
   const listaDiasSemana = [
@@ -85,9 +85,24 @@ export default function AdicionarHorario() {
     setOpen(false);
   };
 
+  const handleAdicionar = () => {
+    callBackAdicionar({
+        horarioId : 50,
+        diaSemana: selectedDiaSemana,
+        horaInicio: selectedHorarioInicio.getHours() + ":" + selectedHorarioInicio.getMinutes(),
+        horaFim: selectedHorarioFim.getHours() + ":" + selectedHorarioFim.getMinutes()
+      });
+    
+    Notifications.showSuccess("Horário adicionado com sucesso!");
+
+    setSelectedDiaSemana('');
+    setSelectedHorarioInicio(null);
+    setSelectedHorarioFim(null);
+  }
+
   return (
     <div>
-        <Fab color="primary" aria-label="add" className={classes.fab}  onClick={handleOpen}>
+        <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
             <AddIcon />
         </Fab>
       <Modal
@@ -105,6 +120,7 @@ export default function AdicionarHorario() {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Novo Horário</h2>
+            <br />
             <form autoComplete="off" className={{flexGrow: 1}}>
               <Grid container spacing={3} justify="center">
                 <Grid item xs={12}>
@@ -151,7 +167,7 @@ export default function AdicionarHorario() {
                   </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={6}>
-                  <Button variant="contained" color="primary" className={classes.button}>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={handleAdicionar}>
                     Adicionar
                   </Button>
                 </Grid>

@@ -36,8 +36,8 @@ const useStyles = makeStyles(theme => ({
     fab: {
         position: "fixed",
         margin: theme.spacing(1),
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 6
+        bottom: theme.spacing(2),
+        right: theme.spacing(6)
     },
   }));
 
@@ -52,7 +52,7 @@ export default function GerenciamentoAgenda(props) {
         "Sexta-Feira",
         "Sábado"
     ];
-    const horarios = [
+    const [horarios, setHorarios] = React.useState([
         {
             horarioId : 1,
             diaSemana: 0,
@@ -101,7 +101,7 @@ export default function GerenciamentoAgenda(props) {
             horaInicio: '09:00',
             horaFim: '10:00'
         }
-    ];
+    ]);
 
     return (
         <NavBarProfissional
@@ -181,9 +181,11 @@ export default function GerenciamentoAgenda(props) {
                             )}
                         </Box>
                     </Container>
-                    <Fab color="primary" aria-label="add" className={classes.fab}>
-                        <AdicionarHorario />
-                    </Fab>
+                    <AdicionarHorario callBackAdicionar={(h) => {
+                        var novosHorarios = horarios.slice();
+                        novosHorarios.push(h);
+                        setHorarios(old => novosHorarios);
+                    }}/>
                 </div>
             }
         />
