@@ -126,7 +126,7 @@ export default function Consultas(props) {
         <NavBarPaciente
             history={props.history}
             content={
-                <Container maxWidth="lg">
+                <Container fixed>
                     <div id="table-consultas"></div>
                 </Container>
             }

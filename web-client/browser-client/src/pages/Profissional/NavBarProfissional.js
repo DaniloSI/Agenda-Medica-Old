@@ -30,7 +30,7 @@ export default function NavBarProfissional(props) {
                         button
                         key='Gerenciar Agendas'
                         onClick={
-                            () => props.history.push('/GerenciamentoAgendas')
+                            () => props.history.push('/Agendas')
                         }
                     >
                         <ListItemIcon>

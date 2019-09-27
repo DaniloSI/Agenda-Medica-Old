@@ -9,6 +9,7 @@ import BuscaProfissionais from './pages/Paciente/BuscaProfissionais'
 import Consultas from './pages/Paciente/Consultas'
 import ConsultasProfissional from './pages/Profissional/ConsultasProfissional'
 import GerenciamentoAgenda from './pages/Profissional/GerenciamentoAgenda'
+import Agendas from './pages/Profissional/Agendas'
 
 import AgendamentoHorario from './pages/AgendamentoHorario'
 // import pacienteConsultas from './pages/pacienteConsultas'
@@ -34,6 +35,7 @@ export default function Routes() {
                 <PrivateRoute path="/ConsultasPaciente" component={Consultas} tipoUsuario="0"></PrivateRoute>
                 <Route path="/ConsultasProfissional" component={ConsultasProfissional} tipoUsuario="1"></Route>
                 <PrivateRoute path="/GerenciamentoAgenda" component={GerenciamentoAgenda} tipoUsuario="1"></PrivateRoute>
+                <PrivateRoute path="/Agendas" component={Agendas} tipoUsuario="1"></PrivateRoute>
                 <Route path="/BuscaProfissionais" component={BuscaProfissionais} tipoUsuario="0"></Route>
                 <Route path="/CadastrarHorarios" component={CadastrarHorarios} tipoUsuario="1"></Route>
                 <Route path="/AgendamentoHorario" component={AgendamentoHorario}/>
