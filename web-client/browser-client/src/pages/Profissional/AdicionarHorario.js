@@ -17,6 +17,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
 } from '@material-ui/pickers';
+import { Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -29,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    maxWidth: '350px'
+    maxWidth: '450px'
   },
   button: {
     margin: theme.spacing(1),
@@ -86,18 +89,27 @@ export default function AdicionarHorario({ callBackAdicionar }) {
   };
 
   const handleAdicionar = () => {
-    callBackAdicionar({
-        horarioId : 50,
-        diaSemana: selectedDiaSemana,
-        horaInicio: selectedHorarioInicio.getHours() + ":" + selectedHorarioInicio.getMinutes(),
-        horaFim: selectedHorarioFim.getHours() + ":" + selectedHorarioFim.getMinutes()
-      });
-    
-    Notifications.showSuccess("Horário adicionado com sucesso!");
 
-    setSelectedDiaSemana('');
-    setSelectedHorarioInicio(null);
-    setSelectedHorarioFim(null);
+    console.log('selectedDiaSemana: ', selectedDiaSemana);
+    console.log('selectedHorarioInicio: ', selectedHorarioInicio);
+    console.log('selectedHorarioFim: ', selectedHorarioFim);
+    
+    if ((selectedDiaSemana === '') || !selectedHorarioInicio || !selectedHorarioFim) {
+        Notifications.showError("Preencha todos os campos.");
+    } else {
+        callBackAdicionar({
+            horarioId : 50,
+            diaSemana: selectedDiaSemana,
+            horaInicio: selectedHorarioInicio.getHours() + ":" + selectedHorarioInicio.getMinutes(),
+            horaFim: selectedHorarioFim.getHours() + ":" + selectedHorarioFim.getMinutes()
+        });
+        
+        Notifications.showSuccess("Horário adicionado com sucesso!");
+    
+        setSelectedDiaSemana('');
+        setSelectedHorarioInicio(null);
+        setSelectedHorarioFim(null);
+    }
   }
 
   return (
@@ -131,6 +143,7 @@ export default function AdicionarHorario({ callBackAdicionar }) {
                             fullWidth
                             onChange={handleChangeDiaSemana}
                             displayEmpty
+                            required
                         >
                         {listaDiasSemana.map((e, i) => 
                                 <MenuItem key={i} value={i}>{e}</MenuItem>
@@ -146,6 +159,7 @@ export default function AdicionarHorario({ callBackAdicionar }) {
                         label="Início"
                         value={selectedHorarioInicio}
                         onChange={handleHorarioInicioChange}
+                        required
                         KeyboardButtonProps={{
                             'aria-label': 'change time',
                         }}
@@ -160,20 +174,29 @@ export default function AdicionarHorario({ callBackAdicionar }) {
                         label="Fim"
                         value={selectedHorarioFim}
                         onChange={handleHorarioFimChange}
+                        required
                         KeyboardButtonProps={{
                             'aria-label': 'change time',
                         }}
                     />
                   </MuiPickersUtilsProvider>
                 </Grid>
-                <Grid item xs={6}>
-                  <Button variant="contained" color="primary" className={classes.button} onClick={handleAdicionar}>
-                    Adicionar
+                <Grid item xs={8}>
+                  <Button variant="contained" size="small" color="primary" className={classes.button} onClick={handleAdicionar}>
+                    <Typography noWrap={true}>
+                        <Box fontSize="fontSize" m={1}>
+                            Adicionar e Limpar Campos
+                        </Box>
+                    </Typography>
                   </Button>
                 </Grid>
-                <Grid item xs={6}>
-                  <Button variant="contained" className={classes.button} onClick={handleClose}>
-                    Fechar
+                <Grid item xs={4}>
+                  <Button variant="contained" size="small" className={classes.button} onClick={handleClose}>
+                    <Typography noWrap={true}>
+                        <Box fontSize="fontSize" m={1}>
+                            Fechar
+                        </Box>
+                    </Typography>
                   </Button>
                 </Grid>
               </Grid>
