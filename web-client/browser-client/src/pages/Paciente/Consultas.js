@@ -127,8 +127,7 @@ export default function Consultas(props) {
             history={props.history}
             content={
                 <Container maxWidth="lg">
-                    <div id="table-consultas">
-                    </div>
+                    <div id="table-consultas"></div>
                 </Container>
             }
         />

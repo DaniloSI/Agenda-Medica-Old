@@ -17,9 +17,9 @@ export default function NavBarProfissional(props) {
                     <ListItem
                         button
                         key='Consultas'
-                        // onClick={
-                        //     () => props.history.push('/ConsultasPaciente')
-                        // }
+                        onClick={
+                            () => props.history.push('/ConsultasProfissional')
+                        }
                         >
                         <ListItemIcon>
                         <EventNoteIcon />
@@ -29,9 +29,9 @@ export default function NavBarProfissional(props) {
                     <ListItem
                         button
                         key='Gerenciar Agendas'
-                        // onClick={
-                        //     () => props.history.push('/BuscaProfissionais')
-                        // }
+                        onClick={
+                            () => props.history.push('/GerenciamentoAgendas')
+                        }
                     >
                         <ListItemIcon>
                         <DateRangeIcon />
