@@ -20,6 +20,8 @@ import {
 } from '@material-ui/pickers';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import AdicionarHorario from './AdicionarHorario';
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,6 +32,12 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         padding: theme.spacing(3),
+    },
+    fab: {
+        position: "fixed",
+        margin: theme.spacing(1),
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 6
     },
   }));
 
@@ -173,6 +181,9 @@ export default function GerenciamentoAgenda(props) {
                             )}
                         </Box>
                     </Container>
+                    <Fab color="primary" aria-label="add" className={classes.fab}>
+                        <AdicionarHorario />
+                    </Fab>
                 </div>
             }
         />
