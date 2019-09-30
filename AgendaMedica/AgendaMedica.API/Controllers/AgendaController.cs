@@ -34,7 +34,10 @@ namespace AgendaMedica.API.Controllers
             var profissional = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             agenda.ProfissionalId = profissional.Id;
 
-            _agendaAppService.Add(agenda);
+            if (agenda.AgendaId == 0)
+                _agendaAppService.Update(agenda);
+            else
+                _agendaAppService.Add(agenda);
 
             return new JsonResult(new
             {

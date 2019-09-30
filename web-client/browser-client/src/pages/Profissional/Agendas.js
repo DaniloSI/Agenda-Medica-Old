@@ -33,8 +33,6 @@ const useStyles = makeStyles(theme => ({
 function TableAgendas({history, agendas}) {
     const classes = useStyles();
 
-    console.log(agendas)
-
     return (
         <div>
             <MaterialTable
@@ -56,12 +54,10 @@ function TableAgendas({history, agendas}) {
                 actions={[
                     {
                         icon: () => <Edit />,
-                        tooltip: 'Editar',
-                        onClick: (event, rowData) => history.push('/GerenciamentoAgenda')
+                        onClick: (event, rowData) => history.push('/GerenciamentoAgenda/' + rowData.agendaId)
                     },
                     {
                         icon: () => <Delete />,
-                        tooltip: 'Deletar',
                         onClick: (event, rowData) => alert("Deseja mesmo deletar a agenda '" + rowData.titulo + "'?")
                     }
                 ]}

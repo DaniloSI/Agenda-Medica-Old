@@ -25,6 +25,14 @@ namespace AgendaMedica.Domain.Services
                 base.Add(agenda);
         }
 
+        public override void Update(Agenda agenda)
+        {
+            agenda.ValidationResult = new AgendaValidator().Validate(agenda);
+
+            if (agenda.ValidationResult.IsValid)
+                base.Update(agenda);
+        }
+
         public void AddHorarioExcecao(HorarioExcecao horarioExcecao)
         {
             Agenda agenda = GetById(horarioExcecao.AgendaId);

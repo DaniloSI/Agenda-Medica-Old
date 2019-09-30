@@ -36,6 +36,18 @@ namespace AgendaMedica.Application.AppServices
             consultaViewModel.ValidationResult = consulta.ValidationResult;
         }
 
+        public override void Update(ConsultaViewModel consultaViewModel)
+        {
+            Consulta consulta = _mapper.Map<Consulta>(consultaViewModel);
+
+            _consultaService.Update(consulta);
+
+            if (consulta.ValidationResult.IsValid)
+                UoW.Commit();
+
+            consultaViewModel.ValidationResult = consulta.ValidationResult;
+        }
+
         public override void Remove(int id)
         {
             base.Remove(id);
