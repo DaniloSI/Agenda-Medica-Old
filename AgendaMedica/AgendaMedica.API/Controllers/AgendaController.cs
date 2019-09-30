@@ -59,6 +59,18 @@ namespace AgendaMedica.API.Controllers
             });
         }
 
+        [HttpGet("Delete")]
+        [Authorize]
+        public JsonResult Delete(int agendaId)
+        {
+            _agendaAppService.Remove(agendaId);
+
+            return new JsonResult(new
+            {
+                sucesso = true
+            });
+        }
+
         [HttpGet("Agendas")]
         [Authorize]
         public async Task<JsonResult> Agendas()

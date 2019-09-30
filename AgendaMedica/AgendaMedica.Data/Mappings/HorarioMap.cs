@@ -16,7 +16,7 @@ namespace AgendaMedica.Data.Mappings
             builder.HasOne(h => h.Agenda)
                 .WithMany(a => a.Horarios)
                 .HasForeignKey(h => h.AgendaId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             List<Horario> horarios = new List<Horario>();
             int horarioId = 1;

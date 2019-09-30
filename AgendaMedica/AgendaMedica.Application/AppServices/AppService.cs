@@ -46,6 +46,7 @@ namespace AgendaMedica.Application.AppServices
         public virtual void Remove(int id)
         {
             _service.Remove(id);
+            UoW.Commit();
         }
 
         public virtual void Update(TViewModel obj)

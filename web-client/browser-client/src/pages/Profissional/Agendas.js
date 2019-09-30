@@ -12,6 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import api from '../../services/api';
 import ReactDOM from 'react-dom';
+import * as Notifications from '../../services/notifications';
 
 
 const tableIcons = {
@@ -32,6 +33,14 @@ const useStyles = makeStyles(theme => ({
 
 function TableAgendas({history, agendas}) {
     const classes = useStyles();
+    const [state, setState] = React.useState({
+        columns: [
+            { title: 'Título', field: 'titulo' },
+            { title: 'Início', field: 'dataHoraInicio' },
+            { title: 'Fim', field: 'dataHoraFim' }
+        ],
+        data: agendas
+    });
 
     return (
         <div>
@@ -45,12 +54,8 @@ function TableAgendas({history, agendas}) {
                         actionsColumnIndex: -1
                     }
                 }
-                columns={[
-                    { title: 'Título', field: 'titulo' },
-                    { title: 'Início', field: 'dataHoraInicio' },
-                    { title: 'Fim', field: 'dataHoraFim' }
-                ]}
-                data={agendas}
+                columns={state.columns}
+                data={state.data}
                 actions={[
                     {
                         icon: () => <Edit />,
@@ -58,7 +63,18 @@ function TableAgendas({history, agendas}) {
                     },
                     {
                         icon: () => <Delete />,
-                        onClick: (event, rowData) => alert("Deseja mesmo deletar a agenda '" + rowData.titulo + "'?")
+                        onClick: (event, rowData) => {
+                            api.get('/Agenda/Delete?agendaId=' + rowData.agendaId)
+                                .then(response => {
+                                    if (response.data.sucesso){
+                                        console.log(rowData.data);
+                                        const data = [...state.data];
+                                        data.splice(data.indexOf(rowData.data), 1);
+                                        setState({ ...state, data });
+                                        Notifications.showSuccess("Agenda deletada com sucesso!");
+                                    }
+                                });
+                        }
                     }
                 ]}
             />
