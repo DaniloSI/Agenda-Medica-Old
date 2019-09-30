@@ -177,7 +177,14 @@ function FormularioAgenda(props) {
                                         <ListItem key={indexHorario}>
                                             <ListItemText id={h.horarioId} primary={"De " + h.horaInicio + " às " + h.horaFim} />
                                             <ListItemSecondaryAction>
-                                                <IconButton edge="end" aria-label="delete">
+                                                <IconButton
+                                                    edge="end"
+                                                    aria-label="delete"
+                                                    onClick={() => {
+                                                        setHorarios(horarios.filter(horario => horario != h));
+                                                        Notifications.showSuccess("Horário removido com sucesso.");
+                                                    }}
+                                                >
                                                     <DeleteIcon />
                                                 </IconButton>
                                             </ListItemSecondaryAction>
