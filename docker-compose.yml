@@ -1,7 +1,9 @@
 version: "3"
 services:
     web:
-        build: .
+        build:
+          context: ./AgendaMedica
+          dockerfile: Dockerfile
         ports:
             - "8000:80"
         depends_on:
@@ -18,7 +20,7 @@ services:
     sample:
         container_name: sample
         build:
-          context: .
+          context: ./web-client/browser-client
           dockerfile: Dockerfile
         volumes:
           - '.:/app'
