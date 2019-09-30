@@ -28,7 +28,7 @@ namespace AgendaMedica.API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<JsonResult> Form(AgendaViewModel agenda)
         {
             var profissional = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
@@ -54,6 +54,21 @@ namespace AgendaMedica.API.Controllers
                     })
                 }
             });
+        }
+
+        [HttpGet("Agendas")]
+        [Authorize]
+        public async Task<JsonResult> Agendas()
+        {
+            var profissional = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            return new JsonResult(_agendaAppService.GetList(profissional.Id)
+                .Select(a => new
+                {
+                    a.AgendaId,
+                    a.Titulo,
+                    DataHoraInicio = a.DataHoraInicio.ToString("dd/MM/yyyy"),
+                    DataHoraFim = a.DataHoraFim.ToString("dd/MM/yyyy")
+                }));
         }
 
         [HttpPost("AddHorarioExcecao")]

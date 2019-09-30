@@ -61,5 +61,19 @@ namespace AgendaMedica.Application.AppServices
 
             return _mapper.Map<IEnumerable<HorarioViewModel>>(horarios);
         }
+
+        public IEnumerable<AgendaViewModel> GetList(int id)
+        {
+            return _agendaService.GetAll()
+                .Where(a => a.ProfissionalId == id)
+                .Select(a => new AgendaViewModel
+                {
+                    AgendaId = a.AgendaId,
+                    Titulo = a.Titulo,
+                    DataHoraInicio = a.DataHoraInicio,
+                    DataHoraFim = a.DataHoraFim,
+                    ProfissionalId = a.ProfissionalId
+                }).ToList();
+        }
     }
 }

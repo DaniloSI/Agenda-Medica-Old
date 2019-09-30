@@ -10,6 +10,9 @@ import {
 import NavBarProfissional from './NavBarProfissional.js';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import api from '../../services/api';
+import ReactDOM from 'react-dom';
+
 
 const tableIcons = {
     SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />)
@@ -19,16 +22,67 @@ const useStyles = makeStyles(theme => ({
     fab: {
         position: "fixed",
         margin: theme.spacing(1),
-        bottom: theme.spacing.unit * 2,
-        right: theme.spacing.unit * 6
+        bottom: theme.spacing(2),
+        right: theme.spacing(6)
     },
     extendedIcon: {
         marginRight: theme.spacing(1),
     },
 }));
 
-export default function Agendas(props) {
+function TableAgendas({history, agendas}) {
     const classes = useStyles();
+
+    console.log(agendas)
+
+    return (
+        <div>
+            <MaterialTable
+                title="Agendas"
+                icons={tableIcons}
+                options={
+                    {
+                        paging: false,
+                        search: false,
+                        actionsColumnIndex: -1
+                    }
+                }
+                columns={[
+                    { title: 'Título', field: 'titulo' },
+                    { title: 'Início', field: 'dataHoraInicio' },
+                    { title: 'Fim', field: 'dataHoraFim' }
+                ]}
+                data={agendas}
+                actions={[
+                    {
+                        icon: () => <Edit />,
+                        tooltip: 'Editar',
+                        onClick: (event, rowData) => history.push('/GerenciamentoAgenda')
+                    },
+                    {
+                        icon: () => <Delete />,
+                        tooltip: 'Deletar',
+                        onClick: (event, rowData) => alert("Deseja mesmo deletar a agenda '" + rowData.titulo + "'?")
+                    }
+                ]}
+            />
+            <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => history.push('/GerenciamentoAgenda')}>
+                <AddIcon />
+            </Fab>
+        </div>
+    )
+}
+
+export default function Agendas(props) {
+    api.get('/Agenda/Agendas')
+        .then(response => {
+            console.log('RESPONSE: ', response);
+
+            ReactDOM.render(
+                <TableAgendas history={props.history} agendas={response.data} />,
+                document.getElementById('table-consultas')
+            );
+    });
 
     return (
         <NavBarProfissional
@@ -36,41 +90,7 @@ export default function Agendas(props) {
             content={
                 <Container maxWidth="lg">
                     <div id="table-consultas">
-                        <MaterialTable
-                            title="Agendas"
-                            icons={tableIcons}
-                            options={
-                                {
-                                    paging: false,
-                                    search: false,
-                                    actionsColumnIndex: -1
-                                }
-                            }
-                            columns={[
-                                { title: 'Título', field: 'titulo' },
-                                { title: 'Início', field: 'inicio' },
-                                { title: 'Fim', field: 'fim' }
-                            ]}
-                            data={[
-                                { titulo: 'Primeiro Semestre', inicio: '01/01/2019', fim: '30/06/2019' },
-                                { titulo: 'Segundo Semestre', inicio: '01/07/2019', fim: '31/12/2019' }
-                            ]}
-                            actions={[
-                                {
-                                    icon: () => <Edit />,
-                                    tooltip: 'Editar',
-                                    onClick: (event, rowData) => props.history.push('/GerenciamentoAgenda')
-                                },
-                                {
-                                    icon: () => <Delete />,
-                                    tooltip: 'Deletar',
-                                    onClick: (event, rowData) => alert("Deseja mesmo deletar a agenda '" + rowData.titulo + "'?")
-                                }
-                            ]}
-                        />
-                        <Fab color="primary" aria-label="add" className={classes.fab} onClick={() => props.history.push('/GerenciamentoAgenda')}>
-                            <AddIcon />
-                        </Fab>
+                        
                     </div>
                 </Container>
             }

@@ -1,4 +1,5 @@
 ﻿using AgendaMedica.Application.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 
@@ -8,5 +9,6 @@ namespace AgendaMedica.Application.Interfaces
     {
         void AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecaoViewModel);
         IEnumerable<HorarioViewModel> GetHorariosPorDataProfissional(int profissionalId, DateTime data);
+        IEnumerable<AgendaViewModel> GetList(int id);
     }
 }
