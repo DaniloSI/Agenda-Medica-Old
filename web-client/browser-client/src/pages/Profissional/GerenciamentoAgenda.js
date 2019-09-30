@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -66,10 +66,23 @@ function FormularioAgenda(props) {
         "Sexta-Feira",
         "Sábado"
     ];
-    const [horarios, setHorarios] = React.useState(props.agenda.horarios);
-    const [dataInicio, setDataInicio] = React.useState(props.agenda.dataHoraInicio);
-    const [dataFim, setDataFim] = React.useState(props.agenda.dataHoraFim);
-    const [titulo, setTitulo] = React.useState(props.agenda.titulo);
+    const [horarios, setHorarios] = React.useState([]);
+    const [dataInicio, setDataInicio] = React.useState(null);
+    const [dataFim, setDataFim] = React.useState(null);
+    const [titulo, setTitulo] = React.useState('');
+    const agendaId = props.match.params.agendaId;
+
+    useEffect(() => {
+        if (agendaId) {
+            api.get('/Agenda?agendaId=' + agendaId)
+                .then(response => {
+                    setHorarios(response.data.horarios);
+                    setDataInicio(response.data.dataHoraInicio);
+                    setDataFim(response.data.dataHoraFim);
+                    setTitulo(response.data.titulo);
+            });
+        }
+    }, [])
 
     async function SalvarAgenda() {
         const response = await api.post('/Agenda',
@@ -194,37 +207,14 @@ function FormularioAgenda(props) {
 }
 
 export default function GerenciamentoAgenda(props) {
-    const agendaId = props.match.params.agendaId;
-
-    if (agendaId) {
-        api.get('/Agenda?agendaId=' + agendaId)
-            .then(response => {
-                console.log('RESPONSE: ', response);
-    
-                ReactDOM.render(
-                    <FormularioAgenda history={props.history} agenda={response.data} />,
-                    document.getElementById('formulario-agenda')
-                );
-        });
-    }
-
     return (
         <NavBarProfissional
             history={props.history}
             content={
-                agendaId ?
-                (<div id="formulario-agenda"></div>) :
-                (<FormularioAgenda
+                <FormularioAgenda
                     history={props.history}
-                    agenda={
-                        {
-                            horarios: [],
-                            dataHoraInicio: null,
-                            dataHoraFim: null,
-                            titulo: ''
-                        }
-                    }
-                />)
+                    match={props.match}
+                />
             }
         />
     )
