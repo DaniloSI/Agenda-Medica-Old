@@ -10,5 +10,6 @@ namespace AgendaMedica.Application.Interfaces
         void AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecaoViewModel);
         IEnumerable<HorarioViewModel> GetHorariosPorDataProfissional(int profissionalId, DateTime data);
         IEnumerable<AgendaViewModel> GetList(int id);
+        AgendaViewModel GetByIdToForm(int agendaId);
     }
 }

@@ -26,6 +26,7 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import * as Notifications from '../../services/notifications';
 import api from '../../services/api';
+import ReactDOM from 'react-dom';
 
 
 const useStyles = makeStyles(theme => ({
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-export default function GerenciamentoAgenda(props) {
+function FormularioAgenda(props) {
     const classes = useStyles();
     const diasSemana = [
         "Domingo",
@@ -65,10 +66,10 @@ export default function GerenciamentoAgenda(props) {
         "Sexta-Feira",
         "Sábado"
     ];
-    const [horarios, setHorarios] = React.useState([]);
-    const [dataInicio, setDataInicio] = React.useState(null);
-    const [dataFim, setDataFim] = React.useState(null);
-    const [titulo, setTitulo] = React.useState('');
+    const [horarios, setHorarios] = React.useState(props.agenda.horarios);
+    const [dataInicio, setDataInicio] = React.useState(props.agenda.dataHoraInicio);
+    const [dataFim, setDataFim] = React.useState(props.agenda.dataHoraFim);
+    const [titulo, setTitulo] = React.useState(props.agenda.titulo);
 
     async function SalvarAgenda() {
         const response = await api.post('/Agenda',
@@ -90,108 +91,140 @@ export default function GerenciamentoAgenda(props) {
     }
 
     return (
+        <div>
+            <CssBaseline />
+            <Container maxWidth="xl">
+                <Box mb={5}>
+                    <Paper className={classes.paper}>
+                        <Typography variant="h5" component="h6">Agenda</Typography>
+                        <br />
+                        <form noValidate autoComplete="off" >
+                            <Grid container spacing={3} justify="flex-start" direction="row">
+                                <Grid item xs={6}>
+                                    <TextField
+                                        id="titulo"
+                                        label="Título"
+                                        width="100%"
+                                        fullWidth
+                                        value={titulo}
+                                        onChange={(t) => setTitulo(t.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            id="date-picker-data-inicio-vigencia"
+                                            label="Início da Vigência"
+                                            format="MM/dd/yyyy"
+                                            fullWidth
+                                            value={dataInicio}
+                                            onChange={(data) => setDataInicio(data)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            id="date-picker-data-fim-vigencia"
+                                            label="Fim da Vigência"
+                                            format="MM/dd/yyyy"
+                                            fullWidth
+                                            value={dataFim}
+                                            onChange={(data) => setDataFim(data)}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Box display="flex" justifyContent="flex-end">
+                                        <AdicionarHorario callBackAdicionar={(h) => {
+                                            var novosHorarios = horarios.slice();
+                                            novosHorarios.push(h);
+                                            setHorarios(old => novosHorarios);
+                                        }}/>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </form>
+                    </Paper>
+                </Box>
+            </Container>
+            <Container maxWidth="xl">
+                <Box width="100%" height={100} display="flex" alignItems="flex-start">
+                    {diasSemana.map((diaSemana, index) => 
+                        <Box width={1 / diasSemana.length} p={1} display="inline-block" maxHeight={5} key={index}>
+                            <List subheader={<ListSubheader>{diaSemana}</ListSubheader>} className={classes.root} bgcolor="background.paper">
+                                {horarios.filter(h => h.diaSemana == index)
+                                    .map((h, indexHorario) => 
+                                        <ListItem key={indexHorario}>
+                                            <ListItemText id={h.horarioId} primary={"De " + h.horaInicio + " às " + h.horaFim} />
+                                            <ListItemSecondaryAction>
+                                                <IconButton edge="end" aria-label="delete">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    )}
+                            </List>
+                        </Box>
+                    )}
+                </Box>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    className={classes.saveButton}
+                    onClick={SalvarAgenda}
+                >
+                    <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
+                    &nbsp;
+                    Salvar
+                </Button>
+                <Button variant="contained" size="small" className={classes.closeButton} onClick={() => props.history.push('/Agendas')}>
+                    Fechar
+                </Button>
+            </Container>
+        </div>
+    );
+}
+
+export default function GerenciamentoAgenda(props) {
+    const agendaId = props.match.params.agendaId;
+
+    if (agendaId) {
+        api.get('/Agenda?agendaId=' + agendaId)
+            .then(response => {
+                console.log('RESPONSE: ', response);
+    
+                ReactDOM.render(
+                    <FormularioAgenda history={props.history} agenda={response.data} />,
+                    document.getElementById('formulario-agenda')
+                );
+        });
+    }
+
+    return (
         <NavBarProfissional
             history={props.history}
             content={
-                <div>
-                    <CssBaseline />
-                    <Container maxWidth="xl">
-                        <Box mb={5}>
-                            <Paper className={classes.paper}>
-                                <Typography variant="h5" component="h6">Agenda</Typography>
-                                <br />
-                                <form noValidate autoComplete="off" >
-                                    <Grid container spacing={3} justify="flex-start" direction="row">
-                                        <Grid item xs={6}>
-                                            <TextField
-                                                id="titulo"
-                                                label="Título"
-                                                width="100%"
-                                                fullWidth
-                                                value={titulo}
-                                                onChange={(t) => setTitulo(t.target.value)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    id="date-picker-data-inicio-vigencia"
-                                                    label="Início da Vigência"
-                                                    format="MM/dd/yyyy"
-                                                    fullWidth
-                                                    value={dataInicio}
-                                                    onChange={(data) => setDataInicio(data)}
-                                                    KeyboardButtonProps={{
-                                                        'aria-label': 'change date',
-                                                    }}
-                                                />
-                                            </MuiPickersUtilsProvider>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                <KeyboardDatePicker
-                                                    id="date-picker-data-fim-vigencia"
-                                                    label="Fim da Vigência"
-                                                    format="MM/dd/yyyy"
-                                                    fullWidth
-                                                    value={dataFim}
-                                                    onChange={(data) => setDataFim(data)}
-                                                    KeyboardButtonProps={{
-                                                        'aria-label': 'change date',
-                                                    }}
-                                                />
-                                            </MuiPickersUtilsProvider>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Box display="flex" justifyContent="flex-end">
-                                                <AdicionarHorario callBackAdicionar={(h) => {
-                                                    var novosHorarios = horarios.slice();
-                                                    novosHorarios.push(h);
-                                                    setHorarios(old => novosHorarios);
-                                                }}/>
-                                            </Box>
-                                        </Grid>
-                                    </Grid>
-                                </form>
-                            </Paper>
-                        </Box>
-                    </Container>
-                    <Container maxWidth="xl">
-                        <Box width="100%" height={100} display="flex" alignItems="flex-start">
-                            {diasSemana.map((diaSemana, index) => 
-                                <Box width={1 / diasSemana.length} p={1} display="inline-block" maxHeight={5} key={index}>
-                                    <List subheader={<ListSubheader>{diaSemana}</ListSubheader>} className={classes.root} bgcolor="background.paper">
-                                        {horarios.filter(h => h.diaSemana == index)
-                                            .map((h, indexHorario) => 
-                                                <ListItem key={indexHorario}>
-                                                    <ListItemText id={h.horarioId} primary={"De " + h.horaInicio + " às " + h.horaFim} />
-                                                    <ListItemSecondaryAction>
-                                                        <IconButton edge="end" aria-label="delete">
-                                                            <DeleteIcon />
-                                                        </IconButton>
-                                                    </ListItemSecondaryAction>
-                                                </ListItem>
-                                            )}
-                                    </List>
-                                </Box>
-                            )}
-                        </Box>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            className={classes.saveButton}
-                            onClick={SalvarAgenda}
-                        >
-                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
-                            &nbsp;
-                            Salvar
-                        </Button>
-                        <Button variant="contained" size="small" className={classes.closeButton} onClick={() => props.history.goBack()}>
-                            Fechar
-                        </Button>
-                    </Container>
-                </div>
+                agendaId ?
+                (<div id="formulario-agenda"></div>) :
+                (<FormularioAgenda
+                    history={props.history}
+                    agenda={
+                        {
+                            horarios: [],
+                            dataHoraInicio: null,
+                            dataHoraFim: null,
+                            titulo: ''
+                        }
+                    }
+                />)
             }
         />
     )

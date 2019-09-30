@@ -71,6 +71,28 @@ namespace AgendaMedica.API.Controllers
                 }));
         }
 
+        [HttpGet]
+        [Authorize]
+        public JsonResult Form(int agendaId)
+        {
+            AgendaViewModel agenda = _agendaAppService.GetByIdToForm(agendaId);
+            return new JsonResult(new
+            {
+                agenda.AgendaId,
+                Titulo = agenda.Titulo ?? string.Empty,
+                agenda.DataHoraInicio,
+                agenda.DataHoraFim,
+                Horarios = agenda.Horarios?.Select(h => new
+                {
+                    h.AgendaId,
+                    h.HorarioId,
+                    h.DiaSemana,
+                    h.HoraInicio,
+                    h.HoraFim
+                })
+            });
+        }
+
         [HttpPost("AddHorarioExcecao")]
         [AllowAnonymous]
         public ActionResult<HorarioExcecaoViewModel> AddHorarioExcecao(HorarioExcecaoViewModel horarioExcecao)

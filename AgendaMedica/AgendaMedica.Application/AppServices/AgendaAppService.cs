@@ -14,14 +14,17 @@ namespace AgendaMedica.Application.AppServices
     public class AgendaAppService : AppService<Agenda, AgendaViewModel>, IAgendaAppService
     {
         private readonly IAgendaService _agendaService;
+        private readonly IAgendaRepository _agendaRepository;
         private readonly IUsuarioProfissionalRepository _usuarioProfissionalRepository;
         public AgendaAppService(IAgendaService agendaService,
+            IAgendaRepository agendaRepository,
             IUsuarioProfissionalRepository usuarioProfissionalRepository,
             IUnitOfWork UoW,
             IMapper mapper)
             : base(agendaService, UoW, mapper)
         {
             _agendaService = agendaService;
+            _agendaRepository = agendaRepository;
             _usuarioProfissionalRepository = usuarioProfissionalRepository;
         }
 
@@ -74,6 +77,14 @@ namespace AgendaMedica.Application.AppServices
                     DataHoraFim = a.DataHoraFim,
                     ProfissionalId = a.ProfissionalId
                 }).ToList();
+        }
+
+        public AgendaViewModel GetByIdToForm(int agendaId)
+        {
+            return _mapper.Map<AgendaViewModel>(_agendaRepository.GetAll()
+                .Where(a => a.AgendaId == agendaId)
+                .Include(a => a.Horarios)
+                .Single());
         }
     }
 }

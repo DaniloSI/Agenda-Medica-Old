@@ -34,7 +34,8 @@ export default function Routes() {
                 <Route path="/Cadastrar" component={Cadastrar}></Route>
                 <PrivateRoute path="/ConsultasPaciente" component={Consultas} tipoUsuario="0"></PrivateRoute>
                 <Route path="/ConsultasProfissional" component={ConsultasProfissional} tipoUsuario="1"></Route>
-                <PrivateRoute path="/GerenciamentoAgenda" component={GerenciamentoAgenda} tipoUsuario="1"></PrivateRoute>
+                <PrivateRoute path="/GerenciamentoAgenda" exact component={GerenciamentoAgenda} tipoUsuario="1"></PrivateRoute>
+                <PrivateRoute path="/GerenciamentoAgenda/:agendaId" component={GerenciamentoAgenda} tipoUsuario="1"></PrivateRoute>
                 <PrivateRoute path="/Agendas" component={Agendas} tipoUsuario="1"></PrivateRoute>
                 <Route path="/BuscaProfissionais" component={BuscaProfissionais} tipoUsuario="0"></Route>
                 <Route path="/CadastrarHorarios" component={CadastrarHorarios} tipoUsuario="1"></Route>
