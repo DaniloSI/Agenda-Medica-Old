@@ -12,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -22,6 +23,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AdicionarHorario from './AdicionarHorario';
+import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,11 +36,20 @@ const useStyles = makeStyles(theme => ({
     paper: {
         padding: theme.spacing(3),
     },
-    fab: {
+    saveButton: {
+        position: "fixed",
+        margin: theme.spacing(1),
+        bottom: theme.spacing(2),
+        right: theme.spacing(17)
+    },
+    closeButton: {
         position: "fixed",
         margin: theme.spacing(1),
         bottom: theme.spacing(2),
         right: theme.spacing(6)
+    },
+    extendedIcon: {
+        marginRight: theme.spacing(1),
     },
   }));
 
@@ -189,6 +201,13 @@ export default function GerenciamentoAgenda(props) {
                                 </Box>
                             )}
                         </Box>
+                        <Button variant="contained" color="primary" size="small" className={classes.saveButton}>
+                            <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
+                            Salvar
+                        </Button>
+                        <Button variant="contained" size="small" className={classes.closeButton}>
+                            Fechar
+                        </Button>
                     </Container>
                 </div>
             }
