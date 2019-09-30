@@ -40,9 +40,9 @@ Para baixar o código fonte do projeto, basta baixar através do link de Downloa
 
 Utilizando o Docker Compose foi possivel configurar para que tanto as API's quanto o back-end sejam executados e parados  simultaneamente com um comando na raiz:
 
-'docker-compose up -d --build'
+`docker-compose up -d --build`
 
-'docker-compose up stop'
+`docker-compose up stop`
 
 O *docker-compose.yml*, localizado no raiz, foi configurado de modo que quando executado acionara dois arquivos *dockerfile* que  acionam o serviço de API's e o back-end.
 
@@ -54,6 +54,6 @@ Após executar a aplicação de back-end, é possível acessá-la através do li
 
 Para a execução de somente um serviço(API ou back-end) é necessário navegar até sua pasta e executar os seguintes comandos:
 
-'docker build .'
+`docker build .`
 
-''
+``
