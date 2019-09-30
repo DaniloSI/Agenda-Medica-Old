@@ -21,10 +21,10 @@ import {
 } from '@material-ui/pickers';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Fab from '@material-ui/core/Fab';
 import AdicionarHorario from './AdicionarHorario';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
+import * as Notifications from '../../services/notifications';
 
 
 const useStyles = makeStyles(theme => ({
@@ -201,11 +201,21 @@ export default function GerenciamentoAgenda(props) {
                                 </Box>
                             )}
                         </Box>
-                        <Button variant="contained" color="primary" size="small" className={classes.saveButton}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            className={classes.saveButton}
+                            onClick={() => {
+                                Notifications.showSuccess("Agenda salva/alterada com sucesso!");
+                                props.history.push('/Agendas');
+                            }}
+                        >
                             <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
+                            &nbsp;
                             Salvar
                         </Button>
-                        <Button variant="contained" size="small" className={classes.closeButton}>
+                        <Button variant="contained" size="small" className={classes.closeButton} onClick={() => props.history.goBack()}>
                             Fechar
                         </Button>
                     </Container>
