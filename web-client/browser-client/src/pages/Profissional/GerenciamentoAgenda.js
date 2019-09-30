@@ -78,8 +78,6 @@ export default function GerenciamentoAgenda(props) {
             dataHoraFim: dataFim,
             horarios
         });
-        
-        console.log(response);
 
         if (response.data.validationResult.isValid) {
             Notifications.showSuccess("Agenda salva/alterada com sucesso!");
@@ -89,11 +87,6 @@ export default function GerenciamentoAgenda(props) {
                 Notifications.showError(error.errorMessage);
             });
         }
-
-        // () => {
-        //     Notifications.showSuccess("Agenda salva/alterada com sucesso!");
-        //     props.history.push('/Agendas');
-        // }
     }
 
     return (

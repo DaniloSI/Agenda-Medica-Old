@@ -29,14 +29,31 @@ namespace AgendaMedica.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<AgendaViewModel>> Form(AgendaViewModel agenda)
+        public async Task<JsonResult> Form(AgendaViewModel agenda)
         {
             var profissional = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             agenda.ProfissionalId = profissional.Id;
 
             _agendaAppService.Add(agenda);
 
-            return agenda;
+            return new JsonResult(new
+            {
+                agenda.AgendaId,
+                agenda.Titulo,
+                agenda.DataHoraInicio,
+                agenda.DataHoraFim,
+                agenda.Horarios,
+                agenda.HorariosExcecoes,
+                agenda.ProfissionalId,
+                ValidationResult = new
+                {
+                    agenda.ValidationResult.IsValid,
+                    Errors = agenda.ValidationResult.Errors?.Select(e => new
+                    {
+                        e.ErrorMessage
+                    })
+                }
+            });
         }
 
         [HttpPost("AddHorarioExcecao")]
