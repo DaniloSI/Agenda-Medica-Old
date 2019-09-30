@@ -35,9 +35,9 @@ namespace AgendaMedica.API.Controllers
             agenda.ProfissionalId = profissional.Id;
 
             if (agenda.AgendaId == 0)
-                _agendaAppService.Update(agenda);
-            else
                 _agendaAppService.Add(agenda);
+            else
+                _agendaAppService.Update(agenda);
 
             return new JsonResult(new
             {

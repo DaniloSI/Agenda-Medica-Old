@@ -33,7 +33,7 @@ namespace AgendaMedica.Data.Repositories
 
         public virtual void Update(TEntity obj)
         {
-            DbSet.Update(obj);
+            Db.Entry(obj).State = EntityState.Modified;
         }
 
         public virtual void Remove(int id)

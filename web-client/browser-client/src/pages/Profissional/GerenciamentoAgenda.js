@@ -87,6 +87,7 @@ function FormularioAgenda(props) {
     async function SalvarAgenda() {
         const response = await api.post('/Agenda',
         {
+            agendaId,
             titulo,
             dataHoraInicio: dataInicio,
             dataHoraFim: dataFim,
@@ -182,7 +183,6 @@ function FormularioAgenda(props) {
                                                     aria-label="delete"
                                                     onClick={() => {
                                                         setHorarios(horarios.filter(horario => horario != h));
-                                                        Notifications.showSuccess("Horário removido com sucesso.");
                                                     }}
                                                 >
                                                     <DeleteIcon />
