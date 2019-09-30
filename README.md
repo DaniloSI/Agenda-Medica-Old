@@ -36,28 +36,24 @@ Para baixar o código fonte do projeto, basta baixar através do link de Downloa
 
 `git clone https://github.com/DaniloSI/Agenda-Medica.git`
 
-### Execução da API
+### Execução 
 
-Para executar a API é necessário possuir o **Docker** instalado e o recurso **Docker Compose** habilitado. Uma vez que os requisitos estão atendidos, basta acessar a pasta AgendaMedica, que contém o arquivo *docker-compose.yml* e executar os seguintes comandos:
+Utilizando o Docker Compose foi possivel configurar para que tanto as API's quanto o back-end sejam executados e parados  simultaneamente com um comando na raiz:
 
-`docker-compose build`
+'docker-compose up -d --build'
 
-`docker-compose up -d`
+'docker-compose up stop'
+
+O *docker-compose.yml*, localizado no raiz, foi configurado de modo que quando executado acionara dois arquivos *dockerfile* que  acionam o serviço de API's e o back-end.
 
 Uma vez que os containers estão em execução, basta abrir o navegador e acessar o seguinte link para ter acesso à documentação da API: http://localhost:8000/swagger.
 
-Para parar a execução, basta acessar a mesma pasta supracitada e executar o seguinte comando:
+Após executar a aplicação de back-end, é possível acessá-la através do link: http://localhost:3000.
 
-`docker-compose down`
+#### Execução singular
 
-### Execução do Frontend
+Para a execução de somente um serviço(API ou back-end) é necessário navegar até sua pasta e executar os seguintes comandos:
 
-Para executar a aplicação de Frontend, basta acessar a pasta **browser-client** dentro da pasta **web-client** e executar o seguinte comando, para baixar e instalar as dependências:
+'docker build .'
 
-`npm install`
-
-Em seguida, para executar a aplicação, basta digitar o seguinte comando:
-
-`npm start`
-
-Após executar a aplicação de Frontend, é possível acessá-la através do link: http://localhost:3000.
+''
