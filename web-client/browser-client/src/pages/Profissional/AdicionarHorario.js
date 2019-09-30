@@ -94,15 +94,14 @@ export default function AdicionarHorario({ callBackAdicionar }) {
         Notifications.showError("Preencha todos os campos.");
     } else {
         callBackAdicionar({
-            horarioId : 50,
+            horarioId : 0,
             diaSemana: selectedDiaSemana,
             horaInicio: selectedHorarioInicio.getHours() + ":" + selectedHorarioInicio.getMinutes(),
             horaFim: selectedHorarioFim.getHours() + ":" + selectedHorarioFim.getMinutes()
         });
         
         Notifications.showSuccess("Horário adicionado com sucesso!");
-    
-        setSelectedDiaSemana('');
+
         setSelectedHorarioInicio(null);
         setSelectedHorarioFim(null);
     }

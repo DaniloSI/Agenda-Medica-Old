@@ -29,9 +29,13 @@ namespace AgendaMedica.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<AgendaViewModel> Form(AgendaViewModel agenda)
+        public async Task<ActionResult<AgendaViewModel>> Form(AgendaViewModel agenda)
         {
+            var profissional = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            agenda.ProfissionalId = profissional.Id;
+
             _agendaAppService.Add(agenda);
+
             return agenda;
         }
 

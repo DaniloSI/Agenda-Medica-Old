@@ -8,6 +8,7 @@ namespace AgendaMedica.Domain.Entities
     public class Agenda
     {
         public int AgendaId { get; set; }
+        public string Titulo { get; set; }
         public DateTime DataHoraInicio { get; set; }
         public DateTime DataHoraFim { get; set; }
         public virtual ICollection<Horario> Horarios { get; set; }

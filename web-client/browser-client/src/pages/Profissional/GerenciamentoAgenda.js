@@ -25,6 +25,7 @@ import AdicionarHorario from './AdicionarHorario';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import * as Notifications from '../../services/notifications';
+import api from '../../services/api';
 
 
 const useStyles = makeStyles(theme => ({
@@ -64,56 +65,36 @@ export default function GerenciamentoAgenda(props) {
         "Sexta-Feira",
         "Sábado"
     ];
-    const [horarios, setHorarios] = React.useState([
+    const [horarios, setHorarios] = React.useState([]);
+    const [dataInicio, setDataInicio] = React.useState(null);
+    const [dataFim, setDataFim] = React.useState(null);
+    const [titulo, setTitulo] = React.useState('');
+
+    async function SalvarAgenda() {
+        const response = await api.post('/Agenda',
         {
-            horarioId : 1,
-            diaSemana: 0,
-            horaInicio: '08:00',
-            horaFim: '09:00'
-        },
-        {
-            horarioId : 2,
-            diaSemana: 0,
-            horaInicio: '09:00',
-            horaFim: '10:00'
-        },
-        {
-            horarioId : 3,
-            diaSemana: 1,
-            horaInicio: '08:00',
-            horaFim: '09:00'
-        },
-        {
-            horarioId : 4,
-            diaSemana: 1,
-            horaInicio: '09:00',
-            horaFim: '10:00'
-        },
-        {
-            horarioId : 5,
-            diaSemana: 2,
-            horaInicio: '08:00',
-            horaFim: '09:00'
-        },
-        {
-            horarioId : 6,
-            diaSemana: 2,
-            horaInicio: '09:00',
-            horaFim: '10:00'
-        },
-        {
-            horarioId : 7,
-            diaSemana: 3,
-            horaInicio: '08:00',
-            horaFim: '09:00'
-        },
-        {
-            horarioId : 8,
-            diaSemana: 3,
-            horaInicio: '09:00',
-            horaFim: '10:00'
+            titulo,
+            dataHoraInicio: dataInicio,
+            dataHoraFim: dataFim,
+            horarios
+        });
+        
+        console.log(response);
+
+        if (response.data.validationResult.isValid) {
+            Notifications.showSuccess("Agenda salva/alterada com sucesso!");
+            props.history.push('/Agendas');            
+        } else {
+            response.data.validationResult.errors.forEach(function (error) {
+                Notifications.showError(error.errorMessage);
+            });
         }
-    ]);
+
+        // () => {
+        //     Notifications.showSuccess("Agenda salva/alterada com sucesso!");
+        //     props.history.push('/Agendas');
+        // }
+    }
 
     return (
         <NavBarProfissional
@@ -128,39 +109,40 @@ export default function GerenciamentoAgenda(props) {
                                 <br />
                                 <form noValidate autoComplete="off" >
                                     <Grid container spacing={3} justify="flex-start" direction="row">
-                                        <Grid item xs={4}>
+                                        <Grid item xs={6}>
                                             <TextField
                                                 id="titulo"
                                                 label="Título"
                                                 width="100%"
                                                 fullWidth
-                                                // onChange={handleChange('name')}
+                                                value={titulo}
+                                                onChange={(t) => setTitulo(t.target.value)}
                                             />
                                         </Grid>
-                                        <Grid item xs={4}>
+                                        <Grid item xs={3}>
                                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                 <KeyboardDatePicker
                                                     id="date-picker-data-inicio-vigencia"
                                                     label="Início da Vigência"
                                                     format="MM/dd/yyyy"
                                                     fullWidth
-                                                    // value={selectedDate}
-                                                    onChange={() => console.log('Data alterada.')}
+                                                    value={dataInicio}
+                                                    onChange={(data) => setDataInicio(data)}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change date',
                                                     }}
                                                 />
                                             </MuiPickersUtilsProvider>
                                         </Grid>
-                                        <Grid item xs={4}>
+                                        <Grid item xs={3}>
                                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                 <KeyboardDatePicker
                                                     id="date-picker-data-fim-vigencia"
                                                     label="Fim da Vigência"
                                                     format="MM/dd/yyyy"
                                                     fullWidth
-                                                    // value={selectedDate}
-                                                    onChange={() => console.log('Data alterada.')}
+                                                    value={dataFim}
+                                                    onChange={(data) => setDataFim(data)}
                                                     KeyboardButtonProps={{
                                                         'aria-label': 'change date',
                                                     }}
@@ -187,8 +169,8 @@ export default function GerenciamentoAgenda(props) {
                                 <Box width={1 / diasSemana.length} p={1} display="inline-block" maxHeight={5} key={index}>
                                     <List subheader={<ListSubheader>{diaSemana}</ListSubheader>} className={classes.root} bgcolor="background.paper">
                                         {horarios.filter(h => h.diaSemana == index)
-                                            .map(h => 
-                                                <ListItem key={h.horarioId}>
+                                            .map((h, indexHorario) => 
+                                                <ListItem key={indexHorario}>
                                                     <ListItemText id={h.horarioId} primary={"De " + h.horaInicio + " às " + h.horaFim} />
                                                     <ListItemSecondaryAction>
                                                         <IconButton edge="end" aria-label="delete">
@@ -206,10 +188,7 @@ export default function GerenciamentoAgenda(props) {
                             color="primary"
                             size="small"
                             className={classes.saveButton}
-                            onClick={() => {
-                                Notifications.showSuccess("Agenda salva/alterada com sucesso!");
-                                props.history.push('/Agendas');
-                            }}
+                            onClick={SalvarAgenda}
                         >
                             <SaveIcon className={clsx(classes.leftIcon, classes.iconSmall)} />
                             &nbsp;
