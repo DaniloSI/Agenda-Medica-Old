@@ -32,6 +32,11 @@ namespace AgendaMedica.Application.AppServices
         {
             Agenda agenda = _mapper.Map<Agenda>(agendaViewModel);
 
+            agenda.Profissional = _usuarioProfissionalRepository.GetAll()
+                .AsNoTracking()
+                .Include(p => p.Agendas)
+                .Single(p => p.Id == agenda.ProfissionalId);
+
             _agendaService.Add(agenda);
 
             if (agenda.ValidationResult.IsValid)
@@ -43,6 +48,11 @@ namespace AgendaMedica.Application.AppServices
         public override void Update(AgendaViewModel agendaViewModel)
         {
             Agenda agenda = _mapper.Map<Agenda>(agendaViewModel);
+
+            agenda.Profissional = _usuarioProfissionalRepository.GetAll()
+                .AsNoTracking()
+                .Include(p => p.Agendas)
+                .Single(p => p.Id == agenda.ProfissionalId);
 
             _agendaService.Update(agenda);
 

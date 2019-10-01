@@ -11,6 +11,7 @@ namespace AgendaMedica.Domain.Validations
         public static readonly IReadOnlyDictionary<string, string> ErrorsMessages = new Dictionary<string, string>
         {
             ["DATA_FIM_MAIOR_QUE_DATA_INICIO"] = "A data final deve ser maior que a data inicial",
+            ["CONFLITO_PERIODO_VIGENCIA"] = "Já existe uma agenda dentro desse período de vigência",
             ["HORARIOS_CONFLITAM"] = "Existe conflito de horários",
         };
 
@@ -23,6 +24,10 @@ namespace AgendaMedica.Domain.Validations
             RuleFor(agenda => agenda.Horarios)
                 .Must(horarios => !horarios.Any(horarioX => horarios.Any(horarioY => horarioX != horarioY && horarioX.Conflita(horarioY))))
                 .WithMessage(ErrorsMessages["HORARIOS_CONFLITAM"]);
+
+            RuleFor(agenda => agenda.Profissional.Agendas)
+                .Must((agenda, agendas) => !agendas.Any(a => a.AgendaId != agenda.AgendaId && agenda.ConflitaPeriodoVigencia(a)))
+                .WithMessage(ErrorsMessages["CONFLITO_PERIODO_VIGENCIA"]);
         }
     }
 }

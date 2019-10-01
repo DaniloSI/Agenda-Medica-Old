@@ -27,5 +27,15 @@ namespace AgendaMedica.Domain.Entities
             if (HorariosExcecoes == null)
                 HorariosExcecoes = new List<HorarioExcecao>();
         }
+
+        public bool ConflitaPeriodoVigencia(Agenda a)
+        {
+            bool dataInicioConflita = DataHoraInicio >= a.DataHoraInicio && DataHoraInicio < a.DataHoraFim;
+            bool dataFimConflita = DataHoraFim > a.DataHoraInicio && DataHoraFim <= a.DataHoraFim;
+            dataInicioConflita = dataInicioConflita || a.DataHoraInicio >= DataHoraInicio && a.DataHoraInicio < DataHoraFim;
+            dataFimConflita = dataFimConflita || a.DataHoraFim > DataHoraInicio && a.DataHoraFim <= DataHoraFim;
+
+            return dataInicioConflita || dataFimConflita;
+        }
     }
 }

@@ -132,7 +132,12 @@ function FormularioAgenda(props) {
                                             format="MM/dd/yyyy"
                                             fullWidth
                                             value={dataInicio}
-                                            onChange={(data) => setDataInicio(data)}
+                                            onChange={(data) => {
+                                                if (data != null) {
+                                                    data = new Date(data.getFullYear(), data.getMonth(), data.getDate());
+                                                }
+                                                setDataInicio(data);
+                                            }}
                                             KeyboardButtonProps={{
                                                 'aria-label': 'change date',
                                             }}
@@ -147,7 +152,12 @@ function FormularioAgenda(props) {
                                             format="MM/dd/yyyy"
                                             fullWidth
                                             value={dataFim}
-                                            onChange={(data) => setDataFim(data)}
+                                            onChange={(data) => {
+                                                if (data != null) {
+                                                    data = new Date(data.getFullYear(), data.getMonth(), data.getDate());
+                                                }
+                                                setDataFim(data);
+                                            }}
                                             KeyboardButtonProps={{
                                                 'aria-label': 'change date',
                                             }}

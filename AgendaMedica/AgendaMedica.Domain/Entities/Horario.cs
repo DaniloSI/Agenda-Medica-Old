@@ -27,6 +27,8 @@ namespace AgendaMedica.Domain.Entities
             bool diaSemanaIgual = horario.DiaSemana == DiaSemana;
             bool horarioInicioConflita = horario.HoraInicio >= HoraInicio && horario.HoraInicio < HoraFim;
             bool horarioFimConflita = horario.HoraFim > HoraInicio && horario.HoraFim <= HoraFim;
+            horarioInicioConflita = horarioInicioConflita || HoraInicio >= horario.HoraInicio && HoraInicio < horario.HoraFim;
+            horarioFimConflita = horarioFimConflita || HoraFim > horario.HoraInicio && HoraFim <= horario.HoraFim;
 
             return diaSemanaIgual && (horarioInicioConflita || horarioFimConflita);
         }
