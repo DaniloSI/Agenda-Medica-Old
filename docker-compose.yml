@@ -8,6 +8,7 @@ services:
             - "8000:80"
         depends_on:
             - db
+        restart: always
     db:
         image: "mcr.microsoft.com/mssql/server:2017-latest-ubuntu"
         environment:
@@ -22,10 +23,10 @@ services:
         build:
           context: ./web-client/browser-client
           dockerfile: Dockerfile
-        volumes:
-          - '.:/app'
-          - '/app/node_modules'
         ports:
           - '3001:3000'
+        depends_on:
+            - db
+            - web
         environment:
           - NODE_ENV=development
