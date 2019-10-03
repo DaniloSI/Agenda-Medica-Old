@@ -45,7 +45,7 @@ namespace AgendaMedica.Domain.Entities
             conflitaHorarioInicio = conflitaHorarioInicio || (DataHoraInicio > consulta.DataHoraInicio && DataHoraInicio < consulta.DataHoraFim);
             conflitaHorarioFim = conflitaHorarioFim || (DataHoraFim > consulta.DataHoraInicio && DataHoraFim < consulta.DataHoraFim);
 
-            return conflitaHorarioInicio || conflitaHorarioFim;
+            return conflitaHorarioInicio || conflitaHorarioFim || (DataHoraInicio == consulta.DataHoraInicio && DataHoraFim == consulta.DataHoraFim);
         }
     }
 }

@@ -16,13 +16,7 @@ namespace AgendaMedica.Domain.Entities
 
         public bool ConflitaHorario(Consulta novaConsulta)
         {
-            return Consultas != null && Consultas.Any(consulta =>
-            {
-                bool conflitaHorarioInicio = novaConsulta.DataHoraInicio >= consulta.DataHoraInicio && novaConsulta.DataHoraInicio < consulta.DataHoraFim;
-                bool conflitaHorarioFim = novaConsulta.DataHoraFim > consulta.DataHoraInicio && novaConsulta.DataHoraFim <= consulta.DataHoraFim;
-
-                return conflitaHorarioInicio || conflitaHorarioFim;
-            });
+            return Consultas?.Any(c => c.ConflitaHorario(novaConsulta)) ?? false;
         }
     }
 }
