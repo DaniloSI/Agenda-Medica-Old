@@ -28,7 +28,7 @@ export default function BuscaProfissionais({ history }) {
       content={
           <div>
             <CssBaseline />
-            <Container fixed>
+            <Container maxWidth="xl">
                 <div id="cards-profissionais">
                 </div>
             </Container>
