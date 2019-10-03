@@ -43,8 +43,8 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             AgendaId = 1,
-                            DataHoraFim = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
-                            DataHoraInicio = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataHoraFim = new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataHoraInicio = new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             ProfissionalId = 3
                         });
                 });

@@ -21,8 +21,8 @@ namespace AgendaMedica.Data.Mappings
                 {
                     AgendaId = 1,
                     ProfissionalId = 3,
-                    DataHoraInicio = DateTime.MinValue,
-                    DataHoraFim = DateTime.MaxValue
+                    DataHoraInicio = new DateTime(1899, 12, 31, 0, 0, 0, DateTimeKind.Utc),
+                    DataHoraFim = new DateTime(2099, 12, 31, 0, 0, 0, DateTimeKind.Utc)
                 }
             );
 

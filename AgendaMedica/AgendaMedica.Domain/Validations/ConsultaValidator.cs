@@ -33,12 +33,8 @@ namespace AgendaMedica.Domain.Validations
                 .Must(pacienteId => pacienteId > 0)
                 .WithMessage(ErrorsMessages["PACIENTE_OBRIGATORIO"]);
 
-            RuleFor(consulta => consulta.Profissional.Agendas)
-                .Must((consulta, agendas) => agendas.Any(a => consulta.DataHoraInicio >= a.DataHoraInicio && consulta.DataHoraFim <= a.DataHoraFim) &&
-                    agendas.Single(a => consulta.DataHoraInicio >= a.DataHoraInicio && consulta.DataHoraFim <= a.DataHoraFim)
-                        .Horarios.Any(h => h.DiaSemana == (DiaSemana)consulta.DataHoraInicio.DayOfWeek &&
-                            consulta.HoraInicio >= h.HoraInicio &&
-                            consulta.HoraFim <= h.HoraFim))
+            RuleFor(consulta => consulta.Profissional.Consultas)
+                .Must((consulta, consultas) => !consultas.Any(c => c.ConflitaHorario(consulta)))
                 .WithMessage(ErrorsMessages["HORARIO_INDISPONIVEL"]);
 
             RuleFor(consulta => consulta.DataHoraInicio)

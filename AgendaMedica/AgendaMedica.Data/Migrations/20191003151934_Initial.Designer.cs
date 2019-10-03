@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20190924181945_NovosHorarioss")]
-    partial class NovosHorarioss
+    [Migration("20191003151934_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,8 @@ namespace AgendaMedica.Data.Migrations
 
                     b.Property<int>("ProfissionalId");
 
+                    b.Property<string>("Titulo");
+
                     b.HasKey("AgendaId");
 
                     b.HasIndex("ProfissionalId");
@@ -43,8 +45,8 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             AgendaId = 1,
-                            DataHoraFim = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
-                            DataHoraInicio = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataHoraFim = new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DataHoraInicio = new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             ProfissionalId = 3
                         });
                 });
@@ -984,7 +986,7 @@ namespace AgendaMedica.Data.Migrations
                     b.HasOne("AgendaMedica.Domain.Entities.Agenda", "Agenda")
                         .WithMany("Horarios")
                         .HasForeignKey("AgendaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>

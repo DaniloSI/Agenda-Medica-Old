@@ -124,6 +124,7 @@ namespace AgendaMedica.Data.Migrations
                 {
                     AgendaId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
                     DataHoraInicio = table.Column<DateTime>(nullable: false),
                     DataHoraFim = table.Column<DateTime>(nullable: false),
                     ProfissionalId = table.Column<int>(nullable: false)
@@ -234,7 +235,6 @@ namespace AgendaMedica.Data.Migrations
                     HoraInicio = table.Column<TimeSpan>(nullable: false),
                     HoraFim = table.Column<TimeSpan>(nullable: false),
                     PagamentoConfirmado = table.Column<bool>(nullable: false),
-                    EnderecoId = table.Column<int>(nullable: false),
                     PacienteId = table.Column<int>(nullable: false),
                     ProfissionalId = table.Column<int>(nullable: false),
                     EspecialidadeId = table.Column<int>(nullable: false)
@@ -242,12 +242,6 @@ namespace AgendaMedica.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Consulta", x => x.ConsultaId);
-                    table.ForeignKey(
-                        name: "FK_Consulta_Endereco_EnderecoId",
-                        column: x => x.EnderecoId,
-                        principalTable: "Endereco",
-                        principalColumn: "EnderecoId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Consulta_Especialidade_EspecialidadeId",
                         column: x => x.EspecialidadeId,
@@ -311,7 +305,7 @@ namespace AgendaMedica.Data.Migrations
                         column: x => x.AgendaId,
                         principalTable: "Agenda",
                         principalColumn: "AgendaId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,6 +317,7 @@ namespace AgendaMedica.Data.Migrations
                     Data = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<TimeSpan>(nullable: false),
                     HoraFim = table.Column<TimeSpan>(nullable: false),
+                    Atende = table.Column<bool>(nullable: false),
                     AgendaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -377,6 +372,11 @@ namespace AgendaMedica.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Agenda",
+                columns: new[] { "AgendaId", "DataHoraFim", "DataHoraInicio", "ProfissionalId", "Titulo" },
+                values: new object[] { 1, new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), 3, null });
+
+            migrationBuilder.InsertData(
                 table: "UsuarioProfissionalEspecialidade",
                 columns: new[] { "EspecialidadeId", "Id" },
                 values: new object[] { 1, 3 });
@@ -385,6 +385,62 @@ namespace AgendaMedica.Data.Migrations
                 table: "UsuarioProfissionalEspecialidade",
                 columns: new[] { "EspecialidadeId", "Id" },
                 values: new object[] { 3, 4 });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[,]
+                {
+                    { 1, 1, 0, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 27, 1, 3, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 28, 1, 3, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 29, 1, 4, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 30, 1, 4, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 31, 1, 4, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 32, 1, 4, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 33, 1, 4, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 34, 1, 4, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 35, 1, 4, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 36, 1, 5, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 37, 1, 5, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 38, 1, 5, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 39, 1, 5, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 40, 1, 5, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 41, 1, 5, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 42, 1, 5, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 43, 1, 6, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 44, 1, 6, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 45, 1, 6, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 46, 1, 6, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 47, 1, 6, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 26, 1, 3, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 48, 1, 6, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 25, 1, 3, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 23, 1, 3, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 2, 1, 0, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 3, 1, 0, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 4, 1, 0, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 5, 1, 0, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 6, 1, 0, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 7, 1, 0, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 8, 1, 1, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 9, 1, 1, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 10, 1, 1, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 11, 1, 1, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 12, 1, 1, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 13, 1, 1, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 14, 1, 1, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 15, 1, 2, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 16, 1, 2, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
+                    { 17, 1, 2, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 18, 1, 2, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
+                    { 19, 1, 2, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
+                    { 20, 1, 2, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
+                    { 21, 1, 2, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
+                    { 22, 1, 3, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
+                    { 24, 1, 3, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
+                    { 49, 1, 6, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agenda_ProfissionalId",
@@ -434,11 +490,6 @@ namespace AgendaMedica.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Consulta_EnderecoId",
-                table: "Consulta",
-                column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consulta_EspecialidadeId",

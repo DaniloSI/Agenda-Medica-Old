@@ -36,5 +36,16 @@ namespace AgendaMedica.Domain.Entities
                 return Data + HoraFim;
             }
         }
+
+        public bool ConflitaHorario(Consulta consulta)
+        {
+            bool conflitaHorarioInicio = consulta.DataHoraInicio > DataHoraInicio && consulta.DataHoraInicio < DataHoraFim;
+            bool conflitaHorarioFim = consulta.DataHoraFim > DataHoraInicio && consulta.DataHoraFim < DataHoraFim;
+
+            conflitaHorarioInicio = conflitaHorarioInicio || (DataHoraInicio > consulta.DataHoraInicio && DataHoraInicio < consulta.DataHoraFim);
+            conflitaHorarioFim = conflitaHorarioFim || (DataHoraFim > consulta.DataHoraInicio && DataHoraFim < consulta.DataHoraFim);
+
+            return conflitaHorarioInicio || conflitaHorarioFim;
+        }
     }
 }
