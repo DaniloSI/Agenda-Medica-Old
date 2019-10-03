@@ -102,8 +102,8 @@ namespace AgendaMedica.API.Controllers
                     h.AgendaId,
                     h.HorarioId,
                     h.DiaSemana,
-                    h.HoraInicio,
-                    h.HoraFim
+                    HoraInicio = h.HoraInicio.ToString(@"hh\:mm"),
+                    HoraFim = h.HoraFim.ToString(@"hh\:mm")
                 })
             });
         }

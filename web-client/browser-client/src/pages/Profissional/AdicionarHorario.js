@@ -85,19 +85,19 @@ export default function AdicionarHorario({ callBackAdicionar }) {
   };
 
   const handleAdicionar = () => {
+    function pad(num) {
+      var s = "0" + num;
+      return s.substr(s.length-2);
+    }
 
-    console.log('selectedDiaSemana: ', selectedDiaSemana);
-    console.log('selectedHorarioInicio: ', selectedHorarioInicio);
-    console.log('selectedHorarioFim: ', selectedHorarioFim);
-    
     if ((selectedDiaSemana === '') || !selectedHorarioInicio || !selectedHorarioFim) {
         Notifications.showError("Preencha todos os campos.");
     } else {
         callBackAdicionar({
             horarioId : 0,
             diaSemana: selectedDiaSemana,
-            horaInicio: selectedHorarioInicio.getHours() + ":" + selectedHorarioInicio.getMinutes(),
-            horaFim: selectedHorarioFim.getHours() + ":" + selectedHorarioFim.getMinutes()
+            horaInicio: pad(selectedHorarioInicio.getHours()) + ":" + pad(selectedHorarioInicio.getMinutes()),
+            horaFim: pad(selectedHorarioFim.getHours()) + ":" + pad(selectedHorarioFim.getMinutes())
         });
         
         Notifications.showSuccess("Horário adicionado com sucesso!");
