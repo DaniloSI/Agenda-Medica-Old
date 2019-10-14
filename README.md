@@ -52,7 +52,7 @@ O *docker-compose.yml*, localizado no raiz, foi configurado de modo que quando e
 
 Uma vez que os containers estão em execução, basta abrir o navegador e acessar o seguinte link para ter acesso à documentação da API: http://localhost:8000/swagger.
 
-Após executar a aplicação de back-end, é possível acessá-la através do link: http://localhost:3000.
+Após executar a aplicação de back-end, é possível acessá-la através do link: http://localhost:3001.
 
 #### Execução singular
 
