@@ -4,6 +4,7 @@ services:
         build:
           context: ./AgendaMedica
           dockerfile: Dockerfile
+        image: danilosi/agenda-medica-api
         ports:
             - "8000:80"
         depends_on:
@@ -23,6 +24,7 @@ services:
         build:
           context: ./web-client/browser-client
           dockerfile: Dockerfile
+        image: danilosi/agenda-medica-web
         ports:
           - '3001:3000'
         depends_on:
