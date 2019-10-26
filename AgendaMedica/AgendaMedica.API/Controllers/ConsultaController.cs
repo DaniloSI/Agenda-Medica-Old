@@ -88,7 +88,9 @@ namespace AgendaMedica.API.Controllers
                     c.Paciente.PhoneNumber,
                     Data = c.Data.Date.ToString("dd/MM/yyyy"),
                     c.HoraInicio,
-                    c.HoraFim
+                    c.HoraFim,
+                    DataHoraInicio = $"{c.Data.Date.ToString("yyyy-MM-dd")}T{c.HoraInicio}",
+                    DataHoraFim = $"{c.Data.Date.ToString("yyyy-MM-dd")}T{c.HoraFim}"
                 })
             );
         }
