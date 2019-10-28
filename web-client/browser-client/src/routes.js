@@ -9,8 +9,8 @@ import BuscaProfissionais from './pages/Paciente/BuscaProfissionais'
 import Consultas from './pages/Paciente/Consultas'
 import ConsultasProfissional from './pages/Profissional/ConsultasProfissional'
 import GerenciamentoAgenda from './pages/Profissional/GerenciamentoAgenda'
-import Agendas from './pages/Profissional/Agendas'
-
+import Agendas from './pages/Profissional/Agendas' 
+import Relatorio from './pages/Profissional/Relatorio' 
 import AgendamentoHorario from './pages/AgendamentoHorario'
 // import pacienteConsultas from './pages/pacienteConsultas'
 
@@ -40,6 +40,7 @@ export default function Routes() {
                 <Route path="/BuscaProfissionais" component={BuscaProfissionais} tipoUsuario="0"></Route>
                 <Route path="/CadastrarHorarios" component={CadastrarHorarios} tipoUsuario="1"></Route>
                 <Route path="/AgendamentoHorario" component={AgendamentoHorario}/>
+                <Route path="/Relatorio" component={Relatorio}/>
                 {/* <PrivateRoute path="/consultas" component={pacienteConsultas}/> */}
             </Switch>
         </BrowserRouter>

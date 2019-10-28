@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import DateRangeIcon from '@material-ui/icons/DateRange';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
 export default function NavBarProfissional(props) {
     return (
@@ -37,6 +38,18 @@ export default function NavBarProfissional(props) {
                         <DateRangeIcon />
                         </ListItemIcon>
                         <ListItemText primary='Gerenciar Agendas' />
+                    </ListItem>
+                    <ListItem
+                        button
+                        key='Relatório'
+                        onClick={
+                            () => props.history.push('/Relatorio')
+                        }
+                    >
+                        <ListItemIcon>
+                            <TrendingUpIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Relatório' />
                     </ListItem>
                 </List>
             }
