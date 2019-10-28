@@ -79,7 +79,7 @@ export default function ConsultasProfissional(props) {
         <NavBarProfissional
             history={props.history}
             content={
-                <Container maxWidth="xl">
+                <Container maxWidth="lg">
                     <Paper className={classes.paperCalendar}>
                         <FullCalendar
                             defaultView="dayGridWeek"
