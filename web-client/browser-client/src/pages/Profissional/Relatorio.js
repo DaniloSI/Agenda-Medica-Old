@@ -37,28 +37,24 @@ export default function Relatorio(props) {
     const classes = useStyles();
     const [ano, setAno] = React.useState(new Date().getFullYear());
     const [mes, setMes] = React.useState(new Date().getMonth());
-    const data = [
-        {
-          name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-        },
-        {
-          name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-        },
-        {
-          name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-        },
-        {
-          name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-        },
-        {
-          name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-        },
-        {
-          name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-        },
-        {
-          name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-        },
+    const dataAno = [
+        { day: 'Jan', "Medicina Esportiva": 3, "Anestesiologia": 1 },
+        { day: 'Fev', "Medicina Esportiva": 4, "Anestesiologia": 3 },
+        { day: 'Mar', "Medicina Esportiva": 1, "Anestesiologia": 25 },
+        { day: 'Abr', "Medicina Esportiva": 9, "Anestesiologia": 15 },
+        { day: 'Mai', "Medicina Esportiva": 2, "Anestesiologia": 13 },
+        { day: 'Jun', "Medicina Esportiva": 3, "Anestesiologia": 1 },
+        { day: 'Jul', "Medicina Esportiva": 1, "Anestesiologia": 2 },
+        { day: 'Ago', "Medicina Esportiva": 6, "Anestesiologia": 9 },
+        { day: 'Set', "Medicina Esportiva": 15, "Anestesiologia": 2 },
+        { day: 'Out', "Medicina Esportiva": 3, "Anestesiologia": 1 },
+        { day: 'Nov', "Medicina Esportiva": 2, "Anestesiologia": 0 },
+        { day: 'Dez', "Medicina Esportiva": 7, "Anestesiologia": 8 },
+    ];
+    const dataMes = [
+        { day: new Date('2019-10-01T00:00:00Z').getTime(), "Medicina Esportiva": 5, "Anestesiologia": 1 },
+        { day: new Date('2019-10-02T00:00:00Z').getTime(), "Medicina Esportiva": 1, "Anestesiologia": 21 },
+        { day: new Date('2019-10-03T00:00:00Z').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
     ];
 
     return (
@@ -93,18 +89,18 @@ export default function Relatorio(props) {
                                     <Grid item xs={12}>
                                         <ResponsiveContainer height={400}>
                                             <BarChart
-                                                data={data}
+                                                data={dataAno}
                                                 margin={{
                                                     top: 5, right: 30, left: 20, bottom: 5,
                                                 }}
                                             >
                                                 <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="name" />
+                                                <XAxis dataKey="day" />
                                                 <YAxis />
                                                 <Tooltip />
                                                 <Legend />
-                                                <Bar dataKey="pv" fill="#8884d8" />
-                                                <Bar dataKey="uv" fill="#82ca9d" />
+                                                <Bar dataKey="Medicina Esportiva" stackId="totalConsultas" fill="#8884d8" />
+                                                <Bar dataKey="Anestesiologia" stackId="totalConsultas" fill="#82ca9d" />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </Grid>
@@ -146,18 +142,22 @@ export default function Relatorio(props) {
                                     <Grid item xs={12}>
                                         <ResponsiveContainer height={400}>
                                             <BarChart
-                                                data={data}
+                                                data={dataMes}
                                                 margin={{
                                                     top: 5, right: 30, left: 20, bottom: 5,
                                                 }}
                                             >
                                                 <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="name" />
+                                                <XAxis dataKey="day" tick={({ x, y, payload }) =>
+                                                    <g transform={`translate(${x},${y})`}>
+                                                        <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">{new Date(payload.value).toLocaleDateString()}</text>
+                                                    </g>
+                                                } />
                                                 <YAxis />
                                                 <Tooltip />
                                                 <Legend />
-                                                <Bar dataKey="pv" fill="#8884d8" />
-                                                <Bar dataKey="uv" fill="#82ca9d" />
+                                                <Bar dataKey="Medicina Esportiva" stackId="totalConsultas" fill="#8884d8" />
+                                                <Bar dataKey="Anestesiologia" stackId="totalConsultas" fill="#82ca9d" />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </Grid>
