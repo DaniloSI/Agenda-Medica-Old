@@ -52,9 +52,9 @@ export default function Relatorio(props) {
         { day: 'Dez', "Medicina Esportiva": 7, "Anestesiologia": 8 },
     ];
     const dataMes = [
-        { day: new Date('2019-10-01T00:00:00Z').getTime(), "Medicina Esportiva": 5, "Anestesiologia": 1 },
-        { day: new Date('2019-10-02T00:00:00Z').getTime(), "Medicina Esportiva": 1, "Anestesiologia": 21 },
-        { day: new Date('2019-10-03T00:00:00Z').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
+        { day: new Date('2019-10-01T00:00:00').getTime(), "Medicina Esportiva": 5, "Anestesiologia": 1 },
+        { day: new Date('2019-10-02T00:00:00').getTime(), "Medicina Esportiva": 1, "Anestesiologia": 21 },
+        { day: new Date('2019-10-03T00:00:00').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
     ];
 
     return (
@@ -150,11 +150,13 @@ export default function Relatorio(props) {
                                                 <CartesianGrid strokeDasharray="3 3" />
                                                 <XAxis dataKey="day" tick={({ x, y, payload }) =>
                                                     <g transform={`translate(${x},${y})`}>
-                                                        <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-35)">{new Date(payload.value).toLocaleDateString()}</text>
+                                                        <text x={0} y={0} dy={16} textAnchor="end" fill="#666">{new Date(payload.value).getDate()}</text>
                                                     </g>
                                                 } />
                                                 <YAxis />
-                                                <Tooltip />
+                                                <Tooltip
+                                                    labelFormatter={(value) => ( new Date(value).toLocaleDateString() )}
+                                                />
                                                 <Legend />
                                                 <Bar dataKey="Medicina Esportiva" stackId="totalConsultas" fill="#8884d8" />
                                                 <Bar dataKey="Anestesiologia" stackId="totalConsultas" fill="#82ca9d" />
