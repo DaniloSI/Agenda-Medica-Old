@@ -49,7 +49,6 @@ export default function Relatorio(props) {
     const [consultasAno, setConsultasAno] = React.useState([]);
     const [consultasMes, setConsultasMes] = React.useState([]);
     const especialidades = getEspecialidades(consultasAno);
-    const cores = especialidades.map(e => randomColor());
 
     function buscaConsultasAno(ano) {
         api.get('Consulta/RelatorioConsultasAno?ano=' + ano)
@@ -114,7 +113,7 @@ export default function Relatorio(props) {
                                                 <Tooltip />
                                                 <Legend />
                                                 {especialidades.map((especialidade, index) => 
-                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={cores[index]} />
+                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={randomColor({seed: especialidade})} />
                                                 )}
                                             </BarChart>
                                         </ResponsiveContainer>
@@ -175,7 +174,7 @@ export default function Relatorio(props) {
                                                 />
                                                 <Legend />
                                                 {especialidades.map((especialidade, index) => 
-                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={cores[index]} />
+                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={randomColor({seed: especialidade})} />
                                                 )}
                                             </BarChart>
                                         </ResponsiveContainer>
