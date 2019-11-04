@@ -87,6 +87,7 @@ export default function Relatorio(props) {
                                                 onChange={event => {
                                                     setAno(event.target.value);
                                                     buscaConsultasAno(event.target.value);
+                                                    buscaConsultasMes(event.target.value, mes);
                                                 }}
                                                 inputProps={{
                                                     name: 'ano',

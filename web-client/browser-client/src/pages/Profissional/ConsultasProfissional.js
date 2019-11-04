@@ -108,7 +108,6 @@ export default function ConsultasProfissional(props) {
                                 meridiem: false
                             }}
                             eventClick={(info) => {
-                                console.log('ConsultaId: ' + info.event.id);
                                 handleOpenModal(info.event.id);
                             }
                             }
