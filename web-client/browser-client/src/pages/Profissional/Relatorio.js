@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {
     ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
+import { randomColor } from 'randomcolor';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import * as Notifications from '../../services/notifications';
 import api from '../../services/api';
@@ -46,12 +47,9 @@ export default function Relatorio(props) {
     const [ano, setAno] = React.useState(new Date().getFullYear());
     const [mes, setMes] = React.useState(new Date().getMonth());
     const [consultasAno, setConsultasAno] = React.useState([]);
+    const [consultasMes, setConsultasMes] = React.useState([]);
     const especialidades = getEspecialidades(consultasAno);
-    const dataMes = [
-        { day: new Date('2019-10-01T00:00:00').getTime(), "Medicina Esportiva": 5, "Anestesiologia": 1 },
-        { day: new Date('2019-10-02T00:00:00').getTime(), "Medicina Esportiva": 1, "Anestesiologia": 21 },
-        { day: new Date('2019-10-03T00:00:00').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
-    ];
+    const cores = especialidades.map(e => randomColor());
 
     function buscaConsultasAno(ano) {
         api.get('Consulta/RelatorioConsultasAno?ano=' + ano)
@@ -60,8 +58,16 @@ export default function Relatorio(props) {
         });
     }
 
+    function buscaConsultasMes(ano, mes) {
+        api.get('Consulta/RelatorioConsultasMes?ano=' + ano + '&mes=' + (mes + 1))
+            .then(response => {
+                setConsultasMes(response.data);
+        });
+    }
+
     useEffect(() => {
         buscaConsultasAno(ano);
+        buscaConsultasMes(ano, mes);
     }, [])
 
     return (
@@ -107,8 +113,8 @@ export default function Relatorio(props) {
                                                 <YAxis />
                                                 <Tooltip />
                                                 <Legend />
-                                                {especialidades.map(especialidade => 
-                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill="#8884d8" />
+                                                {especialidades.map((especialidade, index) => 
+                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={cores[index]} />
                                                 )}
                                             </BarChart>
                                         </ResponsiveContainer>
@@ -127,6 +133,7 @@ export default function Relatorio(props) {
                                                 value={mes}
                                                 onChange={event => {
                                                     setMes(event.target.value);
+                                                    buscaConsultasMes(ano, event.target.value);
                                                 }}
                                                 inputProps={{
                                                     name: 'mes',
@@ -151,13 +158,13 @@ export default function Relatorio(props) {
                                     <Grid item xs={12}>
                                         <ResponsiveContainer height={400}>
                                             <BarChart
-                                                data={dataMes}
+                                                data={consultasMes}
                                                 margin={{
                                                     top: 5, right: 30, left: 20, bottom: 5,
                                                 }}
                                             >
                                                 <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="day" tick={({ x, y, payload }) =>
+                                                <XAxis dataKey="Dia" tick={({ x, y, payload }) =>
                                                     <g transform={`translate(${x},${y})`}>
                                                         <text x={0} y={0} dy={16} textAnchor="end" fill="#666">{new Date(payload.value).getDate()}</text>
                                                     </g>
@@ -167,8 +174,9 @@ export default function Relatorio(props) {
                                                     labelFormatter={(value) => ( new Date(value).toLocaleDateString() )}
                                                 />
                                                 <Legend />
-                                                <Bar dataKey="Medicina Esportiva" stackId="totalConsultas" fill="#8884d8" />
-                                                <Bar dataKey="Anestesiologia" stackId="totalConsultas" fill="#82ca9d" />
+                                                {especialidades.map((especialidade, index) => 
+                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill={cores[index]} />
+                                                )}
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </Grid>

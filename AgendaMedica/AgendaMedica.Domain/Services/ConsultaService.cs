@@ -94,27 +94,40 @@ namespace AgendaMedica.Domain.Services
             return relatorioConsultasPorMes;
         }
 
-        public Dictionary<int, Dictionary<string, int>> RelatorioConsultas(int profissionalId, int ano, int mes)
+        public IEnumerable<Dictionary<string, string>> RelatorioConsultas(int profissionalId, int ano, int mes)
         {
-            Dictionary<int, Dictionary<string, int>> relatorioConsultasPorMes = new Dictionary<int, Dictionary<string, int>>();
-            var consultasDoMes = GetAll()
+            List<Dictionary<string, string>> relatorioConsultasPorDia = new List<Dictionary<string, string>>();
+            var consultasDoMesAgrupadas = GetAll()
                 .Where(consulta => (consulta.ProfissionalId == profissionalId) && (consulta.Data.Year == ano) && (consulta.Data.Month == mes))
-                .Include(consulta => consulta.Especialidade);
+                .Include(consulta => consulta.Especialidade)
+                .GroupBy(consulta => consulta.Data.Date, (dia, consultas) => new
+                {
+                    Dia = dia,
+                    EspecialidadesDia = consultas
+                        .GroupBy(consulta => consulta.Especialidade.Nome)
+                        .Select(grupoConsultasPorEspecialidade => new
+                        {
+                            Nome = grupoConsultasPorEspecialidade.Key,
+                            Quantidade = grupoConsultasPorEspecialidade.Count()
+                        })
+                });
 
-            foreach (Consulta consulta in consultasDoMes)
+            foreach (var grupoConsultas in consultasDoMesAgrupadas)
             {
-                Dictionary<string, int> countEspecialidade = new Dictionary<string, int>();
-                string especialidadeNome = consulta.Especialidade.Nome;
+                Dictionary<string, string> consultasDoMes = new Dictionary<string, string>
+                {
+                    ["Dia"] = grupoConsultas.Dia.ToString("yyyy-MM-ddTHH:mm")
+                };
 
-                if (countEspecialidade.ContainsKey(especialidadeNome))
-                    countEspecialidade[especialidadeNome]++;
-                else
-                    countEspecialidade[especialidadeNome] = 1;
+                foreach (var especialidadeCount in grupoConsultas.EspecialidadesDia)
+                {
+                    consultasDoMes.Add(especialidadeCount.Nome, especialidadeCount.Quantidade.ToString());
+                }
 
-                relatorioConsultasPorMes[consulta.Data.Month] = countEspecialidade;
+                relatorioConsultasPorDia.Add(consultasDoMes);
             }
 
-            return relatorioConsultasPorMes;
+            return relatorioConsultasPorDia;
         }
     }
 }

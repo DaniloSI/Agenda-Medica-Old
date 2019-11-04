@@ -379,12 +379,13 @@ namespace AgendaMedica.Data.Migrations
             migrationBuilder.InsertData(
                 table: "UsuarioProfissionalEspecialidade",
                 columns: new[] { "EspecialidadeId", "Id" },
-                values: new object[] { 1, 3 });
-
-            migrationBuilder.InsertData(
-                table: "UsuarioProfissionalEspecialidade",
-                columns: new[] { "EspecialidadeId", "Id" },
-                values: new object[] { 3, 4 });
+                values: new object[,]
+                {
+                    { 1, 3 },
+                    { 2, 3 },
+                    { 4, 3 },
+                    { 3, 4 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Horario",

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20191003151934_Initial")]
+    [Migration("20191104015953_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -654,6 +654,16 @@ namespace AgendaMedica.Data.Migrations
                         {
                             EspecialidadeId = 3,
                             Id = 4
+                        },
+                        new
+                        {
+                            EspecialidadeId = 2,
+                            Id = 3
+                        },
+                        new
+                        {
+                            EspecialidadeId = 4,
+                            Id = 3
                         });
                 });
 

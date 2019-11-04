@@ -652,6 +652,16 @@ namespace AgendaMedica.Data.Migrations
                         {
                             EspecialidadeId = 3,
                             Id = 4
+                        },
+                        new
+                        {
+                            EspecialidadeId = 2,
+                            Id = 3
+                        },
+                        new
+                        {
+                            EspecialidadeId = 4,
+                            Id = 3
                         });
                 });
 

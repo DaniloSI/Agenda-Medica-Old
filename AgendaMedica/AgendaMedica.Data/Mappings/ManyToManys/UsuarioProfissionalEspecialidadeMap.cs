@@ -30,6 +30,16 @@ namespace AgendaMedica.Data.Mappings.ManyToManys
                 {
                     EspecialidadeId = 3,
                     Id = 4
+                },
+                new UsuarioProfissionalEspecialidade
+                {
+                    EspecialidadeId = 2,
+                    Id = 3
+                },
+                new UsuarioProfissionalEspecialidade
+                {
+                    EspecialidadeId = 4,
+                    Id = 3
                 }
             );
         }
