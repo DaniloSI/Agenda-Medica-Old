@@ -53,11 +53,15 @@ export default function Relatorio(props) {
         { day: new Date('2019-10-03T00:00:00').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
     ];
 
-    useEffect(() => {
-        api.get('Consulta/RelatorioConsultasAno?ano=2019')
+    function buscaConsultasAno(ano) {
+        api.get('Consulta/RelatorioConsultasAno?ano=' + ano)
             .then(response => {
                 setConsultasAno(response.data);
         });
+    }
+
+    useEffect(() => {
+        buscaConsultasAno(ano);
     }, [])
 
     return (
@@ -76,7 +80,8 @@ export default function Relatorio(props) {
                                             <Select
                                                 value={ano}
                                                 onChange={event => {
-                                                    setAno(event.target.value)
+                                                    setAno(event.target.value);
+                                                    buscaConsultasAno(event.target.value);
                                                 }}
                                                 inputProps={{
                                                     name: 'ano',
