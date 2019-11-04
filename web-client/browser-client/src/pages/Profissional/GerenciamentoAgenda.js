@@ -26,7 +26,9 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import * as Notifications from '../../services/notifications';
 import api from '../../services/api';
-import ReactDOM from 'react-dom';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import NumberFormat from 'react-number-format';
+import PropTypes from 'prop-types';
 
 
 const useStyles = makeStyles(theme => ({
@@ -53,7 +55,35 @@ const useStyles = makeStyles(theme => ({
     extendedIcon: {
         marginRight: theme.spacing(1),
     },
-  }));
+}));
+
+
+function NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+
+    return (
+        <NumberFormat
+            {...other}
+            getInputRef={inputRef}
+            onValueChange={values => {
+                onChange({
+                    target: {
+                        value: values.value,
+                    },
+                });
+            }}
+            thousandSeparator="."
+            decimalSeparator=","
+            isNumericString
+            prefix="R$ "
+        />
+    );
+}
+
+NumberFormatCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
 
 function FormularioAgenda(props) {
     const classes = useStyles();
@@ -70,6 +100,7 @@ function FormularioAgenda(props) {
     const [dataInicio, setDataInicio] = React.useState(null);
     const [dataFim, setDataFim] = React.useState(null);
     const [titulo, setTitulo] = React.useState('');
+    const [precoConsulta, setPrecoConsulta] = React.useState('');
     const agendaId = props.match.params.agendaId;
 
     useEffect(() => {
@@ -80,6 +111,7 @@ function FormularioAgenda(props) {
                     setDataInicio(response.data.dataHoraInicio);
                     setDataFim(response.data.dataHoraFim);
                     setTitulo(response.data.titulo);
+                    setPrecoConsulta(response.data.precoConsulta);
             });
         }
     }, [])
@@ -91,6 +123,7 @@ function FormularioAgenda(props) {
             titulo,
             dataHoraInicio: dataInicio,
             dataHoraFim: dataFim,
+            precoConsulta,
             horarios
         });
 
@@ -124,7 +157,22 @@ function FormularioAgenda(props) {
                                         onChange={(t) => setTitulo(t.target.value)}
                                     />
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={2}>
+                                    
+                                    <TextField
+                                        id="precoConsulta"
+                                        label="Preço da Consulta"
+                                        width="100%"
+                                        fullWidth
+                                        InputProps={{
+                                            inputComponent: NumberFormatCustom,
+                                        }}
+                                        value={precoConsulta}
+                                        onChange={(t) => setPrecoConsulta(t.target.value)}
+                                    />
+
+                                </Grid>
+                                <Grid item xs={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                         <KeyboardDatePicker
                                             id="date-picker-data-inicio-vigencia"
@@ -144,7 +192,7 @@ function FormularioAgenda(props) {
                                         />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={2}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                         <KeyboardDatePicker
                                             id="date-picker-data-fim-vigencia"

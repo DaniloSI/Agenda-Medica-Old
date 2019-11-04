@@ -10,6 +10,8 @@ namespace AgendaMedica.Application.ViewModels
         public string Titulo { get; set; }
         public DateTime DataHoraInicio { get; set; }
         public DateTime DataHoraFim { get; set; }
+        public decimal PrecoConsulta { get; set; }
+
         public ICollection<HorarioViewModel> Horarios { get; set; }
         public ICollection<HorarioExcecaoViewModel> HorariosExcecoes { get; set; }
         public int ProfissionalId { get; set; }

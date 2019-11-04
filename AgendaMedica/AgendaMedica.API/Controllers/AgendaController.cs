@@ -45,6 +45,7 @@ namespace AgendaMedica.API.Controllers
                 agenda.Titulo,
                 agenda.DataHoraInicio,
                 agenda.DataHoraFim,
+                agenda.PrecoConsulta,
                 agenda.Horarios,
                 agenda.HorariosExcecoes,
                 agenda.ProfissionalId,
@@ -97,6 +98,7 @@ namespace AgendaMedica.API.Controllers
                 Titulo = agenda.Titulo ?? string.Empty,
                 agenda.DataHoraInicio,
                 agenda.DataHoraFim,
+                agenda.PrecoConsulta,
                 Horarios = agenda.Horarios?.Select(h => new
                 {
                     h.AgendaId,
