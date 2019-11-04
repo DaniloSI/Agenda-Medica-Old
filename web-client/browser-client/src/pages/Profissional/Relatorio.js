@@ -33,29 +33,32 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
+function getEspecialidades(consultasTotais) {
+    var especialidadesArray = [];
+    consultasTotais.forEach(consultas => 
+        especialidadesArray = especialidadesArray.concat(Object.keys(consultas).filter(prop => prop != "Mes"))
+    );
+    return Array.from(new Set(especialidadesArray));
+}
+
 export default function Relatorio(props) {
     const classes = useStyles();
     const [ano, setAno] = React.useState(new Date().getFullYear());
     const [mes, setMes] = React.useState(new Date().getMonth());
-    const dataAno = [
-        { day: 'Jan', "Medicina Esportiva": 3, "Anestesiologia": 1 },
-        { day: 'Fev', "Medicina Esportiva": 4, "Anestesiologia": 3 },
-        { day: 'Mar', "Medicina Esportiva": 1, "Anestesiologia": 25 },
-        { day: 'Abr', "Medicina Esportiva": 9, "Anestesiologia": 15 },
-        { day: 'Mai', "Medicina Esportiva": 2, "Anestesiologia": 13 },
-        { day: 'Jun', "Medicina Esportiva": 3, "Anestesiologia": 1 },
-        { day: 'Jul', "Medicina Esportiva": 1, "Anestesiologia": 2 },
-        { day: 'Ago', "Medicina Esportiva": 6, "Anestesiologia": 9 },
-        { day: 'Set', "Medicina Esportiva": 15, "Anestesiologia": 2 },
-        { day: 'Out', "Medicina Esportiva": 3, "Anestesiologia": 1 },
-        { day: 'Nov', "Medicina Esportiva": 2, "Anestesiologia": 0 },
-        { day: 'Dez', "Medicina Esportiva": 7, "Anestesiologia": 8 },
-    ];
+    const [consultasAno, setConsultasAno] = React.useState([]);
+    const especialidades = getEspecialidades(consultasAno);
     const dataMes = [
         { day: new Date('2019-10-01T00:00:00').getTime(), "Medicina Esportiva": 5, "Anestesiologia": 1 },
         { day: new Date('2019-10-02T00:00:00').getTime(), "Medicina Esportiva": 1, "Anestesiologia": 21 },
         { day: new Date('2019-10-03T00:00:00').getTime(), "Medicina Esportiva": 3, "Anestesiologia": 9 },
     ];
+
+    useEffect(() => {
+        api.get('Consulta/RelatorioConsultasAno?ano=2019')
+            .then(response => {
+                setConsultasAno(response.data);
+        });
+    }, [])
 
     return (
         <NavBarProfissional
@@ -89,18 +92,19 @@ export default function Relatorio(props) {
                                     <Grid item xs={12}>
                                         <ResponsiveContainer height={400}>
                                             <BarChart
-                                                data={dataAno}
+                                                data={consultasAno}
                                                 margin={{
                                                     top: 5, right: 30, left: 20, bottom: 5,
                                                 }}
                                             >
                                                 <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="day" />
+                                                <XAxis dataKey="Mes" />
                                                 <YAxis />
                                                 <Tooltip />
                                                 <Legend />
-                                                <Bar dataKey="Medicina Esportiva" stackId="totalConsultas" fill="#8884d8" />
-                                                <Bar dataKey="Anestesiologia" stackId="totalConsultas" fill="#82ca9d" />
+                                                {especialidades.map(especialidade => 
+                                                    <Bar dataKey={especialidade} stackId="totalConsultas" fill="#8884d8" />
+                                                )}
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </Grid>

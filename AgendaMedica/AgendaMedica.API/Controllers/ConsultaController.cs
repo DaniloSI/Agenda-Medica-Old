@@ -1,9 +1,12 @@
 ﻿using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.ViewModels;
 using AgendaMedica.Domain.Identity;
+using AgendaMedica.Domain.Interfaces.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,12 +17,15 @@ namespace AgendaMedica.API.Controllers
     public class ConsultaController : ControllerBase
     {
         private readonly IConsultaAppService _consultaAppService;
+        private readonly IConsultaService _consultaService;
         private readonly UserManager<AppUser> _userManager;
 
         public ConsultaController(IConsultaAppService consultaAppService,
+            IConsultaService consultaService,
             UserManager<AppUser> userManager)
         {
             _consultaAppService = consultaAppService;
+            _consultaService = consultaService;
             _userManager = userManager;
         }
 
@@ -132,6 +138,26 @@ namespace AgendaMedica.API.Controllers
                     }
                 });
             }
+        }
+
+        [HttpGet("RelatorioConsultasAno")]
+        [Authorize]
+        public async Task<JsonResult> RelatorioConsultasAno(int ano)
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var relatorioConsultas = _consultaService.RelatorioConsultas(user.Id, ano);
+
+            return new JsonResult(relatorioConsultas);
+        }
+
+        [HttpGet("RelatorioConsultasMes")]
+        [Authorize]
+        public async Task<JsonResult> RelatorioConsultasMes(int ano, int mes)
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var relatorioConsultas = _consultaService.RelatorioConsultas(user.Id, ano, mes);
+
+            return new JsonResult(relatorioConsultas);
         }
     }
 }
