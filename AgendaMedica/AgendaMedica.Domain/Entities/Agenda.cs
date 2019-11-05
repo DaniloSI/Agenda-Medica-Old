@@ -11,7 +11,7 @@ namespace AgendaMedica.Domain.Entities
         public string Titulo { get; set; }
         public DateTime DataHoraInicio { get; set; }
         public DateTime DataHoraFim { get; set; }
-        public decimal PrecoConsulta { get; set; }
+        public decimal? PrecoConsulta { get; set; }
         public virtual ICollection<Horario> Horarios { get; set; }
         public virtual ICollection<HorarioExcecao> HorariosExcecoes { get; set; }
         public int ProfissionalId { get; set; }
