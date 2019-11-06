@@ -16,13 +16,15 @@
     "material-table": "^1.50.0",
     "randomcolor": "^0.5.4",
     "react": "^16.9.0",
+    "react-credit-card-input": "^1.1.5",
     "react-datepicker": "^2.9.6",
     "react-dom": "^16.9.0",
     "react-number-format": "^4.3.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "react-toastify": "^5.3.2",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "styled-components": "^4.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

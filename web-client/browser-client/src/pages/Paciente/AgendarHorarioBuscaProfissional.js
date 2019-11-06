@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import CreditCardInput from 'react-credit-card-input';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
   },
   formControl: {
-    minWidth: 250,
+    minWidth: 280,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -51,6 +52,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function AgendarHorarioBuscaProfissional({ profissional }) {
   const classes = useStyles();
+
+  const pag = {
+    DINHEIRO: 1,
+    BOLETO: 2,
+    CREDITO: 3
+  }
+
   const [open, setOpen] = React.useState(false);
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [listaHorarios, setListaHorarios] = React.useState([]);
@@ -58,6 +66,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     horarioId: '',
     Intervalo: '',
   });
+  const [formaPagamento, setFormaPagamento] = React.useState(pag.DINHEIRO);
   const [especialidade, setEspecialidade] = React.useState({
     especialidadeId: '',
     intervalo: '',
@@ -92,6 +101,10 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     } else {
       Notifications.showError("Erro ao atualizar lista de Horários.");
     }
+  }
+
+  function handleChangePagamento(event) {
+    setFormaPagamento(event.target.value)
   }
 
   const handleOpen = () => {
@@ -144,7 +157,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
 
   return (
     <div>
-        <Button color="primary" size="small" className={classes.button} onClick={handleOpen}>
+      <Button color="primary" size="small" className={classes.button} onClick={handleOpen}>
             <EventAvailableIcon className={classes.leftIcon} />
             Agendar Horário
         </Button>
@@ -216,6 +229,27 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                       }
                     </Select>
                   </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="pagamento">Forma de Pagamento</InputLabel>
+                    <Select
+                      value={formaPagamento}
+                      onChange={handleChangePagamento}
+                      displayEmpty
+                      inputProps={{
+                        name: 'pagamentoId',
+                        id: 'pagamento',
+                      }}
+                    >                                              
+                          <MenuItem key={pag.DINHEIRO} value={pag.DINHEIRO}>Dinheiro</MenuItem>                        
+                          <MenuItem key={pag.BOLETO} value={pag.BOLETO}>Boleto</MenuItem>                        
+                          <MenuItem key={pag.CREDITO} value={pag.CREDITO}>Crédito</MenuItem>                                              
+                    </Select>
+                  </FormControl>
+                </Grid>                
+                <Grid item xs={12}>
+                  <CreditCardInput />
                 </Grid>
                 <Grid item xs={6}>
                   <Button variant="contained" color="primary" className={classes.button} onClick={handleAgendar}>
