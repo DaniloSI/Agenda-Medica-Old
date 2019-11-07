@@ -88,6 +88,8 @@ namespace AgendaMedica.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Bairro");
+
                     b.Property<string>("CEP");
 
                     b.Property<string>("Cidade");
@@ -108,6 +110,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 1,
+                            Bairro = "Laranjeiras",
                             CEP = "29050-902",
                             Cidade = "Vitória",
                             Complemento = "Casa",
@@ -118,6 +121,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 2,
+                            Bairro = "Enseada do Suá",
                             CEP = "29045-250",
                             Cidade = "Vitória",
                             Complemento = "Casa",
@@ -128,6 +132,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 3,
+                            Bairro = "Vila Velha",
                             CEP = "29100-000",
                             Cidade = "Vila Velha",
                             Complemento = "Casa",
@@ -138,6 +143,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 4,
+                            Bairro = "Feu Rosa",
                             CEP = "29166-820",
                             Cidade = "Serra",
                             Complemento = "Casa",

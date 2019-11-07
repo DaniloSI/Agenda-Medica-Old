@@ -137,6 +137,7 @@ namespace AgendaMedica.Data
                     Complemento = "Casa",
                     Estado = "ES",
                     Numero = 56,
+                    Bairro = "Laranjeiras",
                     Rua = "Av. Américo Buaiz"
                 },
                 new Endereco
@@ -147,6 +148,7 @@ namespace AgendaMedica.Data
                     Complemento = "Casa",
                     Estado = "ES",
                     Numero = 51,
+                    Bairro = "Enseada do Suá",
                     Rua = "Juiz Alexandre Martins de Castro Filho"
                 },
                 new Endereco
@@ -157,6 +159,7 @@ namespace AgendaMedica.Data
                     Complemento = "Casa",
                     Estado = "ES",
                     Numero = 851,
+                    Bairro = "Vila Velha",
                     Rua = "Av. São Paulo"
                 },
                 new Endereco
@@ -167,6 +170,7 @@ namespace AgendaMedica.Data
                     Complemento = "Casa",
                     Estado = "ES",
                     Numero = 711,
+                    Bairro = "Feu Rosa",
                     Rua = "Av. Copacabana"
                 }
             );

@@ -31,10 +31,11 @@ namespace AgendaMedica.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CEP = table.Column<string>(nullable: true),
                     Estado = table.Column<string>(nullable: true),
-                    Rua = table.Column<string>(nullable: true),
-                    Complemento = table.Column<string>(nullable: true),
                     Cidade = table.Column<string>(nullable: true),
-                    Numero = table.Column<int>(nullable: false)
+                    Bairro = table.Column<string>(nullable: true),
+                    Rua = table.Column<string>(nullable: true),
+                    Numero = table.Column<int>(nullable: false),
+                    Complemento = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,6 +128,7 @@ namespace AgendaMedica.Data.Migrations
                     Titulo = table.Column<string>(nullable: true),
                     DataHoraInicio = table.Column<DateTime>(nullable: false),
                     DataHoraFim = table.Column<DateTime>(nullable: false),
+                    PrecoConsulta = table.Column<decimal>(nullable: true),
                     ProfissionalId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -333,13 +335,13 @@ namespace AgendaMedica.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Endereco",
-                columns: new[] { "EnderecoId", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
+                columns: new[] { "EnderecoId", "Bairro", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
                 values: new object[,]
                 {
-                    { 1, "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" },
-                    { 2, "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" },
-                    { 3, "29100-000", "Vila Velha", "Casa", "ES", 851, "Av. São Paulo" },
-                    { 4, "29166-820", "Serra", "Casa", "ES", 711, "Av. Copacabana" }
+                    { 1, "Laranjeiras", "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" },
+                    { 2, "Enseada do Suá", "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" },
+                    { 3, "Vila Velha", "29100-000", "Vila Velha", "Casa", "ES", 851, "Av. São Paulo" },
+                    { 4, "Feu Rosa", "29166-820", "Serra", "Casa", "ES", 711, "Av. Copacabana" }
                 });
 
             migrationBuilder.InsertData(
@@ -373,8 +375,8 @@ namespace AgendaMedica.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Agenda",
-                columns: new[] { "AgendaId", "DataHoraFim", "DataHoraInicio", "ProfissionalId", "Titulo" },
-                values: new object[] { 1, new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), 3, null });
+                columns: new[] { "AgendaId", "DataHoraFim", "DataHoraInicio", "PrecoConsulta", "ProfissionalId", "Titulo" },
+                values: new object[] { 1, new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), null, 3, null });
 
             migrationBuilder.InsertData(
                 table: "UsuarioProfissionalEspecialidade",

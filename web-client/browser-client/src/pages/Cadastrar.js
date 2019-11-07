@@ -38,6 +38,15 @@ export default function Cadastrar({ history }) {
         Orgao: "",
         Estado: "",
         Registro: "",
+        Endereco: {
+            Cep: "",
+            Estado: "",
+            Cidade: "",
+            Bairro: "",
+            Rua: "",
+            Numero: "",
+            Complemento: ""
+        }
     });
 
     useEffect(() => {
@@ -68,7 +77,8 @@ export default function Cadastrar({ history }) {
                     Email: form.Email,
                     Password: form.Senha,
                     Cpf: form.cpf,
-                    PhoneNumber: "55704468412301"
+                    PhoneNumber: "55704468412301",
+                    Endereco: form.Endereco
                 })
             );
         } else {
@@ -84,7 +94,8 @@ export default function Cadastrar({ history }) {
                     PhoneNumber: "55704468412301",
                     Orgao: form.Orgao,
                     Estado: form.Estado,
-                    Registro: form.Registro
+                    Registro: form.Registro,
+                    Endereco: form.Endereco
                 })
             );
         }
@@ -125,6 +136,9 @@ export default function Cadastrar({ history }) {
         },
         radio: {
             marginTop: '35px'
+        },
+        tituloCampos: {
+            marginTop: theme.spacing(4),
         }
       }));
     
@@ -154,6 +168,7 @@ export default function Cadastrar({ history }) {
                                     <FormControlLabel value="1" control={<Radio />} label="Profissional" />
                                 </RadioGroup>
                             </FormControl>
+                            <Typography variant="h6" gutterBottom className={classes.tituloCampos}>Informações Básicas</Typography>
                             <TextField
                                 id="Nome"
                                 label="Primerio Nome"
@@ -204,24 +219,6 @@ export default function Cadastrar({ history }) {
                                     }}
                                 />
                             </MuiPickersUtilsProvider>
-                            <TextField
-                                id="email"
-                                label="Email"
-                                required={true}
-                                className={classes.textField}
-                                type="email"
-                                value={form.Email}
-                                onChange={e => setForm(
-                                    {
-                                        ...form,
-                                        Email: e.target.value
-                                    }
-                                )}
-                                name="email"
-                                fullWidth
-                                autoComplete="email"
-                                margin="normal"
-                            />
                             <Box id="professionalFields" m={0}>
                                 <TextField
                                     id="cnpj"
@@ -298,6 +295,174 @@ export default function Cadastrar({ history }) {
                                     margin="normal"
                                 />
                             </Box>
+                            <Typography variant="h6" gutterBottom className={classes.tituloCampos}>Endereço</Typography>
+                            <TextField
+                                id="Cep"
+                                label="CEP"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Cep}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Cep = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Estado"
+                                label="Estado"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Estado}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Estado = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Cidade"
+                                label="Cidade"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Cidade}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Cidade = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Bairro"
+                                label="Bairro"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Bairro}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Bairro = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Rua"
+                                label="Rua"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Rua}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Rua = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Numero"
+                                label="Numero"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Numero}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Numero = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+                            <TextField
+                                id="Complemento"
+                                label="Complemento"
+                                required={true}
+                                className={classes.textField}
+                                value={form.Endereco.Complemento}
+                                onChange={e => {
+                                    var endereco = {
+                                        ...form.Endereco
+                                    };
+                                    endereco.Complemento = e.target.value;
+
+                                    setForm(
+                                    {
+                                        ...form,
+                                        Endereco: endereco
+                                    });
+                                }}
+                                fullWidth
+                                margin="normal"
+                            />
+
+                            <Typography variant="h6" gutterBottom className={classes.tituloCampos}>Informações da Conta</Typography>
+                            <TextField
+                                id="email"
+                                label="Email"
+                                required={true}
+                                className={classes.textField}
+                                type="email"
+                                value={form.Email}
+                                onChange={e => setForm(
+                                    {
+                                        ...form,
+                                        Email: e.target.value
+                                    }
+                                )}
+                                name="email"
+                                fullWidth
+                                autoComplete="email"
+                                margin="normal"
+                            />
                             <TextField
                                 id="password"
                                 label="Password"

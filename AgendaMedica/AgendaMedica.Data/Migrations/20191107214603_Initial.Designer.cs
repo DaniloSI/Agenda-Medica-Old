@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20191104111018_PrecoConsulta")]
-    partial class PrecoConsulta
+    [Migration("20191107214603_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace AgendaMedica.Data.Migrations
 
                     b.Property<DateTime>("DataHoraInicio");
 
-                    b.Property<decimal>("PrecoConsulta");
+                    b.Property<decimal?>("PrecoConsulta");
 
                     b.Property<int>("ProfissionalId");
 
@@ -49,7 +49,6 @@ namespace AgendaMedica.Data.Migrations
                             AgendaId = 1,
                             DataHoraFim = new DateTime(2099, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             DataHoraInicio = new DateTime(1899, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc),
-                            PrecoConsulta = 0m,
                             ProfissionalId = 3
                         });
                 });
@@ -91,6 +90,8 @@ namespace AgendaMedica.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Bairro");
+
                     b.Property<string>("CEP");
 
                     b.Property<string>("Cidade");
@@ -111,6 +112,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 1,
+                            Bairro = "Laranjeiras",
                             CEP = "29050-902",
                             Cidade = "Vitória",
                             Complemento = "Casa",
@@ -121,6 +123,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 2,
+                            Bairro = "Enseada do Suá",
                             CEP = "29045-250",
                             Cidade = "Vitória",
                             Complemento = "Casa",
@@ -131,6 +134,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 3,
+                            Bairro = "Vila Velha",
                             CEP = "29100-000",
                             Cidade = "Vila Velha",
                             Complemento = "Casa",
@@ -141,6 +145,7 @@ namespace AgendaMedica.Data.Migrations
                         new
                         {
                             EnderecoId = 4,
+                            Bairro = "Feu Rosa",
                             CEP = "29166-820",
                             Cidade = "Serra",
                             Complemento = "Casa",
