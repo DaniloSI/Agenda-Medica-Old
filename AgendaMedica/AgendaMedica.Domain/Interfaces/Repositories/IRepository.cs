@@ -11,5 +11,6 @@ namespace AgendaMedica.Domain.Interfaces.Repositories
         void Update(TEntity obj);
         void Remove(int id);
         int SaveChanges();
+        TEntity GetByIdAsNoTracking(int id);
     }
 }

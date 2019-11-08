@@ -7,6 +7,7 @@ namespace AgendaMedica.Application.Interfaces
     {
         void Add(TViewModel obj);
         TViewModel GetById(int id);
+        TViewModel GetByIdAsNoTracking(int id);
         IQueryable<TViewModel> GetAll();
         void Update(TViewModel obj);
         void Remove(int id);

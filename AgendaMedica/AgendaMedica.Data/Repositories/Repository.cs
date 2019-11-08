@@ -51,5 +51,12 @@ namespace AgendaMedica.Data.Repositories
             Db.Dispose();
             GC.SuppressFinalize(this);
         }
+
+        public TEntity GetByIdAsNoTracking(int id)
+        {
+            var item = DbSet.Find(id);
+            Db.Entry(item).State = EntityState.Detached;
+            return item;
+        }
     }
 }

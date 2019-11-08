@@ -1,5 +1,6 @@
 ﻿using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.ViewModels;
+using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using AgendaMedica.Domain.Interfaces.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -72,7 +73,7 @@ namespace AgendaMedica.API.Controllers
                     Data = c.Data.Date.ToString("dd/MM/yyyy"),
                     c.HoraInicio,
                     c.HoraFim,
-                    Estado = c.Estado
+                    c.Estado
                 })
             );
         }
@@ -108,7 +109,7 @@ namespace AgendaMedica.API.Controllers
         {
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            ConsultaViewModel consulta = _consultaAppService.GetById(consultaId);
+            ConsultaViewModel consulta = _consultaAppService.GetByIdAsNoTracking(consultaId);
 
             if (user.Id != consulta.ProfissionalId && user.Id != consulta.PacienteId)
             {
@@ -128,14 +129,23 @@ namespace AgendaMedica.API.Controllers
             }
             else
             {
-                _consultaAppService.Remove(consultaId);
-
+                consulta.Estado = ConsultaEstado.Cancelada;
+                _consultaAppService.Update(consulta);
                 return new JsonResult(new
                 {
+                    consulta.Data,
+                    consulta.HoraInicio,
+                    consulta.HoraFim,
+                    consulta.EspecialidadeId,
+                    consulta.ProfissionalId,
+                    consulta.Estado,
                     ValidationResult = new
                     {
-                        IsValid = true,
-                        Errors = new object[] { }
+                        consulta.ValidationResult.IsValid,
+                        Errors = consulta.ValidationResult.Errors?.Select(e => new
+                        {
+                            e.ErrorMessage
+                        })
                     }
                 });
             }

@@ -53,5 +53,10 @@ namespace AgendaMedica.Application.AppServices
         {
             _service.Update(_mapper.Map<TEntity>(obj));
         }
+
+        public TViewModel GetByIdAsNoTracking(int id)
+        {
+            return _mapper.Map<TViewModel>(_service.GetByIdAsNoTracking(id));
+        }
     }
 }

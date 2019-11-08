@@ -115,7 +115,7 @@ function TableConsultas({ consultas }) {
                                 if (response.status == 200){
                                     if (response.data.validationResult.isValid) {
                                         const data = [...state.data];
-                                        data.splice(data.indexOf(rowData.data), 1);
+                                        data[data.indexOf(rowData.data)].estado = response.data.estado;
                                         setState({ ...state, data });
 
                                         Notifications.showSuccess("Consulta cancelada com sucesso!");

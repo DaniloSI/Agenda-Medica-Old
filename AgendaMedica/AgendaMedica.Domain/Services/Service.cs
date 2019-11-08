@@ -34,6 +34,11 @@ namespace AgendaMedica.Domain.Services
             return _repository.GetById(id);
         }
 
+        public TEntity GetByIdAsNoTracking(int id)
+        {
+            return _repository.GetByIdAsNoTracking(id);
+        }
+
         public virtual void Remove(int id)
         {
             _repository.Remove(id);

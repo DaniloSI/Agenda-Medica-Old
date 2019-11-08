@@ -41,6 +41,7 @@ namespace AgendaMedica.Application.AppServices
             Consulta consulta = _mapper.Map<Consulta>(consultaViewModel);
 
             _consultaService.Update(consulta);
+            consulta.ValidationResult = new FluentValidation.Results.ValidationResult();
 
             if (consulta.ValidationResult.IsValid)
                 UoW.Commit();
