@@ -71,7 +71,8 @@ namespace AgendaMedica.API.Controllers
                     Endereco = c.Profissional.Endereco?.ToString(),
                     Data = c.Data.Date.ToString("dd/MM/yyyy"),
                     c.HoraInicio,
-                    c.HoraFim
+                    c.HoraFim,
+                    Estado = c.Estado
                 })
             );
         }

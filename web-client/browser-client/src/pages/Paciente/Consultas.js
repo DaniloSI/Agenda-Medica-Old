@@ -53,6 +53,10 @@ function TableConsultas({ consultas }) {
                 title: 'Horário de Fim',
                 field: 'horaFim',
                 type: 'time'
+            },
+            {
+                title: 'Status',
+                field: 'estado'
             }
         ],
         data: consultas

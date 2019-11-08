@@ -17,6 +17,7 @@ namespace AgendaMedica.Application.ViewModels
         public UsuarioProfissionalViewModel Profissional { get; set; }
         public int EspecialidadeId { get; set; }
         public EspecialidadeViewModel Especialidade { get; set; }
+        public ConsultaEstado Estado { get; set; }
 
         public ValidationResult ValidationResult { get; set; }
     }
