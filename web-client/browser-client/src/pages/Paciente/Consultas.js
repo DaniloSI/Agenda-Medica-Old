@@ -14,6 +14,11 @@ import {
     Cancel
 } from '@material-ui/icons';
 import NavBarPaciente from './NavBarPaciente.js';
+import DoneIcon from '@material-ui/icons/Done';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import CloseIcon from '@material-ui/icons/Close';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const tableIcons = {
     FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
@@ -56,7 +61,19 @@ function TableConsultas({ consultas }) {
             },
             {
                 title: 'Status',
-                field: 'estado'
+                field: 'estado',
+                render: rowData => {
+                    if (rowData.estado == 0) {
+                        // return (<img src={rowData.imageUrl} style={{width: 40, borderRadius: '50%'}}/>)
+                        return <Tooltip title="Agendada"><DoneIcon /></Tooltip>;
+                    } else if (rowData.estado == 1) {
+                        return <Tooltip title="Confirmada"><DoneAllIcon /></Tooltip>;
+                    } else if (rowData.estado == 2) {
+                        return <Tooltip title="Realizada"><DoneAllIcon color="primary" /></Tooltip>;
+                    } else {
+                        return <Tooltip title="Cancelada"><CloseIcon /></Tooltip>;
+                    }
+                }
             }
         ],
         data: consultas
