@@ -99,36 +99,44 @@ function TableConsultas({ consultas }) {
                 })
             ]}
             components={{
-                Action: rowData => 
-                    <ConfirmCancel
-                    title="Deseja cancelar a consulta?"
-                    text="Ao clicar em SIM, a consulta será cancelada."
-                    labelCancel="Não"
-                    labelAccept="Sim"
-                    callBack={(setOpen)=> {
-                        api.get('/Consulta/CancelarConsulta', {
-                            params: {
-                                consultaId: rowData.data.consultaId
-                            }
-                        })
-                            .then(response => {
-                                if (response.status == 200){
-                                    if (response.data.validationResult.isValid) {
-                                        const data = [...state.data];
-                                        data[data.indexOf(rowData.data)].estado = response.data.estado;
-                                        setState({ ...state, data });
+                Action: rowData => {
+                    if (rowData.data.estado != '3' && rowData.data.estado != '2') {
+                        return (
+                            <ConfirmCancel
+                                title="Deseja cancelar a consulta?"
+                                text="Ao clicar em SIM, a consulta será cancelada."
+                                labelCancel="Não"
+                                labelAccept="Sim"
+                                callBack={(setOpen)=> {
+                                    api.get('/Consulta/CancelarConsulta', {
+                                        params: {
+                                            consultaId: rowData.data.consultaId
+                                        }
+                                    })
+                                        .then(response => {
+                                            if (response.status == 200){
+                                                if (response.data.validationResult.isValid) {
+                                                    const data = [...state.data];
+                                                    data[data.indexOf(rowData.data)].estado = response.data.estado;
+                                                    setState({ ...state, data });
 
-                                        Notifications.showSuccess("Consulta cancelada com sucesso!");
-                                    } else {
-                                        response.data.validationResult.errors.forEach(function (e) {
-                                            Notifications.showError(e.errorMessage);
-                                        })
-                                    }
-                                }
-                                setOpen(false);
-                            });
-                    }}
-                    />
+                                                    Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                                } else {
+                                                    response.data.validationResult.errors.forEach(function (e) {
+                                                        Notifications.showError(e.errorMessage);
+                                                    })
+                                                }
+                                            }
+                                            setOpen(false);
+                                        });
+                                }}
+                            />
+                        );
+                    }
+                    else {
+                        return (<p></p>);
+                    }
+                }
             }}
         />
     );
