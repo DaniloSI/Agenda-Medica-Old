@@ -15,6 +15,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,14 +25,14 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(3),
-    textAlign: 'center',
+    // textAlign: 'center',
     color: theme.palette.text.secondary,
   },
   formControl: {
     minWidth: '100%',
     textAlign: 'center',
     fullWidth: true,
-  },
+  }
 }));
 
 export default function BuscaProfissionais({ history }) {
@@ -50,15 +52,16 @@ export default function BuscaProfissionais({ history }) {
     });
   };
 
-  useEffect(() => {
-    api.post('/User/Profissionais', {
-      Nome: "",
-      EspecialidadesIds: []
-    })
+  function atualizaProfissionais() {
+    api.post('/User/Profissionais', filtro)
       .then(response => {
           console.log(response.data);
           setProfissionais(response.data);
     });
+  }
+
+  useEffect(() => {
+    atualizaProfissionais();
     api.get('/Especialidade')
       .then(response => {
           console.log(response.data);
@@ -85,6 +88,12 @@ export default function BuscaProfissionais({ history }) {
                         className={classes.textField}
                         label="Nome"
                         fullWidth
+                        onChange={event => {
+                          setFiltro({
+                            ...filtro,
+                            Nome: event.target.value
+                          });
+                        }}
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -106,6 +115,19 @@ export default function BuscaProfissionais({ history }) {
                           ))}
                         </Select>
                       </FormControl>
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={3} justify="flex-end" alignContent="flex-end">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={event => {
+                          atualizaProfissionais();
+                        }}
+                      >
+                        <FilterListIcon /> Filtrar
+                      </Button>
                     </Grid>
                   </Grid>
                 </Paper>
