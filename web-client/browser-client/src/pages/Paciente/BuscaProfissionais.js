@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 // import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
@@ -9,18 +8,18 @@ import NavBarPaciente from './NavBarPaciente.js';
 
 
 export default function BuscaProfissionais({ history }) {
+  const [profissionais, setProfissionais] = React.useState([]);
 
-  async function showProfissionais() {
-    const response = await api.get("/User/Profissionais");
-    const profissionais = response.data;
-
-    ReactDOM.render(
-      <CardBuscaProfissionais profissionais={profissionais} />,
-      document.getElementById('cards-profissionais')
-    );
-  }
-
-  showProfissionais()
+  useEffect(() => {
+    api.post('/User/Profissionais', {
+      Nome: "",
+      EspecialidadesIds: []
+    })
+      .then(response => {
+          console.log(response.data);
+          setProfissionais(response.data);
+    });
+  }, []);
 
   return (
     <NavBarPaciente
@@ -29,8 +28,7 @@ export default function BuscaProfissionais({ history }) {
           <div>
             <CssBaseline />
             <Container maxWidth="xl">
-                <div id="cards-profissionais">
-                </div>
+              <CardBuscaProfissionais profissionais={profissionais} />
             </Container>
           </div>
       }

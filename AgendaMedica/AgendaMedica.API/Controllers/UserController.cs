@@ -1,4 +1,5 @@
 ﻿using AgendaMedica.Application.ViewModels;
+using AgendaMedica.Application.ViewModels.PesquisaViewModels;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Identity;
 using AgendaMedica.Domain.Interfaces.Repositories;
@@ -57,13 +58,14 @@ namespace AgendaMedica.API.Controllers
             });
         }
 
-        [HttpGet("Profissionais")]
-        public JsonResult GetProfissionais()
+        [HttpPost("Profissionais")]
+        public JsonResult GetProfissionais(BuscaProfissionaisViewModel vm)
         {
             var profissionais = _usuarioProfissionalRepository.GetAll()
                 .Include(x => x.Especialidades)
                 .Include(x => x.Endereco)
                 .AsNoTracking()
+                .Where(vm.Filtro())
                 .Select(p => new
                 {
                     p.Id,
