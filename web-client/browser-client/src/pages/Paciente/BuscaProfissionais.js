@@ -5,10 +5,50 @@ import Container from '@material-ui/core/Container'
 import CardBuscaProfissionais from './CardBuscaProfissionais'
 import api from '../../services/api';
 import NavBarPaciente from './NavBarPaciente.js';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(3),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  formControl: {
+    minWidth: '100%',
+    textAlign: 'center',
+    fullWidth: true,
+  },
+}));
 
 export default function BuscaProfissionais({ history }) {
+  const classes = useStyles();
   const [profissionais, setProfissionais] = React.useState([]);
+  const [filtro, setFiltro] = React.useState({
+    nome: '',
+    EspecialidadesIds: []
+  });
+  const [especialidades, setEspecialidades] = React.useState([]);
+  const handleChangeEspecialidade = event => {
+    console.log('Selecionados, teóricamente: ', event.target.value);
+
+    setFiltro({
+      ...filtro,
+      EspecialidadesIds: event.target.value
+    });
+  };
 
   useEffect(() => {
     api.post('/User/Profissionais', {
@@ -19,6 +59,11 @@ export default function BuscaProfissionais({ history }) {
           console.log(response.data);
           setProfissionais(response.data);
     });
+    api.get('/Especialidade')
+      .then(response => {
+          console.log(response.data);
+          setEspecialidades(response.data);
+    });
   }, []);
 
   return (
@@ -27,9 +72,50 @@ export default function BuscaProfissionais({ history }) {
       content={
           <div>
             <CssBaseline />
-            <Container maxWidth="xl">
-              <CardBuscaProfissionais profissionais={profissionais} />
-            </Container>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                      <h3>Filtro</h3>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="Nome"
+                        className={classes.textField}
+                        label="Nome"
+                        fullWidth
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel id="especialidades-label">Especialidades</InputLabel>
+                        <Select
+                          labelid="especialidades-label"
+                          className={classes.formControl}
+                          id="especialidades"
+                          multiple
+                          value={filtro.EspecialidadesIds}
+                          onChange={handleChangeEspecialidade}
+                          input={<Input />}
+                        >
+                          {especialidades.map(especialidade => (
+                            <MenuItem key={especialidade.especialidadeId} value={especialidade.especialidadeId}>
+                              {especialidade.nome}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <CardBuscaProfissionais profissionais={profissionais} />
+              </Grid>
+            </Grid>
+            {/* <Container maxWidth="xl">
+            </Container> */}
           </div>
       }
     />
