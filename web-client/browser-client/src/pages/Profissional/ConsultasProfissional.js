@@ -142,54 +142,57 @@ export default function ConsultasProfissional(props) {
                                 <p><strong>Data</strong>: {openModal.data}</p>
                                 <p><strong>Horario de Início</strong>: {openModal.horaInicio}</p>
                                 <p><strong>Horario de Fim</strong>: {openModal.horaFim}</p>
+                                <p><strong>Estado</strong>: {(openModal.estado == 0) ? "Agendada" : (openModal.estado == 1 ? "Realizada" : "Cancelada")}</p>
                                 <br />
                                 {(openModal.estado == 0) && (
-                                    <Box width="100%" display="flex">
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.button}
-                                            right="true"
-                                            fullWidth
-                                            onClick={() => {
-                                                
-                                            }}>
-                                            Marcar como Realizada
-                                        </Button>
-                                    </Box>
-                                )}
-                                <Box width="100%" display="flex">
-                                    <Button
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.button}
-                                        right="true"
-                                        fullWidth
-                                        onClick={() => {
-                                            api.get('/Consulta/CancelarConsulta', {
-                                                params: {
-                                                    consultaId: openModal.consultaId
-                                                }
-                                            })
-                                                .then(response => {
-                                                    if (response.status == 200){
-                                                        if (response.data.validationResult.isValid) {
-                                                            // TODO: Remover consulta do calendario.
-                    
-                                                            Notifications.showSuccess("Consulta cancelada com sucesso!");
-                                                        } else {
-                                                            response.data.validationResult.errors.forEach(function (e) {
-                                                                Notifications.showError(e.errorMessage);
-                                                            })
+                                    <div>
+                                        <Box width="100%" display="flex">
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.button}
+                                                right="true"
+                                                fullWidth
+                                                onClick={() => {
+                                                    
+                                                }}>
+                                                Marcar como Realizada
+                                            </Button>
+                                        </Box>
+                                        <Box width="100%" display="flex">
+                                            <Button
+                                                variant="contained"
+                                                color="default"
+                                                className={classes.button}
+                                                right="true"
+                                                fullWidth
+                                                onClick={() => {
+                                                    api.get('/Consulta/CancelarConsulta', {
+                                                        params: {
+                                                            consultaId: openModal.consultaId
                                                         }
-                                                    }
-                                                    handleCloseModal();
-                                                    atualizarConsultas();
-                                                });
-                                        }}>
-                                        Cancelar
-                                    </Button>
-                                </Box>
+                                                    })
+                                                        .then(response => {
+                                                            if (response.status == 200){
+                                                                if (response.data.validationResult.isValid) {
+                                                                    // TODO: Remover consulta do calendario.
+                            
+                                                                    Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                                                } else {
+                                                                    response.data.validationResult.errors.forEach(function (e) {
+                                                                        Notifications.showError(e.errorMessage);
+                                                                    })
+                                                                }
+                                                            }
+                                                            handleCloseModal();
+                                                            atualizarConsultas();
+                                                        });
+                                                }}>
+                                                Cancelar
+                                            </Button>
+                                        </Box>
+                                    </div>
+                                )}
                             </div>
                         </Fade>
                     </Modal>
