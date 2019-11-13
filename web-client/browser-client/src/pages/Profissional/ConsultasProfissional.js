@@ -56,8 +56,10 @@ export default function ConsultasProfissional(props) {
         email: consulta.email,
         phoneNumber: consulta.phoneNumber,
         data: consulta.data,
+        pagamentoConfirmado: consulta.pagamentoConfirmado,
         horaInicio: consulta.horaInicio,
-        horaFim: consulta.horaFim
+        horaFim: consulta.horaFim,
+        estado: consulta.estado
     });
   };
 
@@ -68,11 +70,15 @@ export default function ConsultasProfissional(props) {
     });
   };
 
+  function atualizarConsultas() {
+      api.get('/Consulta/ConsultasProfissional')
+          .then(response => {
+              setConsultas(response.data);
+      });
+  }
+
     useEffect(() => {
-        api.get('/Consulta/ConsultasProfissional')
-            .then(response => {
-                setConsultas(response.data);
-        });
+        atualizarConsultas();
     }, [])
 
     return (
@@ -98,7 +104,8 @@ export default function ConsultasProfissional(props) {
                                         id: consulta.consultaId,
                                         title: consulta.pacienteNome,
                                         start: consulta.dataHoraInicio,
-                                        end: consulta.dataHoraFim
+                                        end: consulta.dataHoraFim,
+                                        backgroundColor: (consulta.estado == 0 ? /* Agendada */ "" : (consulta.estado == 1 ? /* Realizada */ "#757575" : /* Cancelada */ "#e0e0e0"))
                                     }
                                 })
                             }
@@ -136,19 +143,21 @@ export default function ConsultasProfissional(props) {
                                 <p><strong>Horario de Início</strong>: {openModal.horaInicio}</p>
                                 <p><strong>Horario de Fim</strong>: {openModal.horaFim}</p>
                                 <br />
-                                <Box width="100%" display="flex">
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        className={classes.button}
-                                        right="true"
-                                        fullWidth
-                                        onClick={() => {
-                                            
-                                        }}>
-                                        Marcar como Realizada
-                                    </Button>
-                                </Box>
+                                {(openModal.estado == 0) && (
+                                    <Box width="100%" display="flex">
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            className={classes.button}
+                                            right="true"
+                                            fullWidth
+                                            onClick={() => {
+                                                
+                                            }}>
+                                            Marcar como Realizada
+                                        </Button>
+                                    </Box>
+                                )}
                                 <Box width="100%" display="flex">
                                     <Button
                                         variant="contained"
@@ -175,6 +184,7 @@ export default function ConsultasProfissional(props) {
                                                         }
                                                     }
                                                     handleCloseModal();
+                                                    atualizarConsultas();
                                                 });
                                         }}>
                                         Cancelar

@@ -96,10 +96,12 @@ namespace AgendaMedica.API.Controllers
                     c.Paciente.Email,
                     c.Paciente.PhoneNumber,
                     Data = c.Data.Date.ToString("dd/MM/yyyy"),
+                    c.PagamentoConfirmado,
                     c.HoraInicio,
                     c.HoraFim,
                     DataHoraInicio = $"{c.Data.Date.ToString("yyyy-MM-dd")}T{c.HoraInicio}",
-                    DataHoraFim = $"{c.Data.Date.ToString("yyyy-MM-dd")}T{c.HoraFim}"
+                    DataHoraFim = $"{c.Data.Date.ToString("yyyy-MM-dd")}T{c.HoraFim}",
+                    c.Estado
                 })
             );
         }
