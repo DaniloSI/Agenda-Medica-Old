@@ -154,6 +154,54 @@ namespace AgendaMedica.API.Controllers
             }
         }
 
+        [HttpGet("RealizarConsulta")]
+        [Authorize]
+        public async Task<JsonResult> RealizarConsulta(int consultaId)
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            ConsultaViewModel consulta = _consultaAppService.GetByIdAsNoTracking(consultaId);
+
+            if (user.Id != consulta.ProfissionalId)
+            {
+                return new JsonResult(new
+                {
+                    ValidationResult = new
+                    {
+                        IsValid = false,
+                        Errors = new object[] {
+                            new
+                            {
+                                ErrorMessage = "Somente o profissional pode marcar a consulta como 'Realizada'"
+                            }
+                        }
+                    }
+                });
+            }
+            else
+            {
+                consulta.Estado = ConsultaEstado.Realizada;
+                _consultaAppService.Update(consulta);
+                return new JsonResult(new
+                {
+                    consulta.Data,
+                    consulta.HoraInicio,
+                    consulta.HoraFim,
+                    consulta.EspecialidadeId,
+                    consulta.ProfissionalId,
+                    consulta.Estado,
+                    ValidationResult = new
+                    {
+                        consulta.ValidationResult.IsValid,
+                        Errors = consulta.ValidationResult.Errors?.Select(e => new
+                        {
+                            e.ErrorMessage
+                        })
+                    }
+                });
+            }
+        }
+
         [HttpGet("RelatorioConsultasAno")]
         [Authorize]
         public async Task<JsonResult> RelatorioConsultasAno(int ano)

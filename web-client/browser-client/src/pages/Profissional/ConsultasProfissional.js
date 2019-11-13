@@ -154,7 +154,24 @@ export default function ConsultasProfissional(props) {
                                                 right="true"
                                                 fullWidth
                                                 onClick={() => {
-                                                    
+                                                    api.get('/Consulta/RealizarConsulta', {
+                                                        params: {
+                                                            consultaId: openModal.consultaId
+                                                        }
+                                                    })
+                                                        .then(response => {
+                                                            if (response.status == 200){
+                                                                if (response.data.validationResult.isValid) {
+                                                                    Notifications.showSuccess("Consulta marcada como realizada com sucesso!");
+                                                                } else {
+                                                                    response.data.validationResult.errors.forEach(function (e) {
+                                                                        Notifications.showError(e.errorMessage);
+                                                                    })
+                                                                }
+                                                            }
+                                                            handleCloseModal();
+                                                            atualizarConsultas();
+                                                        });
                                                 }}>
                                                 Marcar como Realizada
                                             </Button>
@@ -175,8 +192,6 @@ export default function ConsultasProfissional(props) {
                                                         .then(response => {
                                                             if (response.status == 200){
                                                                 if (response.data.validationResult.isValid) {
-                                                                    // TODO: Remover consulta do calendario.
-                            
                                                                     Notifications.showSuccess("Consulta cancelada com sucesso!");
                                                                 } else {
                                                                     response.data.validationResult.errors.forEach(function (e) {
