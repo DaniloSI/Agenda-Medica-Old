@@ -1,4 +1,5 @@
 import React, { forwardRef }  from 'react'
+import { makeStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import Container from '@material-ui/core/Container';
 import MaterialTable from 'material-table';
@@ -29,8 +30,17 @@ const tableIcons = {
     Cancel: forwardRef((props, ref) => <Cancel {...props} ref={ref} />)
 };
 
+const useStyles = makeStyles(theme => ({
+    iconTableStatusPago: {
+        color: "#4caf50",
+    },
+    iconTableStatusNaoPago: {
+        color: "#212121",
+    },
+}));
 
 function TableConsultas({ consultas }) {
+    const classes = useStyles();
     const [state, setState] = React.useState({
         columns: [
             {
@@ -63,15 +73,15 @@ function TableConsultas({ consultas }) {
                 title: 'Status',
                 field: 'estado',
                 render: rowData => {
+                    var classNameStatus = rowData.pagamentoConfirmado ? classes.iconTableStatusPago : classes.iconTableStatusNaoPago;
+                    var titleComplementoPago = rowData.pagamentoConfirmado ? " e paga" : "";
+
                     if (rowData.estado == 0) {
-                        // return (<img src={rowData.imageUrl} style={{width: 40, borderRadius: '50%'}}/>)
-                        return <Tooltip title="Agendada"><DoneIcon /></Tooltip>;
+                        return <Tooltip title={("Agendada" + titleComplementoPago)}><DoneIcon className={classNameStatus} /></Tooltip>;
                     } else if (rowData.estado == 1) {
-                        return <Tooltip title="Confirmada"><DoneAllIcon /></Tooltip>;
-                    } else if (rowData.estado == 2) {
-                        return <Tooltip title="Realizada"><DoneAllIcon color="primary" /></Tooltip>;
+                        return <Tooltip title={("Realizada" + titleComplementoPago)}><DoneAllIcon className={classNameStatus} /></Tooltip>;
                     } else {
-                        return <Tooltip title="Cancelada"><CloseIcon /></Tooltip>;
+                        return <Tooltip title={("Cancelada" + titleComplementoPago)}><CloseIcon className={classNameStatus} /></Tooltip>;
                     }
                 }
             }
@@ -100,7 +110,7 @@ function TableConsultas({ consultas }) {
             ]}
             components={{
                 Action: rowData => {
-                    if (rowData.data.estado != '3' && rowData.data.estado != '2') {
+                    if (rowData.data.estado == '0') {
                         return (
                             <ConfirmCancel
                                 title="Deseja cancelar a consulta?"

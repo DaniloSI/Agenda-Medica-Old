@@ -71,6 +71,7 @@ namespace AgendaMedica.API.Controllers
                     ProfissionalNome = c.Profissional.Nome,
                     Endereco = c.Profissional.Endereco?.ToString(),
                     Data = c.Data.Date.ToString("dd/MM/yyyy"),
+                    c.PagamentoConfirmado,
                     c.HoraInicio,
                     c.HoraFim,
                     c.Estado

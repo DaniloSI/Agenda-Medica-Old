@@ -7,7 +7,6 @@ namespace AgendaMedica.Domain.Entities
     public enum ConsultaEstado
     {
         Agendada = 0,
-        Confirmada,
         Realizada,
         Cancelada
     }
