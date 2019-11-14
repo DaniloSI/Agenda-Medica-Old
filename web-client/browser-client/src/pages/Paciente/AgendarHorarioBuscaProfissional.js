@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -67,6 +68,13 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     Intervalo: '',
   });
   const [formaPagamento, setFormaPagamento] = React.useState(pag.DINHEIRO);
+  const [dadosPagamento, setDadosPagamento] = React.useState(
+    {
+      cardNumber: '',
+      expiry: '',
+      cvc: ''
+    }
+  );
   const [especialidade, setEspecialidade] = React.useState({
     especialidadeId: '',
     intervalo: '',
@@ -104,7 +112,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   }
 
   function handleChangePagamento(event) {
-    setFormaPagamento(event.target.value)
+    setFormaPagamento(event.target.value)    
   }
 
   const handleOpen = () => {
@@ -245,11 +253,33 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                           <MenuItem key={pag.DINHEIRO} value={pag.DINHEIRO}>Dinheiro</MenuItem>                        
                           <MenuItem key={pag.BOLETO} value={pag.BOLETO}>Boleto</MenuItem>                        
                           <MenuItem key={pag.CREDITO} value={pag.CREDITO}>Crédito</MenuItem>                                              
-                    </Select>
+                    </Select>                    
                   </FormControl>
                 </Grid>                
-                <Grid item xs={12}>
-                  <CreditCardInput />
+                <Grid item xs={12} id="formaPagamento">
+                  {(formaPagamento === pag.CREDITO) && (
+                    <CreditCardInput 
+                    cardNumberInputProps={{ value: dadosPagamento.cardNumber, onChange: (e) => {
+                      setDadosPagamento({
+                        ...dadosPagamento,
+                        cardNumber: e.target.value
+                      })
+                    }}}
+                    cardExpiryInputProps={{ value: dadosPagamento.expiry, onChange: (e) => {
+                      setDadosPagamento({
+                        ...dadosPagamento,
+                        expiry: e.target.value
+                      })
+                    }}}
+                    cardCVCInputProps={{ value: dadosPagamento.cvc, onChange: (e) => {
+                      setDadosPagamento({
+                        ...dadosPagamento,
+                        cvc: e.target.value
+                      })
+                    }}}
+                    fieldClassName="input"
+                    />
+                  )}                  
                 </Grid>
                 <Grid item xs={6}>
                   <Button variant="contained" color="primary" className={classes.button} onClick={handleAgendar}>
