@@ -80,6 +80,10 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
     intervalo: '',
   });
 
+  function validatePagamento() {
+    return formaPagamento && dadosPagamento.cvc && dadosPagamento.expiry && dadosPagamento.cardNumber;
+  }
+
   function handleChangeHorario(event) {
     setHorario(oldHorario => ({
       ...oldHorario,
@@ -133,7 +137,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   };
 
   async function handleAgendar() {
-    if (!selectedDate || !horario.horarioId || !especialidade.especialidadeId) {
+    if (!selectedDate || !horario.horarioId || !especialidade.especialidadeId || !validatePagamento()) {
       Notifications.showError("É necessário preencher todos os campos!");
     } else {
       const response = await api.post("/Consulta",{
@@ -141,7 +145,9 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
         horaInicio: listaHorarios.filter(h => h.horarioId == horario.horarioId).pop().horaInicio,
         horaFim: listaHorarios.filter(h => h.horarioId == horario.horarioId).pop().horaFim,
         profissionalId: profissional.id,
-        especialidadeId: especialidade.especialidadeId
+        especialidadeId: especialidade.especialidadeId,
+        formaPagamento,
+        dadosPagamento
       });
 
       if (response.status == 200) {
