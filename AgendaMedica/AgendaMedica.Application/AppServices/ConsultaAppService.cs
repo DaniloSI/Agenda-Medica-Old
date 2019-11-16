@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.Util;
@@ -37,10 +38,24 @@ namespace AgendaMedica.Application.AppServices
                 ValidationResult resultPagamento = null;
 
                 if (consulta.TipoPagamento == TipoPagamento.Credito)
+                {
                     resultPagamento = UtilitarioPagamento.RealizarPagamentoCredito(consultaViewModel.Cartao);
+                }
 
                 if (resultPagamento?.IsValid ?? true)
+                {
                     UoW.Commit();
+
+                    if (consulta.TipoPagamento == TipoPagamento.Credito)
+                    {
+                        consulta.PagamentoConfirmado = true;
+                        consulta.DataRealizacaoPagamento = DateTime.Now;
+
+                        _consultaService.Update(consulta);
+
+                        UoW.Commit();
+                    }
+                }
                 else
                     consulta.ValidationResult = resultPagamento;
             }

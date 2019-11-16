@@ -153,7 +153,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
         horaFim: listaHorarios.filter(h => h.horarioId == horario.horarioId).pop().horaFim,
         profissionalId: profissional.id,
         especialidadeId: especialidade.especialidadeId,
-        formaPagamento,
+        tipoPagamento: formaPagamento,
         cartao: (formaPagamento !== pag.CREDITO ? null : dadosPagamento)
       });
 
