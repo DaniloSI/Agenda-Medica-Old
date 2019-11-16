@@ -79,6 +79,54 @@ namespace AgendaMedica.API.Controllers
             );
         }
 
+        [HttpGet("ConfirmarPagamento")]
+        [Authorize]
+        public async Task<JsonResult> ConfirmarPagamento(int consultaId)
+        {
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            ConsultaViewModel consulta = _consultaAppService.GetByIdAsNoTracking(consultaId);
+
+            if (user.Id != consulta.ProfissionalId && user.Id != consulta.PacienteId)
+            {
+                return new JsonResult(new
+                {
+                    ValidationResult = new
+                    {
+                        IsValid = false,
+                        Errors = new object[] {
+                            new
+                            {
+                                ErrorMessage = "Somente o paciente e o profissional pode cancelar a consulta"
+                            }
+                        }
+                    }
+                });
+            }
+            else
+            {
+                consulta.PagamentoConfirmado = true;
+                _consultaAppService.Update(consulta);
+                return new JsonResult(new
+                {
+                    consulta.Data,
+                    consulta.HoraInicio,
+                    consulta.HoraFim,
+                    consulta.EspecialidadeId,
+                    consulta.ProfissionalId,
+                    consulta.Estado,
+                    ValidationResult = new
+                    {
+                        consulta.ValidationResult.IsValid,
+                        Errors = consulta.ValidationResult.Errors?.Select(e => new
+                        {
+                            e.ErrorMessage
+                        })
+                    }
+                });
+            }
+        }
+
         [HttpGet("ConsultasProfissional")]
         [Authorize]
         public async Task<JsonResult> GetConsultasProfissional()

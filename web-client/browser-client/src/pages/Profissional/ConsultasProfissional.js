@@ -102,7 +102,7 @@ export default function ConsultasProfissional(props) {
                                 consultas.map((consulta) => {
                                     return {
                                         id: consulta.consultaId,
-                                        title: consulta.pacienteNome,
+                                        title: ((consulta.pagamentoConfirmado) ? "[PAGO] " : "") + consulta.pacienteNome,
                                         start: consulta.dataHoraInicio,
                                         end: consulta.dataHoraFim,
                                         backgroundColor: (consulta.estado == 0 ? /* Agendada */ "" : (consulta.estado == 1 ? /* Realizada */ "#757575" : /* Cancelada */ "#e0e0e0"))
@@ -145,6 +145,38 @@ export default function ConsultasProfissional(props) {
                                 <p><strong>Estado</strong>: {(openModal.estado == 0) ? "Agendada" : (openModal.estado == 1 ? "Realizada" : "Cancelada")}</p>
                                 <p><strong>Pagamento</strong>: {(openModal.pagamentoConfirmado) ? "Pago" : "Não Pago"}</p>
                                 <br />
+                                {openModal.estado !== 2 && !openModal.pagamentoConfirmado && (
+                                    <Box width="100%" display="flex">
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            className={classes.button}
+                                            right="true"
+                                            fullWidth
+                                            onClick={() => {
+                                                api.get('/Consulta/ConfirmarPagamento', {
+                                                    params: {
+                                                        consultaId: openModal.consultaId
+                                                    }
+                                                })
+                                                    .then(response => {
+                                                        if (response.status == 200){
+                                                            if (response.data.validationResult.isValid) {
+                                                                Notifications.showSuccess("Pagamento da consulta confirmado com sucesso!");
+                                                            } else {
+                                                                response.data.validationResult.errors.forEach(function (e) {
+                                                                    Notifications.showError(e.errorMessage);
+                                                                })
+                                                            }
+                                                        }
+                                                        handleCloseModal();
+                                                        atualizarConsultas();
+                                                    });
+                                            }}>
+                                            Confirmar Pagamento
+                                        </Button>
+                                    </Box>
+                                )}
                                 {(openModal.estado == 0) && (
                                     <div>
                                         <Box width="100%" display="flex">
