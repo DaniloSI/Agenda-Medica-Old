@@ -143,6 +143,7 @@ export default function ConsultasProfissional(props) {
                                 <p><strong>Horario de Início</strong>: {openModal.horaInicio}</p>
                                 <p><strong>Horario de Fim</strong>: {openModal.horaFim}</p>
                                 <p><strong>Estado</strong>: {(openModal.estado == 0) ? "Agendada" : (openModal.estado == 1 ? "Realizada" : "Cancelada")}</p>
+                                <p><strong>Pagamento</strong>: {(openModal.pagamentoConfirmado) ? "Pago" : "Não Pago"}</p>
                                 <br />
                                 {(openModal.estado == 0) && (
                                     <div>
