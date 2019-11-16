@@ -141,6 +141,12 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
       'especialidadeId': '',
     }));
     setSelectedDate(null);
+    setDadosPagamento({
+      cardNumber: '',
+      expiry: '',
+      cvc: ''
+    });
+    setFormaPagamento(pag.DINHEIRO);
   };
 
   async function handleAgendar() {
