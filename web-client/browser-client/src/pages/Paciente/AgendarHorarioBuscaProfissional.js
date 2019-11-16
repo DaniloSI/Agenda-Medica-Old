@@ -81,7 +81,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   });
 
   function validatePagamento() {
-    return formaPagamento && dadosPagamento.cvc && dadosPagamento.expiry && dadosPagamento.cardNumber;
+    return (formaPagamento !== pag.CREDITO) || (formaPagamento === pag.CREDITO && dadosPagamento.cvc && dadosPagamento.expiry && dadosPagamento.cardNumber);
   }
 
   function handleChangeHorario(event) {
@@ -116,7 +116,14 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
   }
 
   function handleChangePagamento(event) {
-    setFormaPagamento(event.target.value)    
+    setFormaPagamento(event.target.value);
+
+    if (event.target.value !== pag.CREDITO)
+      setDadosPagamento({
+        cardNumber: '',
+        expiry: '',
+        cvc: ''
+      });
   }
 
   const handleOpen = () => {
@@ -147,7 +154,7 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
         profissionalId: profissional.id,
         especialidadeId: especialidade.especialidadeId,
         formaPagamento,
-        dadosPagamento
+        cartao: (formaPagamento !== pag.CREDITO ? null : dadosPagamento)
       });
 
       if (response.status == 200) {

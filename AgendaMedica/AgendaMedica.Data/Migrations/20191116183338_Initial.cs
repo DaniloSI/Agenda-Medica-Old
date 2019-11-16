@@ -239,7 +239,10 @@ namespace AgendaMedica.Data.Migrations
                     PagamentoConfirmado = table.Column<bool>(nullable: false),
                     PacienteId = table.Column<int>(nullable: false),
                     ProfissionalId = table.Column<int>(nullable: false),
-                    EspecialidadeId = table.Column<int>(nullable: false)
+                    EspecialidadeId = table.Column<int>(nullable: false),
+                    Estado = table.Column<int>(nullable: false),
+                    TipoPagamento = table.Column<int>(nullable: false),
+                    DataRealizacaoPagamento = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AgendaMedica.Application.Interfaces;
+using AgendaMedica.Application.Util;
 using AgendaMedica.Application.ViewModels;
 using AgendaMedica.Domain.Entities;
 using AgendaMedica.Domain.Interfaces.Domain;
 using AgendaMedica.Domain.Interfaces.Repositories;
 using AutoMapper;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaMedica.Application.AppServices
@@ -31,7 +33,17 @@ namespace AgendaMedica.Application.AppServices
             _consultaService.Add(consulta);
 
             if (consulta.ValidationResult.IsValid)
-                UoW.Commit();
+            {
+                ValidationResult resultPagamento = null;
+
+                if (consulta.TipoPagamento == TipoPagamento.Credito)
+                    resultPagamento = UtilitarioPagamento.RealizarPagamentoCredito(consultaViewModel.Cartao);
+
+                if (resultPagamento?.IsValid ?? true)
+                    UoW.Commit();
+                else
+                    consulta.ValidationResult = resultPagamento;
+            }
 
             consultaViewModel.ValidationResult = consulta.ValidationResult;
         }

@@ -4,6 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AgendaMedica.Domain.Entities
 {
+    public enum TipoPagamento
+    {
+        Dinheiro = 1,
+        Boleto,
+        Credito
+    }
+
     public enum ConsultaEstado
     {
         Agendada = 0,
@@ -25,6 +32,8 @@ namespace AgendaMedica.Domain.Entities
         public int EspecialidadeId { get; set; }
         public virtual Especialidade Especialidade { get; set; }
         public ConsultaEstado Estado { get; set; }
+        public TipoPagamento TipoPagamento { get; set; }
+        public DateTime? DataRealizacaoPagamento { get; set; }
 
         [NotMapped]
         public ValidationResult ValidationResult { get; set; }

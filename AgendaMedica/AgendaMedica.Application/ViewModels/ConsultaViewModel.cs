@@ -18,6 +18,9 @@ namespace AgendaMedica.Application.ViewModels
         public int EspecialidadeId { get; set; }
         public EspecialidadeViewModel Especialidade { get; set; }
         public ConsultaEstado Estado { get; set; }
+        public TipoPagamento? TipoPagamento { get; set; }
+        public DateTime? DataRealizacaoPagamento { get; set; }
+        public CartaoViewModel Cartao { get; set; }
 
         public ValidationResult ValidationResult { get; set; }
     }

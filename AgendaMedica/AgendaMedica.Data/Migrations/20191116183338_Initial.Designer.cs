@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20191108200147_EstadoNaConsulta")]
-    partial class EstadoNaConsulta
+    [Migration("20191116183338_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,6 +61,8 @@ namespace AgendaMedica.Data.Migrations
 
                     b.Property<DateTime>("Data");
 
+                    b.Property<DateTime?>("DataRealizacaoPagamento");
+
                     b.Property<int>("EspecialidadeId");
 
                     b.Property<int>("Estado");
@@ -74,6 +76,8 @@ namespace AgendaMedica.Data.Migrations
                     b.Property<bool>("PagamentoConfirmado");
 
                     b.Property<int>("ProfissionalId");
+
+                    b.Property<int>("TipoPagamento");
 
                     b.HasKey("ConsultaId");
 

@@ -59,6 +59,8 @@ namespace AgendaMedica.Data.Migrations
 
                     b.Property<DateTime>("Data");
 
+                    b.Property<DateTime?>("DataRealizacaoPagamento");
+
                     b.Property<int>("EspecialidadeId");
 
                     b.Property<int>("Estado");
@@ -72,6 +74,8 @@ namespace AgendaMedica.Data.Migrations
                     b.Property<bool>("PagamentoConfirmado");
 
                     b.Property<int>("ProfissionalId");
+
+                    b.Property<int>("TipoPagamento");
 
                     b.HasKey("ConsultaId");
 
