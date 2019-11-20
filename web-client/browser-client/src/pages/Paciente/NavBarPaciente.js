@@ -6,20 +6,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import SearchIcon from '@material-ui/icons/Search';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import Modal from '@material-ui/core/Modal';
-
-import Gif from '../../assets/tenor.gif';
 
 
 export default function NavBarPaciente(props) {
-
-    const [openModal, setOpenModal] = React.useState(false);
-
-    function handleEstorno() {
-        setOpenModal(!openModal);
-    }
-
     return (
         <NavBar
             title="Paciente"
@@ -38,27 +27,6 @@ export default function NavBarPaciente(props) {
                         </ListItemIcon>
                         <ListItemText primary='Procurar Profissionais' />
                     </ListItem>
-                    <ListItem button key='Estorno de Pagamento' onClick={handleEstorno}>
-                        <ListItemIcon>
-                        <AttachMoneyIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='Estorno de Pagamento' />
-                    </ListItem>
-                    <Modal
-                        open={openModal}
-                        onClose={handleEstorno}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}
-                    >
-                        <form autoComplete="off" className={{flexGrow: 1}}>
-                            <div>
-                                <img src={Gif}></img>
-                            </div>
-                        </form>                        
-                    </Modal>
                 </List>
             }
             content={
