@@ -1,4 +1,4 @@
-import React, { forwardRef }  from 'react'
+import React, { forwardRef, useEffect }  from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import Container from '@material-ui/core/Container';
@@ -19,6 +19,14 @@ import DoneIcon from '@material-ui/icons/Done';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import CloseIcon from '@material-ui/icons/Close';
 import Tooltip from '@material-ui/core/Tooltip';
+import PaymentIcon from '@material-ui/icons/Payment';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 const tableIcons = {
@@ -37,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     iconTableStatusNaoPago: {
         color: "#212121",
     },
+    dialogPaymentAction:{
+        justifyContent:'center',
+    }
 }));
 
 function TableConsultas({ consultas }) {
@@ -104,43 +115,55 @@ function TableConsultas({ consultas }) {
             }
             actions={[
                 rowData => ({
-                icon: 'Cancel',
-                tooltip: 'cancelar'
+                    icon: 'Cancel',
+                    tooltip: 'cancelar'
                 })
             ]}
             components={{
                 Action: rowData => {
                     if (rowData.data.estado == '0') {
                         return (
-                            <ConfirmCancel
-                                title="Deseja cancelar a consulta?"
-                                text="Ao clicar em SIM, a consulta será cancelada."
-                                labelCancel="Não"
-                                labelAccept="Sim"
-                                callBack={(setOpen)=> {
-                                    api.get('/Consulta/CancelarConsulta', {
-                                        params: {
-                                            consultaId: rowData.data.consultaId
-                                        }
-                                    })
-                                        .then(response => {
-                                            if (response.status == 200){
-                                                if (response.data.validationResult.isValid) {
-                                                    const data = [...state.data];
-                                                    data[data.indexOf(rowData.data)].estado = response.data.estado;
-                                                    setState({ ...state, data });
-
-                                                    Notifications.showSuccess("Consulta cancelada com sucesso!");
-                                                } else {
-                                                    response.data.validationResult.errors.forEach(function (e) {
-                                                        Notifications.showError(e.errorMessage);
-                                                    })
+                            <Grid
+                                container
+                                direction="row"
+                            >
+                                <Grid item xs={6}>
+                                    <Pagamento
+                                        consulta={rowData.data}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <ConfirmCancel
+                                        title="Deseja cancelar a consulta?"
+                                        text="Ao clicar em SIM, a consulta será cancelada."
+                                        labelCancel="Não"
+                                        labelAccept="Sim"
+                                        callBack={(setOpen)=> {
+                                            api.get('/Consulta/CancelarConsulta', {
+                                                params: {
+                                                    consultaId: rowData.data.consultaId
                                                 }
-                                            }
-                                            setOpen(false);
-                                        });
-                                }}
-                            />
+                                            })
+                                                .then(response => {
+                                                    if (response.status == 200){
+                                                        if (response.data.validationResult.isValid) {
+                                                            const data = [...state.data];
+                                                            data[data.indexOf(rowData.data)].estado = response.data.estado;
+                                                            setState({ ...state, data });
+
+                                                            Notifications.showSuccess("Consulta cancelada com sucesso!");
+                                                        } else {
+                                                            response.data.validationResult.errors.forEach(function (e) {
+                                                                Notifications.showError(e.errorMessage);
+                                                            })
+                                                        }
+                                                    }
+                                                    setOpen(false);
+                                                });
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
                         );
                     }
                     else {
@@ -150,6 +173,47 @@ function TableConsultas({ consultas }) {
             }}
         />
     );
+}
+
+function Pagamento({ consulta }) {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        
+    }, []);
+
+    return (
+        <div>
+            <Tooltip title="Pagar">
+                <IconButton aria-label="cancelar" size='small'>
+                    <PaymentIcon onClick={handleClickOpen} />
+                </IconButton>
+            </Tooltip>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                onEntered={() => {
+                    window.renderButtonPaypal("paypal-button-container-" + consulta.consultaId, 'sb-fegkl615996@personal.example.com', '25');
+                }}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">Pagar Consulta</DialogTitle>
+                <DialogActions className={classes.dialogPaymentAction}>
+                    <div id={("paypal-button-container-" + consulta.consultaId)}></div>
+                </DialogActions>
+            </Dialog>
+        </div>
+    )
 }
 
 export default function Consultas(props) {

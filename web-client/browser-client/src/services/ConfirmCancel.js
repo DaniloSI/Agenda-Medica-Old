@@ -22,7 +22,7 @@ export default function ConfirmCancel(props) {
 
   return (
     <div>
-       <Tooltip title="Cancelar Consulta">
+       <Tooltip title="Cancelar">
         <IconButton aria-label="cancelar" size='small'>
           <CancelIcon onClick={handleClickOpen} />
         </IconButton>
