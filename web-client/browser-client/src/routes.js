@@ -13,6 +13,7 @@ import Agendas from './pages/Profissional/Agendas'
 import Relatorio from './pages/Profissional/Relatorio' 
 import AgendamentoHorario from './pages/AgendamentoHorario'
 // import pacienteConsultas from './pages/pacienteConsultas'
+import Especialidades from './pages/Admin/Especialidades' 
 
 const PrivateRoute = ({component: Component, tipoUsuario, ...rest}) => (
     <Route
@@ -41,6 +42,7 @@ export default function Routes() {
                 <Route path="/CadastrarHorarios" component={CadastrarHorarios} tipoUsuario="1"></Route>
                 <Route path="/AgendamentoHorario" component={AgendamentoHorario}/>
                 <Route path="/Relatorio" component={Relatorio}/>
+                <Route path="/Especialidades" component={Especialidades}  tipoUsuario="2"></Route>
                 {/* <PrivateRoute path="/consultas" component={pacienteConsultas}/> */}
             </Switch>
         </BrowserRouter>

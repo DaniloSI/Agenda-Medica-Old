@@ -29,5 +29,17 @@ namespace AgendaMedica.Application.AppServices
 
             especialidadeViewModel.ValidationResult = especialidade.ValidationResult;
         }
+
+        public override void Update(EspecialidadeViewModel especialidadeViewModel)
+        {
+            Especialidade especialidade = _mapper.Map<Especialidade>(especialidadeViewModel);
+
+            _especialidadeService.Update(especialidade);
+
+            if (especialidade.ValidationResult.IsValid)
+                UoW.Commit();
+
+            especialidadeViewModel.ValidationResult = especialidade.ValidationResult;
+        }
     }
 }

@@ -25,8 +25,25 @@ namespace AgendaMedica.API.Controllers
         [Authorize]
         public ActionResult<EspecialidadeViewModel> Form(EspecialidadeViewModel especialidade)
         {
-            _especialidadeAppService.Add(especialidade);
-            return especialidade;
+            if (especialidade.EspecialidadeId == 0)
+                _especialidadeAppService.Add(especialidade);
+            else
+                _especialidadeAppService.Update(especialidade);
+
+            return new JsonResult(new
+            {
+                especialidade.EspecialidadeId,
+                especialidade.Nome,
+                especialidade.Codigo,
+                ValidationResult = new
+                {
+                    especialidade.ValidationResult.IsValid,
+                    Errors = especialidade.ValidationResult.Errors?.Select(e => new
+                    {
+                        e.ErrorMessage
+                    })
+                }
+            });
         }
 
         [HttpGet]

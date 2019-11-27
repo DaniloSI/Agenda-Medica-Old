@@ -43,8 +43,10 @@ export default function Login({ history }) {
 
       if (tipoUsuario == '0') {
         history.push('/ConsultasPaciente');
-      } else {
+      } else if (tipoUsuario == '1') {
         history.push('/ConsultasProfissional');
+      } else {
+        history.push('/Especialidades');
       }
     } else {
       Notifications.showError(response.data.erro);

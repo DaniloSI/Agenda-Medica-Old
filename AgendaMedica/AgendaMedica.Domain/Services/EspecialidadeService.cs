@@ -19,5 +19,13 @@ namespace AgendaMedica.Domain.Services
             if (especialidade.ValidationResult.IsValid)
                 base.Add(especialidade);
         }
+
+        public override void Update(Especialidade especialidade)
+        {
+            especialidade.ValidationResult = new EspecialidadeValidator().Validate(especialidade);
+
+            if (especialidade.ValidationResult.IsValid)
+                base.Update(especialidade);
+        }
     }
 }
