@@ -229,7 +229,7 @@ namespace AgendaMedica.API.Controllers
                 tokenDescriptor.Expires,
                 FullName = $"{(user as Usuario).Nome} {(user as Usuario).SobreNome}",
                 user.Email,
-                TipoUsuario = (user is UsuarioPaciente) ? 0 : 1
+                TipoUsuario = (user is UsuarioPaciente) ? 0 : (user is UsuarioProfissional) ? 1 : 2
             };
         }
     }

@@ -175,6 +175,22 @@ namespace AgendaMedica.Data
                 }
             );
 
+            builder.Entity<UsuarioAdmin>()
+                .HasData(new UsuarioAdmin
+                {
+                    Id = 5,
+                    Nome = "Admin",
+                    SobreNome = string.Empty,
+                    Email = "admin@teste.com",
+                    NormalizedEmail = "ADMIN@TESTE.COM",
+                    PasswordHash = "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==",
+                    SecurityStamp = "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C",
+                    ConcurrencyStamp = "d7d50895-1e1c-4582-8bd1-6badd9daea7e",
+                    LockoutEnabled = true,
+                    UserName = "admin@teste.com",
+                    NormalizedUserName = "ADMIN@TESTE.COM"
+                });
+
             builder.ApplyConfiguration(new EspecialidadeMap());
             builder.ApplyConfiguration(new UsuarioProfissionalEspecialidadeMap());
             builder.ApplyConfiguration(new ConsultaMap());

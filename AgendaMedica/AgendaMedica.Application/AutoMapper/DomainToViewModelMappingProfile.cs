@@ -22,6 +22,7 @@ namespace AgendaMedica.Application.AutoMapper
                 .ForMember(dest => dest.Codigo, opt => opt.MapFrom(x => x.Especialidade.Codigo))
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(x => x.Especialidade.Nome));
             CreateMap<UsuarioPaciente, UsuarioPacienteViewModel>();
+            CreateMap<UsuarioAdmin, UsuarioAdminViewModel>();
         }
     }
 }
