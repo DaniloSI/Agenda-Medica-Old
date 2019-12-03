@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AgendaMedica.Data.Migrations
@@ -13,7 +12,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -28,7 +27,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     EnderecoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     CEP = table.Column<string>(nullable: true),
                     Estado = table.Column<string>(nullable: true),
                     Cidade = table.Column<string>(nullable: true),
@@ -47,7 +46,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     EspecialidadeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Codigo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                 },
@@ -61,7 +60,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -82,7 +81,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -124,7 +123,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     AgendaId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Titulo = table.Column<string>(nullable: true),
                     DataHoraInicio = table.Column<DateTime>(nullable: false),
                     DataHoraFim = table.Column<DateTime>(nullable: false),
@@ -147,7 +146,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -232,7 +231,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     ConsultaId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Data = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<TimeSpan>(nullable: false),
                     HoraFim = table.Column<TimeSpan>(nullable: false),
@@ -242,7 +241,8 @@ namespace AgendaMedica.Data.Migrations
                     EspecialidadeId = table.Column<int>(nullable: false),
                     Estado = table.Column<int>(nullable: false),
                     TipoPagamento = table.Column<int>(nullable: false),
-                    DataRealizacaoPagamento = table.Column<DateTime>(nullable: true)
+                    DataRealizacaoPagamento = table.Column<DateTime>(nullable: true),
+                    UsuarioAdminId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -262,6 +262,12 @@ namespace AgendaMedica.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Consulta_AspNetUsers_ProfissionalId",
                         column: x => x.ProfissionalId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Consulta_AspNetUsers_UsuarioAdminId",
+                        column: x => x.UsuarioAdminId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -296,7 +302,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     HorarioId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     DiaSemana = table.Column<int>(nullable: false),
                     HoraInicio = table.Column<TimeSpan>(nullable: false),
                     HoraFim = table.Column<TimeSpan>(nullable: false),
@@ -318,7 +324,7 @@ namespace AgendaMedica.Data.Migrations
                 columns: table => new
                 {
                     HorarioExcecaoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Data = table.Column<DateTime>(nullable: false),
                     HoraInicio = table.Column<TimeSpan>(nullable: false),
                     HoraFim = table.Column<TimeSpan>(nullable: false),
@@ -337,44 +343,69 @@ namespace AgendaMedica.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome" },
+                values: new object[] { 5, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioAdmin", "admin@teste.com", false, true, null, "ADMIN@TESTE.COM", "ADMIN@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", null, false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "admin@teste.com", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Admin", "" });
+
+            migrationBuilder.InsertData(
                 table: "Endereco",
                 columns: new[] { "EnderecoId", "Bairro", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
-                values: new object[,]
-                {
-                    { 1, "Laranjeiras", "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" },
-                    { 2, "Enseada do Suá", "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" },
-                    { 3, "Vila Velha", "29100-000", "Vila Velha", "Casa", "ES", 851, "Av. São Paulo" },
-                    { 4, "Feu Rosa", "29166-820", "Serra", "Casa", "ES", 711, "Av. Copacabana" }
-                });
+                values: new object[] { 1, "Laranjeiras", "29050-902", "Vitória", "Casa", "ES", 56, "Av. Américo Buaiz" });
+
+            migrationBuilder.InsertData(
+                table: "Endereco",
+                columns: new[] { "EnderecoId", "Bairro", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
+                values: new object[] { 2, "Enseada do Suá", "29045-250", "Vitória", "Casa", "ES", 51, "Juiz Alexandre Martins de Castro Filho" });
+
+            migrationBuilder.InsertData(
+                table: "Endereco",
+                columns: new[] { "EnderecoId", "Bairro", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
+                values: new object[] { 3, "Vila Velha", "29100-000", "Vila Velha", "Casa", "ES", 851, "Av. São Paulo" });
+
+            migrationBuilder.InsertData(
+                table: "Endereco",
+                columns: new[] { "EnderecoId", "Bairro", "CEP", "Cidade", "Complemento", "Estado", "Numero", "Rua" },
+                values: new object[] { 4, "Feu Rosa", "29166-820", "Serra", "Casa", "ES", 711, "Av. Copacabana" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "EspecialidadeId", "Codigo", "Nome" },
-                values: new object[,]
-                {
-                    { 1, "ANSTSLG", "Anestesiologia" },
-                    { 2, "CIRUR. PLAST.", "Cirurgia Plástica" },
-                    { 3, "MED. ESP.", "Medicina Esportiva" },
-                    { 4, "ORTOP. E TRAUM.", "Ortopedia e Traumatologia" }
-                });
+                values: new object[] { 1, "ANSTSLG", "Anestesiologia" });
+
+            migrationBuilder.InsertData(
+                table: "Especialidade",
+                columns: new[] { "EspecialidadeId", "Codigo", "Nome" },
+                values: new object[] { 2, "CIRUR. PLAST.", "Cirurgia Plástica" });
+
+            migrationBuilder.InsertData(
+                table: "Especialidade",
+                columns: new[] { "EspecialidadeId", "Codigo", "Nome" },
+                values: new object[] { 3, "MED. ESP.", "Medicina Esportiva" });
+
+            migrationBuilder.InsertData(
+                table: "Especialidade",
+                columns: new[] { "EspecialidadeId", "Codigo", "Nome" },
+                values: new object[] { 4, "ORTOP. E TRAUM.", "Ortopedia e Traumatologia" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cpf" },
-                values: new object[,]
-                {
-                    { 1, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "vanessa@teste.com", false, true, null, "VANESSA@TESTE.COM", "VANESSA@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "994839210", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "vanessa@teste.com", new DateTime(1941, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Vanessa", "Bianca da Cruz", "71985694719" },
-                    { 2, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "victor@teste.com", false, true, null, "VICTOR@TESTE.COM", "VICTOR@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "997965652", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "victor@teste.com", new DateTime(1946, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Victor", "Nelson Martin Caldeira", "52435366442" }
-                });
+                values: new object[] { 1, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "vanessa@teste.com", false, true, null, "VANESSA@TESTE.COM", "VANESSA@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "994839210", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "vanessa@teste.com", new DateTime(1941, 7, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Vanessa", "Bianca da Cruz", "71985694719" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cpf" },
+                values: new object[] { 2, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioPaciente", "victor@teste.com", false, true, null, "VICTOR@TESTE.COM", "VICTOR@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "997965652", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "victor@teste.com", new DateTime(1946, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Victor", "Nelson Martin Caldeira", "52435366442" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cnpj", "Estado", "Orgao", "Registro" },
-                values: new object[,]
-                {
-                    { 3, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "rodrigo@teste.com", false, true, null, "RODRIGO@TESTE.COM", "RODRIGO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99349-5462", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "rodrigo@teste.com", new DateTime(1971, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Rodrigo", "Vitor Kevin Ferreira", "63.029.660/0001-15", null, null, null },
-                    { 4, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "augusto@teste.com", false, true, null, "AUGUSTO@TESTE.COM", "AUGUSTO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99598-2285", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "augusto@teste.com", new DateTime(1982, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Augusto", "Menezes da Costa", "35.172.039/0001-70", null, null, null }
-                });
+                values: new object[] { 3, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "rodrigo@teste.com", false, true, null, "RODRIGO@TESTE.COM", "RODRIGO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99349-5462", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "rodrigo@teste.com", new DateTime(1971, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Rodrigo", "Vitor Kevin Ferreira", "63.029.660/0001-15", null, null, null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "DataNascimento", "EnderecoId", "Nome", "SobreNome", "Cnpj", "Estado", "Orgao", "Registro" },
+                values: new object[] { 4, 0, "d7d50895-1e1c-4582-8bd1-6badd9daea7e", "UsuarioProfissional", "augusto@teste.com", false, true, null, "AUGUSTO@TESTE.COM", "AUGUSTO@TESTE.COM", "AQAAAAEAACcQAAAAEEVjXvqjVsNgg//Kp2nmmIc8cVqwehn9NayYOAl6iqthSU3yClvT5iQDdDc4J5lKHg==", "99598-2285", false, "KRV4CMQKAQCZGZYKSMRW3L7NIJ7CTS6C", false, "augusto@teste.com", new DateTime(1982, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "Augusto", "Menezes da Costa", "35.172.039/0001-70", null, null, null });
 
             migrationBuilder.InsertData(
                 table: "Agenda",
@@ -384,69 +415,267 @@ namespace AgendaMedica.Data.Migrations
             migrationBuilder.InsertData(
                 table: "UsuarioProfissionalEspecialidade",
                 columns: new[] { "EspecialidadeId", "Id" },
-                values: new object[,]
-                {
-                    { 1, 3 },
-                    { 2, 3 },
-                    { 4, 3 },
-                    { 3, 4 }
-                });
+                values: new object[] { 1, 3 });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioProfissionalEspecialidade",
+                columns: new[] { "EspecialidadeId", "Id" },
+                values: new object[] { 2, 3 });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioProfissionalEspecialidade",
+                columns: new[] { "EspecialidadeId", "Id" },
+                values: new object[] { 4, 3 });
+
+            migrationBuilder.InsertData(
+                table: "UsuarioProfissionalEspecialidade",
+                columns: new[] { "EspecialidadeId", "Id" },
+                values: new object[] { 3, 4 });
 
             migrationBuilder.InsertData(
                 table: "Horario",
                 columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
-                values: new object[,]
-                {
-                    { 1, 1, 0, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 27, 1, 3, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 28, 1, 3, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 29, 1, 4, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 30, 1, 4, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 31, 1, 4, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 32, 1, 4, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 33, 1, 4, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 34, 1, 4, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 35, 1, 4, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 36, 1, 5, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 37, 1, 5, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 38, 1, 5, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 39, 1, 5, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 40, 1, 5, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 41, 1, 5, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 42, 1, 5, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 43, 1, 6, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 44, 1, 6, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 45, 1, 6, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 46, 1, 6, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 47, 1, 6, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 26, 1, 3, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 48, 1, 6, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 25, 1, 3, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 23, 1, 3, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 2, 1, 0, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 3, 1, 0, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 4, 1, 0, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 5, 1, 0, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 6, 1, 0, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 7, 1, 0, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 8, 1, 1, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 9, 1, 1, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 10, 1, 1, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 11, 1, 1, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 12, 1, 1, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 13, 1, 1, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 14, 1, 1, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 15, 1, 2, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 16, 1, 2, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) },
-                    { 17, 1, 2, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 18, 1, 2, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) },
-                    { 19, 1, 2, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) },
-                    { 20, 1, 2, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) },
-                    { 21, 1, 2, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) },
-                    { 22, 1, 3, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) },
-                    { 24, 1, 3, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) },
-                    { 49, 1, 6, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) }
-                });
+                values: new object[] { 1, 1, 0, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 27, 1, 3, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 28, 1, 3, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 29, 1, 4, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 30, 1, 4, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 31, 1, 4, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 32, 1, 4, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 33, 1, 4, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 34, 1, 4, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 35, 1, 4, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 36, 1, 5, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 37, 1, 5, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 38, 1, 5, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 39, 1, 5, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 40, 1, 5, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 41, 1, 5, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 42, 1, 5, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 43, 1, 6, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 44, 1, 6, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 45, 1, 6, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 46, 1, 6, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 47, 1, 6, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 26, 1, 3, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 48, 1, 6, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 25, 1, 3, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 23, 1, 3, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 2, 1, 0, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 3, 1, 0, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 4, 1, 0, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 5, 1, 0, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 6, 1, 0, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 7, 1, 0, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 8, 1, 1, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 9, 1, 1, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 10, 1, 1, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 11, 1, 1, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 12, 1, 1, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 13, 1, 1, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 14, 1, 1, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 15, 1, 2, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 16, 1, 2, new TimeSpan(0, 9, 30, 0, 0), new TimeSpan(0, 8, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 17, 1, 2, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 18, 1, 2, new TimeSpan(0, 11, 30, 0, 0), new TimeSpan(0, 10, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 19, 1, 2, new TimeSpan(0, 12, 30, 0, 0), new TimeSpan(0, 11, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 20, 1, 2, new TimeSpan(0, 13, 30, 0, 0), new TimeSpan(0, 12, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 21, 1, 2, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 22, 1, 3, new TimeSpan(0, 8, 30, 0, 0), new TimeSpan(0, 7, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 24, 1, 3, new TimeSpan(0, 10, 30, 0, 0), new TimeSpan(0, 9, 30, 0, 0) });
+
+            migrationBuilder.InsertData(
+                table: "Horario",
+                columns: new[] { "HorarioId", "AgendaId", "DiaSemana", "HoraFim", "HoraInicio" },
+                values: new object[] { 49, 1, 6, new TimeSpan(0, 14, 30, 0, 0), new TimeSpan(0, 13, 30, 0, 0) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agenda_ProfissionalId",
@@ -462,8 +691,7 @@ namespace AgendaMedica.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -494,8 +722,7 @@ namespace AgendaMedica.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consulta_EspecialidadeId",
@@ -511,6 +738,11 @@ namespace AgendaMedica.Data.Migrations
                 name: "IX_Consulta_ProfissionalId",
                 table: "Consulta",
                 column: "ProfissionalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Consulta_UsuarioAdminId",
+                table: "Consulta",
+                column: "UsuarioAdminId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Horario_AgendaId",

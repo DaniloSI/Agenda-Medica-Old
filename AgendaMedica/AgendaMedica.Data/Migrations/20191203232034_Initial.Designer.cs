@@ -3,29 +3,25 @@ using System;
 using AgendaMedica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgendaMedica.Data.Migrations
 {
     [DbContext(typeof(AgendaMedicaDbContext))]
-    [Migration("20191127112153_UsuarioAdmin")]
-    partial class UsuarioAdmin
+    [Migration("20191203232034_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Agenda", b =>
                 {
                     b.Property<int>("AgendaId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataHoraFim");
 
@@ -56,8 +52,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Consulta", b =>
                 {
                     b.Property<int>("ConsultaId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Data");
 
@@ -97,8 +92,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Endereco", b =>
                 {
                     b.Property<int>("EnderecoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Bairro");
 
@@ -168,8 +162,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Especialidade", b =>
                 {
                     b.Property<int>("EspecialidadeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -215,8 +208,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Entities.Horario", b =>
                 {
                     b.Property<int>("HorarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AgendaId");
 
@@ -630,8 +622,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Entities.HorarioExcecao", b =>
                 {
                     b.Property<int>("HorarioExcecaoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AgendaId");
 
@@ -688,8 +679,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Identity.AppUser", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -734,8 +724,7 @@ namespace AgendaMedica.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
 
@@ -745,8 +734,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("AgendaMedica.Domain.Identity.Role", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -761,8 +749,7 @@ namespace AgendaMedica.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -783,8 +770,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -802,8 +788,7 @@ namespace AgendaMedica.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 

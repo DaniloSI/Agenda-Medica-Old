@@ -21,7 +21,6 @@ using AgendaMedica.Domain.Services;
 using AgendaMedica.Application.AutoMapper;
 using AgendaMedica.Application.Interfaces;
 using AgendaMedica.Application.AppServices;
-using AgendaMedica.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace AgendaMedica.API
@@ -39,7 +38,7 @@ namespace AgendaMedica.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AgendaMedicaDbContext>(
-                x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             IdentityBuilder builder = services.AddIdentityCore<AppUser>(options =>
             {
