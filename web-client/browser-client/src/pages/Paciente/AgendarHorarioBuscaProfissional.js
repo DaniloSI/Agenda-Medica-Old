@@ -329,10 +329,12 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                     />
                   )}                  
                 </Grid>
-                <Grid item xs={6}>
-                  <Button variant="contained" color="primary" className={classes.button} onClick={handleBoleto}>
-                    BOLETO TESTE
-                  </Button>
+                <Grid item xs={6}>  
+                {(formaPagamento === pag.BOLETO) &&
+                  (<Button variant="contained" color="primary" className={classes.button} onClick={handleBoleto}>
+                    GERAR BOLETO
+                  </Button>)
+                }                
                 </Grid>
                 <Grid item xs={6}>
                   <Button variant="contained" color="primary" className={classes.button} onClick={handleAgendar}>
