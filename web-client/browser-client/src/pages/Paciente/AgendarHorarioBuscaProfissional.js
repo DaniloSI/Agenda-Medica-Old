@@ -19,6 +19,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import CreditCardInput from 'react-credit-card-input';
+import Axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -125,6 +126,34 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
         cvc: ''
       });
   }
+
+  async function handleBoleto(e){
+    const axios = require('axios');
+
+    if ('cpfPayer') {
+        axios.get('https://sandbox.boletobancario.com/boletofacil/integration/api/v1/issue-charge',
+            { params:{
+                token: 'DBD36248D7E26F938D39AB344BD8C3EFF4BD1B1B07F929C7E7F080BBF1E269EF',
+                description: 'Agenda Medica - Pagamento Boleto',
+                amount: 50.00,
+                payerName: 'Lucas Erlacher',
+                payerCpfCnpj: '17025193763'
+            }
+            }
+        ).then(
+          function(response) {
+            console.log(response);
+            var response_boleto = response.data.data.charges[0];
+            window.open(response_boleto.link, '_blank');          
+          }
+        );
+        
+       
+    }
+    else {
+        alert('empty');
+    }
+}
 
   const handleOpen = () => {
     setOpen(true);
@@ -299,6 +328,11 @@ export default function AgendarHorarioBuscaProfissional({ profissional }) {
                     fieldClassName="input"
                     />
                   )}                  
+                </Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" color="primary" className={classes.button} onClick={handleBoleto}>
+                    BOLETO TESTE
+                  </Button>
                 </Grid>
                 <Grid item xs={6}>
                   <Button variant="contained" color="primary" className={classes.button} onClick={handleAgendar}>
