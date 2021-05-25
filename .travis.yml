@@ -9,7 +9,7 @@ addons:
   sonarcloud:
     organization: "danilosi"
     token:
-      secure: "5699f06f0439a343b2a709db88cf908b945ad9ff" # encrypted value of your token
+      secure: "ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d" # encrypted value of your token
 
 jdk:
   - oraclejdk8
@@ -22,10 +22,10 @@ before_script:
     - export PATH="$PATH:/home/travis/.dotnet/tools"
     
 script:
-  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="AgendaMedica/AgendaMedica.Domain.Teste/coverage.opencover.xml" /d:sonar.verbose=false
+  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="AgendaMedica/AgendaMedica.Domain.Teste/coverage.opencover.xml" /d:sonar.verbose=false
   - dotnet build --force AgendaMedica/AgendaMedica.sln
   - dotnet test AgendaMedica/AgendaMedica.Domain.Teste/AgendaMedica.Domain.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile=\"AgendaMedica/AgendaMedica.Data/Migrations/*.cs\"
-  - dotnet sonarscanner end /d:sonar.login=5699f06f0439a343b2a709db88cf908b945ad9ff || true
+  - dotnet sonarscanner end /d:sonar.login=ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d || true
 
 cache:
   directories:
