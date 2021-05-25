@@ -15,7 +15,7 @@ jdk:
   - oraclejdk8
 
 install:
-    - dotnet tool install --global dotnet-sonarscanner
+    - dotnet tool install --global dotnet-sonarscanner  --version 4.8.0
     - dotnet restore AgendaMedica/AgendaMedica.sln
 
 before_script:
