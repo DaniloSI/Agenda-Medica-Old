@@ -15,14 +15,14 @@ jdk:
   - oraclejdk8
 
 install:
-    - dotnet tool install --global dotnet-sonarscanner --version 4.8.0
+    - dotnet tool install --global dotnet-sonarscanner #--version 4.8.0
     - dotnet restore AgendaMedica/AgendaMedica.sln
 
 before_script:
     - export PATH="$PATH:/home/travis/.dotnet/tools"
     
 script:
-  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /d:sonar.login=ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="AgendaMedica/AgendaMedica.Domain.Teste/coverage.opencover.xml" /d:sonar.verbose=false
+  - dotnet sonarscanner begin /k:DaniloSI_Agenda-Medica /o:danilosi /d:sonar.login=ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="AgendaMedica/AgendaMedica.Domain.Teste/coverage.opencover.xml" /d:sonar.verbose=false
   - dotnet build --force AgendaMedica/AgendaMedica.sln
   - dotnet test AgendaMedica/AgendaMedica.Domain.Teste/AgendaMedica.Domain.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByFile=\"AgendaMedica/AgendaMedica.Data/Migrations/*.cs\"
   - dotnet sonarscanner end /d:sonar.login=ba6c826c9d7be5dd710cfe6dde112b3c1ee57a6d || true
