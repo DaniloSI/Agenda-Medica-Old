@@ -2,7 +2,11 @@
 
 [![Build Status](https://travis-ci.org/DaniloSI/Agenda-Medica.svg?branch=master)](https://travis-ci.org/DaniloSI/Agenda-Medica) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=alert_status)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DaniloSI_Agenda-Medica&metric=coverage)](https://sonarcloud.io/dashboard?id=DaniloSI_Agenda-Medica)
 
-> :warning: O presente projeto foi desenvolvido para fins didáticos e não está pronto para utilização em produção!
+> :warning: O presente projeto foi desenvolvido para fins didáticos e não está pronto para utilização em produção! O backend está hospedado no Heroku e utiliza o SQLite. Isso significa que, após 30 minutos parado, o backend entra no modo Sleeping e o banco de dados é zerado.
+> 
+> Link do Frotend: https://danilosi.github.io/Agenda-Medica
+> 
+> Link do Backend: https://agenda-medica-api.herokuapp.com/swagger
 
 ## Sumário
 - [Sobre o Projeto](https://github.com/DaniloSI/Agenda-Medica#sobre-o-projeto)
