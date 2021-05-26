@@ -7,6 +7,14 @@
 > Link do Frotend: https://danilosi.github.io/Agenda-Medica
 > 
 > Link do Backend: https://agenda-medica-api.herokuapp.com/swagger
+>
+> Alguns usuários para testar o sistema:
+>   - Paciente:
+>     - Login: vanessa@teste.com
+>     - Senha: Pass123
+>   - Médico:
+>     - Login: rodrigo@teste.com
+>     - Senha: Pass123
 
 ## Sumário
 - [Sobre o Projeto](https://github.com/DaniloSI/Agenda-Medica#sobre-o-projeto)
