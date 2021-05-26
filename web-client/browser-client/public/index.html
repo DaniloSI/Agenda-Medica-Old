@@ -1,48 +1,52 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Agenda Médica</title>
-    <script src="https://www.paypal.com/sdk/js?client-id=AeYoK_-EBksBUpSNoadRwGDYZKalmbp7cdNgV7YjZR57CXAkVX9a2u24f-DGJZvX5dp--aPU6BvKAVFb&currency=BRL&intent=capture"></script>
-  </head>
-  <body>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AeYoK_-EBksBUpSNoadRwGDYZKalmbp7cdNgV7YjZR57CXAkVX9a2u24f-DGJZvX5dp--aPU6BvKAVFb&currency=BRL&intent=capture"></script>
+</head>
+
+<body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script>
-      function renderButtonPaypal(componentId, emailAddress, valor) {
-          paypal.Buttons({
-            createOrder: function(data, actions) {
-                // This function sets up the details of the transaction, including the amount and line item details.
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: valor
-                        },
-                        payee: {
-                            email_address: emailAddress
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name);
-                    // Call your server to save the transaction
-                    return fetch('/paypal-transaction-complete', {
-                        method: 'post',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            orderID: data.orderID
-                        })
+        function renderButtonPaypal(componentId, emailAddress, valor) {
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    // This function sets up the details of the transaction, including the amount and line item details.
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: valor
+                            },
+                            payee: {
+                                email_address: emailAddress
+                            }
+                        }]
                     });
-                });
-            }
-        }).render('#' + componentId);
-      }
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                        // Call your server to save the transaction
+                        return fetch('/paypal-transaction-complete', {
+                            method: 'post',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                orderID: data.orderID
+                            })
+                        });
+                    });
+                }
+            }).render('#' + componentId);
+        }
     </script>
     <div id="root"></div>
     <div id="notifications"></div>
-  </body>
+</body>
+
 </html>
