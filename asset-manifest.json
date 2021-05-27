@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Agenda-Medica/static/css/main.af5a8f3f.chunk.css",
-    "main.js": "/Agenda-Medica/static/js/main.1655a115.chunk.js",
-    "main.js.map": "/Agenda-Medica/static/js/main.1655a115.chunk.js.map",
+    "main.js": "/Agenda-Medica/static/js/main.d3bbd4bc.chunk.js",
+    "main.js.map": "/Agenda-Medica/static/js/main.d3bbd4bc.chunk.js.map",
     "runtime-main.js": "/Agenda-Medica/static/js/runtime-main.ead0b397.js",
     "runtime-main.js.map": "/Agenda-Medica/static/js/runtime-main.ead0b397.js.map",
     "static/css/2.3c39834c.chunk.css": "/Agenda-Medica/static/css/2.3c39834c.chunk.css",
-    "static/js/2.8730c16f.chunk.js": "/Agenda-Medica/static/js/2.8730c16f.chunk.js",
-    "static/js/2.8730c16f.chunk.js.map": "/Agenda-Medica/static/js/2.8730c16f.chunk.js.map",
+    "static/js/2.3eb5b845.chunk.js": "/Agenda-Medica/static/js/2.3eb5b845.chunk.js",
+    "static/js/2.3eb5b845.chunk.js.map": "/Agenda-Medica/static/js/2.3eb5b845.chunk.js.map",
     "static/js/3.85143207.chunk.js": "/Agenda-Medica/static/js/3.85143207.chunk.js",
     "static/js/3.85143207.chunk.js.map": "/Agenda-Medica/static/js/3.85143207.chunk.js.map",
     "static/js/4.de2c649e.chunk.js": "/Agenda-Medica/static/js/4.de2c649e.chunk.js",
@@ -17,7 +17,7 @@
     "index.html": "/Agenda-Medica/index.html",
     "static/css/2.3c39834c.chunk.css.map": "/Agenda-Medica/static/css/2.3c39834c.chunk.css.map",
     "static/css/main.af5a8f3f.chunk.css.map": "/Agenda-Medica/static/css/main.af5a8f3f.chunk.css.map",
-    "static/js/2.8730c16f.chunk.js.LICENSE.txt": "/Agenda-Medica/static/js/2.8730c16f.chunk.js.LICENSE.txt",
+    "static/js/2.3eb5b845.chunk.js.LICENSE.txt": "/Agenda-Medica/static/js/2.3eb5b845.chunk.js.LICENSE.txt",
     "static/js/3.85143207.chunk.js.LICENSE.txt": "/Agenda-Medica/static/js/3.85143207.chunk.js.LICENSE.txt",
     "static/js/4.de2c649e.chunk.js.LICENSE.txt": "/Agenda-Medica/static/js/4.de2c649e.chunk.js.LICENSE.txt",
     "static/js/5.cd2f9e48.chunk.js.LICENSE.txt": "/Agenda-Medica/static/js/5.cd2f9e48.chunk.js.LICENSE.txt"
@@ -25,8 +25,8 @@
   "entrypoints": [
     "static/js/runtime-main.ead0b397.js",
     "static/css/2.3c39834c.chunk.css",
-    "static/js/2.8730c16f.chunk.js",
+    "static/js/2.3eb5b845.chunk.js",
     "static/css/main.af5a8f3f.chunk.css",
-    "static/js/main.1655a115.chunk.js"
+    "static/js/main.d3bbd4bc.chunk.js"
   ]
 }
